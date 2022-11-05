@@ -27,9 +27,9 @@ namespace LMSweb.Controllers
         public ActionResult StudentCreate(string cid)
         {
             var vmodel = new StudentViewModel();
+            vmodel.CID = cid;
             var course = db.Courses.Where(c => c.CID == cid).Single();
 
-            vmodel.CID = cid;
             vmodel.CName = course.CName;
             
             return View(vmodel);
@@ -45,10 +45,10 @@ namespace LMSweb.Controllers
                 db.SaveChanges();
                 return RedirectToAction("StudentManagement",new { cid = vmodel.student.CID } );
             }
-
+            vmodel.CID = vmodel.student.CID;
             var course = db.Courses.Where(c => c.CID == vmodel.student.CID).Single();
 
-            vmodel.CID = vmodel.student.CID;
+            
             vmodel.CName = course.CName;                                     
 
             return View(vmodel);
@@ -311,10 +311,11 @@ namespace LMSweb.Controllers
         [HttpPost]
         public ActionResult GroupN(int n, string cid)
         {
-            List<Group> groups = new List<Group>();
+            
             var stus = GetRandomElements(db.Students.Where(x => x.@group == null && cid == x.CID).ToList());
+            List<Group> groups = new List<Group>();
             var left_s = stus.Count % n;
-            int g_idx = 0;
+            
 
             for (int i = 1; i <= n; i++)
             {
@@ -324,8 +325,8 @@ namespace LMSweb.Controllers
                 g.CID = cid;
                 groups.Add(g);
             }
-
-            for(int i = 0; i < stus.Count; i++)
+            int g_idx = 0;
+            for (int i = 0; i < stus.Count; i++)
             {
                 groups[g_idx].Students.Add(stus[i]);
                 g_idx++;
@@ -350,20 +351,19 @@ namespace LMSweb.Controllers
         public ActionResult GroupDelete(int groupId)
         {
             Group group = db.Groups.Find(groupId);
-            var cid = group.CID;
-            var learnb = db.LearnB.Where(l => l.group.GID == groupId);
-            var studentCode = db.StudentCodes.Where(sc => sc.group.GID == groupId);
-            var studentDraw = db.StudentDraws.Where(sd => sd.Group.GID == groupId);
-
+ 
             if (group == null)
             {
                 return HttpNotFound();
             }
-
+            var cid = group.CID;
             group.Students.Clear();
             db.Groups.Remove(group);
+            var learnb = db.LearnB.Where(l => l.group.GID == groupId);
             db.LearnB.RemoveRange(learnb);
+            var studentCode = db.StudentCodes.Where(sc => sc.group.GID == groupId);
             db.StudentCodes.RemoveRange(studentCode);
+            var studentDraw = db.StudentDraws.Where(sd => sd.Group.GID == groupId);
             db.StudentDraws.RemoveRange(studentDraw);
 
             db.SaveChanges();
@@ -391,7 +391,7 @@ namespace LMSweb.Controllers
 
         public ActionResult AddStuToOtherGroup(int gid, List<string> StudentList, string CID)
         {
-            var vmodel = new GroupCreateViewModel();
+           
 
             if (ModelState.IsValid)
             {
@@ -407,7 +407,7 @@ namespace LMSweb.Controllers
 
                 return new HttpStatusCodeResult(200);
             }
-
+            var vmodel = new GroupCreateViewModel();
             vmodel.StudentList = GetStudent(vmodel.CID);
 
             return View(vmodel);                                                                                                                                                                                                         

@@ -26,15 +26,17 @@ namespace LMSweb.Controllers
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
             var TID = claims.Claims.Where(x => x.Type == "TID").SingleOrDefault().Value;
             var gmodel = new GroupViewModel();
+            gmodel.MID = mid;
             var mis = db.Missions.Find(mid);
             var mname = mis.MName;
-            var stu = db.Students.Where(s => s.group.CID == cid).ToList();
+            
 
-            gmodel.MID = mid;
+            
             gmodel.Groups = db.Groups.Where(g => mis.CID == g.CID).ToList();
             gmodel.CID = cid;
             gmodel.CName = mis.course.CName;
             gmodel.MName = mname;
+            var stu = db.Students.Where(s => s.group.CID == cid).ToList();
             gmodel.IsUploadDraw = db.StudentDraws.Where(sd => sd.MID == mid).ToList();
             gmodel.IsUploadCode = db.StudentCodes.Where(sc => sc.MID == mid).ToList();
             gmodel.GroupER = db.GroupERs.Where(sg => sg.MID == mid && sg.EvaluatorSID == TID).ToList();
@@ -44,11 +46,12 @@ namespace LMSweb.Controllers
         public ActionResult CheckCoding(int gid, string cid, string mid)
         {
             DrawingViewModel dvmodel = new DrawingViewModel();
-            var pt = db.StudentDraws.Where(p => p.GID == gid && p.MID == mid).Select(p => p.DrawingImgPath).SingleOrDefault();
+            
 
             dvmodel.CID = cid;
             dvmodel.GID = gid;
             dvmodel.MID = mid;
+            var pt = db.StudentDraws.Where(p => p.GID == gid && p.MID == mid).Select(p => p.DrawingImgPath).SingleOrDefault();
             dvmodel.DrawingImgPath = pt;
 
             return View(dvmodel);
@@ -150,13 +153,7 @@ namespace LMSweb.Controllers
                 var pt = db.StudentDraws.Where(p => p.GID == gid && p.MID == mid).Select(p => p.DrawingImgPath).SingleOrDefault();
                 var code = db.StudentCodes.Find(cid, mid, gid);
                 var readcode = new TextIO();
-                var course = db.Courses.Find(cid).CName;
-
-                groupVM.CID = cid;
-                groupVM.MID = mid;
-                groupVM.CName = course;
-                groupVM.Groups = db.Groups.Where(g => g.CID == cid).ToList();
-
+                
                 if (code != null)
                 {
                     string virtualBaseFilePath = Url.Content(codefileSavedPath);
@@ -183,6 +180,13 @@ namespace LMSweb.Controllers
                 {
                     groupVM.IsUploadDraw = null;
                 }
+                var course = db.Courses.Find(cid).CName;
+
+                groupVM.CID = cid;
+                groupVM.MID = mid;
+                groupVM.CName = course;
+                groupVM.Groups = db.Groups.Where(g => g.CID == cid).ToList();
+
 
                 return Json(new { redirectToUrl = Url.Action("Index", "Groups", new { gid = groupVM.GID, cid = groupVM.CID, mid = groupVM.MID }) });
             }
@@ -199,17 +203,18 @@ namespace LMSweb.Controllers
 
             TeacherAssessment teacherAssessment = db.TeacherA.Find(id);
             var groupVM = new GroupViewModel();
-            var code = db.StudentCodes.Find(cid, mid, gid);
-            var course = db.Courses.Find(cid);
-            var gname = db.Groups.Find(gid);
-            var pt = db.StudentDraws.Where(p => p.GID == gid && p.MID == mid).Select(p => p.DrawingImgPath).SingleOrDefault();
-            var readcode = new TextIO();
-
             groupVM.CID = cid;
             groupVM.MID = mid;
             groupVM.GID = gid;
+
+            var code = db.StudentCodes.Find(cid, mid, gid);
+            var course = db.Courses.Find(cid);
+            var gname = db.Groups.Find(gid);
             groupVM.CName = course.CName;
             groupVM.GName = gname.GName;
+            var pt = db.StudentDraws.Where(p => p.GID == gid && p.MID == mid).Select(p => p.DrawingImgPath).SingleOrDefault();
+            var readcode = new TextIO();
+            
             
             if (teacherAssessment != null)
             {
@@ -282,15 +287,7 @@ namespace LMSweb.Controllers
             var code = db.StudentCodes.Find(cid, mid, gid);
             var readcode = new TextIO();
 
-            evalution.IsDiscuss = misChat;
-            evalution.GroupQuestion = db.GroupQuestions.Include(q => q.GroupERs);
-            evalution.MID = mid;
-            evalution.CID = cid;
-            evalution.GID = gid;
-            evalution.CName = cname;
-            evalution.MName = mname;
-            evalution.GName = gname;
-            evalution.TID = TID;
+            
 
             if (code != null)
             {
@@ -310,18 +307,32 @@ namespace LMSweb.Controllers
             {
                 evalution.DrawingImgPath = pt;
             }
+            evalution.IsDiscuss = misChat;
+            evalution.GroupQuestion = db.GroupQuestions.Include(q => q.GroupERs);
+            evalution.MID = mid;
+            evalution.CID = cid;
+            evalution.GID = gid;
+            evalution.CName = cname;
+            evalution.MName = mname;
+            evalution.GName = gname;
+            evalution.TID = TID;
 
             return View(evalution);
         }
         public ActionResult TeacherEdit( string cid, int gid, string mid)
         {
-            EvalutionViewModel model = new EvalutionViewModel();
+            
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
             var TID = claims.Claims.Where(x => x.Type == "TID").SingleOrDefault().Value;
             var evalution = db.GroupERs.Where(r => r.GID == gid && r.EvaluatorSID == TID && r.MID == mid);
             var qids = evalution.Select(r => r.GQID).ToList();
             var rids = evalution.Select(r => r.RID).ToList();
             var questions = db.GroupOptions.Where(q => qids.Contains(q.GQID)).ToList();
+            EvalutionViewModel model = new EvalutionViewModel();
+            model.MID = mid;
+            model.GID = gid;
+            model.CID = cid;
+
             var group = db.Groups.Single(g => g.GID == gid);
             var pt = db.StudentDraws.Where(p => p.GID == gid && p.MID == mid).Select(p => p.DrawingImgPath).SingleOrDefault();
             var code = db.StudentCodes.Find(cid, mid, gid);
@@ -330,9 +341,7 @@ namespace LMSweb.Controllers
             var mname = db.Missions.Find(mid).MName;
             var readcode = new TextIO();
 
-            model.MID = mid;
-            model.GID = gid;
-            model.CID = cid;
+            
             model.GroupQuestion = db.GroupQuestions.Include(q => q.GroupOptions);
             model.MID = mid;
             model.GID = gid;

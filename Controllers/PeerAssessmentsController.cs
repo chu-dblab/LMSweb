@@ -162,23 +162,29 @@ namespace LMSweb.Controllers
         [Authorize(Roles = "Student")]
         public ActionResult GroupEvalution(int gid, string mid, string cid)
         {
+            var gmodel = new GroupViewModel();
+            gmodel.MID = mid;
+            var mis = db.Missions.Find(mid);
+
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
             var claimData = claims.Claims.Where(x => x.Type == "SID").ToList();   //抓出當初記載Claims陣列中的SID
-            var gmodel = new GroupViewModel();
             var sid = claimData[0].Value;
-            var mis = db.Missions.Find(mid);
-            var pa = db.PeerA.SingleOrDefault(p => p.AssessedSID == sid && p.MID == mid);
-            var course = db.Courses.Single(c => c.CID == cid);
-            var mname = db.Missions.Find(mid).MName; 
+            
+           
             var stu = db.Students.Where(s => s.SID == sid);
             var stuC = db.Students.Find(sid).course;
             var stuG = db.Students.Find(sid).group;
-            var misChat = db.Missions.Find(mid).IsDiscuss; 
+            var misChat = db.Missions.Find(mid).IsDiscuss;
 
-            gmodel.MID = mid;
             gmodel.Courses = db.Courses.Where(c => c.CID == stuC.CID).ToList();
             gmodel.Groups = db.Groups.Where(g => g.GID != stuG.GID && g.CID == cid).ToList();
+
+            var pa = db.PeerA.SingleOrDefault(p => p.AssessedSID == sid && p.MID == mid);
             gmodel.PeerAssessment = pa;
+            var course = db.Courses.Single(c => c.CID == cid);
+            var mname = db.Missions.Find(mid).MName;
+
+            
             gmodel.CID = cid;
             gmodel.CName = course.CName;
             gmodel.IsDiscuss = misChat;

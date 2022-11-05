@@ -295,14 +295,16 @@ namespace LMSweb.Controllers
 
         public ActionResult TeacherChat(string mid, string cid)
         {
+            var gmodel = new GroupViewModel();
+            gmodel.MID = mid;
+            var mis = db.Missions.Find(mid);
+
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
             var claimData = claims.Claims.Where(x => x.Type == "TID").ToList();   //抓出當初記載Claims陣列中的SID
-            var gmodel = new GroupViewModel();          
-            var mis = db.Missions.Find(mid);
             var tid = claimData[0].Value;            
             var mname = db.Missions.Find(mid).MName;
             var cname = db.Courses.Find(cid).CName;
-            gmodel.MID = mid;
+           
             gmodel.CID = cid;
             gmodel.CName = cname;
             gmodel.Groups = db.Groups.Where(g => g.CID == cid).ToList(); 

@@ -41,14 +41,16 @@ namespace LMSweb.Controllers
             vm.SID = sid;
             vm.GID = stuG.GID;
             vm.MID = mid;
+            var gid = stuG.GID.ToString();
             vm.SName = sname;
             vm.TeacherER = db.GroupERs.Where(sg => sg.GID == stuG.GID && sg.MID == mid).ToList();
             vm.ClassER = db.GroupERs.ToList();
             vm.missions = db.Missions.Where(m => m.CID == cid).ToList();           
             vm.Teachercourse = db.Groups.Where(c => c.CID == cid).Count();
             vm.CID = cid;
-            
-            if(i != 0)
+            var i = db.GroupERs.Where(c => (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.GID == stuG.GID && c.MID == mid).ToList().Count();
+
+            if (i != 0)
             {
                 TeacherCor = db.GroupERs.Where(c => c.GQID == 1 && c.EvaluatorSID == "T004" && c.GID == stuG.GID && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
                 TeacherLogi = db.GroupERs.Where(c => c.GQID == 2 && c.EvaluatorSID == "T004" && c.GID == stuG.GID && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
@@ -78,12 +80,13 @@ namespace LMSweb.Controllers
             var stuG = db.Students.Find(sid).group;
             var sname = db.Students.Find(sid).SName;
             var gqid = 1002.ToString();
-            var gid = stuG.GID;
+            
 
             vm.Groups = db.Groups.Where(g => g.CID == cid).ToList();
             vm.SID = sid;
             vm.GID = stuG.GID;
             vm.MID = mid;
+            var gid = stuG.GID;
             vm.SName = sname;
             vm.TeacherER = db.GroupERs.Where(sg => sg.GID == stuG.GID).ToList();
             vm.ClassER = db.GroupERs.ToList();
