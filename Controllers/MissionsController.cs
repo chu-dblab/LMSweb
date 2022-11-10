@@ -142,7 +142,7 @@ namespace LMSweb.Models
         public ActionResult Edit(MissionCreateViewModel model)
         {
             var mission = model.mission;
-            //model.CID = mission.CID;
+            model.CID = mission.CID;
 
             if (ModelState.IsValid)
             {
