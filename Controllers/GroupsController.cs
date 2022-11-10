@@ -293,15 +293,23 @@ namespace LMSweb.Controllers
             {
                 string virtualBaseFilePath = Url.Content(codefileSavedPath);
                 string filePath = HttpContext.Server.MapPath(virtualBaseFilePath);
+                string basePath = $"{filePath}{code.CodePath}";
 
                 if (!Directory.Exists(filePath))
                 {
                     Directory.CreateDirectory(filePath);
                 }
-
-                string readcodepath = $"{filePath}{code.CodePath}.txt";
-                evalution.CodePath = code.CodePath;
-                evalution.CodeText = readcode.readCodeText(readcodepath);
+                if (!Path.HasExtension(basePath)) //沒有包含副檔名
+                {
+                    evalution.IsCodeImg = false;
+                    string readcodepath = $"{basePath}.txt";
+                    evalution.CodeText = readcode.readCodeText(readcodepath);
+                }
+                else  //有副檔名
+                {
+                    evalution.CodePath = code.CodePath;
+                    evalution.IsCodeImg = true;
+                }
             }
             if (pt != null)
             {

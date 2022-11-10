@@ -21,6 +21,7 @@ namespace LMSweb.ViewModel
         public string DrawingImgPath { get; set; }
         public string CodeText { get; set; }
         public string CodePath { get; set; }
+        public bool IsCodeImg { get; set; }
         public bool IsDiscuss { get; set; }
         public string TID { get; set; }
         public IEnumerable<LMSweb.Models.DefaultQuestion> DefaultQuestion { get; set; }

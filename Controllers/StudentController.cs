@@ -10,11 +10,9 @@ using LMSweb.Models;
 using LMSweb.ViewModel;
 using System.Security.Claims;
 using System.IO;
-using Newtonsoft.Json;
 using System.Web.Configuration;
-using Newtonsoft.Json.Linq;
-using LMSweb.Infrastructure.Helpers;
 using LMSweb.Service;
+using System.Text.RegularExpressions;
 
 namespace LMSweb.Controllers
 {
@@ -932,14 +930,23 @@ namespace LMSweb.Controllers
             {
                 string virtualBaseFilePath = Url.Content(codefileSavedPath);
                 string filePath = HttpContext.Server.MapPath(virtualBaseFilePath);
-                
+                string basePath = $"{filePath}{code.CodePath}";
+
                 if (!Directory.Exists(filePath))
                 {
                     Directory.CreateDirectory(filePath);
                 }
-                string readcodepath = $"{filePath}{code.CodePath}.txt";
-                GroupEVM.CodeText = readcode.readCodeText(readcodepath);
-                GroupEVM.CodePath = $"{code.CodePath}";
+                if (!Path.HasExtension(basePath)) //沒有包含副檔名
+                {
+                    GroupEVM.IsCodeImg = false;
+                    string readcodepath = $"{basePath}.txt";
+                    GroupEVM.CodeText = readcode.readCodeText(readcodepath);
+                }
+                else  //有副檔名
+                {
+                    GroupEVM.CodePath = code.CodePath;
+                    GroupEVM.IsCodeImg = true;
+                }
             }
             if (pt != null)
             {
@@ -986,7 +993,7 @@ namespace LMSweb.Controllers
             return Json(new { redirectToUrl = Url.Action("GroupEvalution", "PeerAssessments", new { gid = evalution.GID, cid = evalution.CID, mid = evalution.MID }) });
         }
 
-        public ActionResult StudentGroupER(EvalutionViewModel evalution, string cid, string mid, int gid)  ///學生已填過組間評價
+        public ActionResult StudentGroupER(string cid, string mid, int gid)  ///學生已填過組間評價
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
             var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
@@ -997,17 +1004,28 @@ namespace LMSweb.Controllers
             var pt = db.StudentDraws.Where(p => p.GID == gid && p.MID == mid).Select(p => p.DrawingImgPath).SingleOrDefault();
             var code = db.StudentCodes.Find(cid, mid, gid);
             var readcode = new TextIO();
+            EvalutionViewModel evalution = new EvalutionViewModel();
             if (code != null)
             {
                 string virtualBaseFilePath = Url.Content(codefileSavedPath);
                 string filePath = HttpContext.Server.MapPath(virtualBaseFilePath);
+                string basePath = $"{filePath}{code.CodePath}";
 
                 if (!Directory.Exists(filePath))
                 {
                     Directory.CreateDirectory(filePath);
                 }
-                string readcodepath = $"{filePath}{code.CodePath}.txt";
-                evalution.CodeText = readcode.readCodeText(readcodepath);
+                if (!Path.HasExtension(basePath)) //沒有包含副檔名
+                {
+                    evalution.IsCodeImg = false;
+                    string readcodepath = $"{basePath}.txt";
+                    evalution.CodeText = readcode.readCodeText(readcodepath);
+                }
+                else  //有副檔名
+                {
+                    evalution.CodePath = code.CodePath;
+                    evalution.IsCodeImg = true;
+                }
             }
             if (pt != null)
             {
