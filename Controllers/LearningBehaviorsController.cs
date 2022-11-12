@@ -28,7 +28,7 @@ namespace LMSweb.Controllers
             var sname = db.Students.Find(sid).SName;
             var gqid = 1002.ToString();
             var gid = stuG.GID.ToString();
-            var i = db.GroupERs.Where(c => c.EvaluatorSID == "T004" && c.GID == stuG.GID && c.MID == mid).ToList().Count();
+            //var i = db.GroupERs.Where(c => c.EvaluatorSID == "T004" && c.GID == stuG.GID && c.MID == mid).ToList().Count();
 
             double TeacherCor = 0;
             double TeacherLogi = 0;
@@ -41,7 +41,6 @@ namespace LMSweb.Controllers
             vm.SID = sid;
             vm.GID = stuG.GID;
             vm.MID = mid;
-            var gid = stuG.GID.ToString();
             vm.SName = sname;
             vm.TeacherER = db.GroupERs.Where(sg => sg.GID == stuG.GID && sg.MID == mid).ToList();
             vm.ClassER = db.GroupERs.ToList();
