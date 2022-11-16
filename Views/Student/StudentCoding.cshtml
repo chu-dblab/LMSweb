@@ -23,7 +23,9 @@
     </nav>
 </div>
 <div class="article">
-    @if (DateTime.Compare(DateTime.Parse(Model.End), DateTime.Now) <= 0)
+    <h5>@Model.MName</h5>
+    <hr />
+    @if(DateTime.Compare(DateTime.Parse(Model.End), DateTime.Now) <= 0)
     {
         if (Model.CodePath == null)
         {
@@ -31,47 +33,76 @@
         }
         else
         {
-            <h5>@Model.MName</h5>
+            @*<h5>@Model.MName</h5>
             <hr />
             <div class="mb-3">
                 <input type="button" value="查看任務內容" onclick="myFunction()" class="btn btn-outline-dark" />
-            </div>
+            </div>*@
             <img src="~/UploadCode/@Model.CodePath" width="1060" />
         }
     }
     else
     {
-        <div class="mb-3">
+        if (Model.IsUpDateSuccess)  //作法一
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <span>上傳成功</span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+
+        @*<div class="mb-3">
+                <form action="@Url.Action("StudentCoding", "Student", new { cid = Model.CID, mid = Model.MID, gid = Model.GID})" method="post" enctype="multipart/form-data">
+                    <input type="file" accept=".png, .jpg, .jpeg" name="File" id="file" />
+                    <input type="submit" id="File" value="上傳" class="btn btn-primary" />
+                    <p>上傳檔預覽 :<img id="demo" width="1060" /></p>
+                </form>
+            </div>
+
+            if (Model.CodePath == null)
+            {
+                <p>尚未上傳程式碼</p>
+            }
+            else
+            {
+                <img class="mb-3" src="~/UploadCode/@Model.CodePath" width="1060" />
+            }
+            <br />*@
+
+        <div id="file-upload" class="mb-3">
             <form action="@Url.Action("StudentCoding", "Student", new { cid = Model.CID, mid = Model.MID, gid = Model.GID})" method="post" enctype="multipart/form-data">
-                <input type="file" accept=".png, .jpg, .jpeg" name="File" id="file" />
-                <input type="submit" id="File" value="上傳" class="btn btn-primary" />
-                <p>上傳檔預覽 :<img id="demo" width="1060" /></p>
+                <div class="mb-2">
+                    <label for="formFile" class="form-label">請上傳程式碼圖</label>
+                    <input type="file" accept=".png, .jpg, .jpeg" name="File" id="file" class="form-control" />
+                </div>
+                <input type="submit" value="上傳" class="btn btn-primary" />
             </form>
         </div>
 
+        <p>上傳檔預覽:<img id="demo" width="1060" /></p>
+
         if (Model.CodePath == null)
         {
-            <p>尚未上傳程式碼</p>
+            <p>尚未上傳流程圖</p>
         }
         else
         {
-            <img class="mb-3" src="~/UploadCode/@Model.CodePath" width="1060" />
+            <img class="mb-3" src="~/UploadImages/@Model.CodePath" width="1060" />
         }
-        <br />
     }
 
 </div>
 
 <!-- 懸浮聊天室 -->
 <body>
-    @if(Model.IsDiscuss)
+    @if (Model.IsDiscuss)
     {
         <button type="button" class="btn btn-primary rounded-circle message-btn" data-bs-toggle="offcanvas"
                 data-bs-target="#messageBox" aria-controls="messageBox">
             討論區
         </button>
     }
-    
+
     <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="messageBox" aria-labelledby="messageBoxLabel">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="messageBoxLabel">聊天室</h5>
@@ -99,18 +130,38 @@
     <script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
     <script src="~/signalr/hubs"></script>
     <script src="~/Scripts/Coding/coding_editor.js"></script>
+
     <script>
         function myFunction() {
             const myWindow = window.open('@Url.Action( "StudentMDetailWindow", "Student", new { MID = Model.MID, CID = Model.CID})', "", "width=800,height=800");
         }
         $('#file').change(function () {
             var file = $('#file')[0].files[0];
-            var reader = new FileReader;
+            var reader = new FileReader();
             reader.onload = function (e) {
                 $('#demo').attr('src', e.target.result);
             };
             reader.readAsDataURL(file);
         });
     </script>
+
+    @*<script>
+        function myFunction() {
+            const myWindow = window.open('@Url.Action( "StudentMDetailWindow", "Student", new { MID = Model.MID, CID = Model.CID})', "", "width=800,height=800");
+        }
+        $('#file').change(function () {
+            var file = $('#file')[0].files[0];
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#demo').attr('src', e.target.result);
+            };
+            reader.readAsDataURL(file);
+        });
+
+        //作法二: 使用fetch()或是$.ajax()發送post要求(Controller中[HttpPost]StudentDrawing()要改寫一下)
+        //$('input[type="submit"]').submit((e) => {
+        //    e.preventDefault();
+        //});
+    </script>*@
 
 }

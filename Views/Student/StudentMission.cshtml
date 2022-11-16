@@ -46,12 +46,11 @@
                 {
                     <tr>
                         <td>
-
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.MName)
                         </td>
-                        <td class="col-4">
+                        <td id="text_to_html">
                             @Html.DisplayFor(modelItem => item.MDetail)
                         </td>
                         <td>
@@ -60,19 +59,19 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.End)
                         </td>
-                        <td class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <td>
                             @*@if (DateTime.Compare(DateTime.Parse(item.End), DateTime.Now) > 0)
-                            {
-                                <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("StudentMissionDetail","Student", new {sid = Model.SID, mid = item.MID, cid = item.CID, gid = Model.GID})'">
-                                    進入任務<i class="bi bi-arrow-right"></i>
-                                </button>
-                            }
-                            else
-                            {
-                                <button type="button" class="btn btn-secondary" disabled="disabled" onclick="location.href='@Url.Action("StudentMissionDetail","Student", new {sid = Model.SID, mid = item.MID, cid = item.CID, gid = Model.GID})'">
-                                    任務已到期
-                                </button>
-                            }*@
+                                {
+                                    <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("StudentMissionDetail","Student", new {sid = Model.SID, mid = item.MID, cid = item.CID, gid = Model.GID})'">
+                                        進入任務<i class="bi bi-arrow-right"></i>
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button type="button" class="btn btn-secondary" disabled="disabled" onclick="location.href='@Url.Action("StudentMissionDetail","Student", new {sid = Model.SID, mid = item.MID, cid = item.CID, gid = Model.GID})'">
+                                        任務已到期
+                                    </button>
+                                }*@
                             <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("StudentMissionDetail","Student", new {sid = Model.SID, mid = item.MID, cid = item.CID, gid = Model.GID})'">
                                 進入任務<i class="bi bi-arrow-right"></i>
                             </button>
@@ -81,7 +80,7 @@
                 }
             </tbody>
 
-            
+
 
         </table>
     }
@@ -95,6 +94,16 @@
                 tableLine.rows[i].cells[0].innerHTML = (i + 1);
             }
         }
+    </script>
+
+    @* 讓文字從電腦文字傳換成HTML *@
+    <script>
+        //let text = document.getElementsByTagName("td")[2].textContent;
+        //let converted = text.replace(/\n/g, "<br />");
+        //document.getElementsByTagName("td")[2].innerHTML = converted;
+        //let text = document.getElementById("text_to_html").textContent;
+        //let converted = text.replace(/\n/g, "<br />");
+        //document.getElementById("text_to_html").innerHTML = converted;
     </script>
 
 }

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using LMSweb.ViewModel;
+using System.Text.RegularExpressions;
 
 namespace LMSweb.Models
 {
@@ -50,10 +51,12 @@ namespace LMSweb.Models
             var course = db.Courses.Find(cid);
             var kps = mission.relatedKP.Split(',');
             model.KContents = new List<string>();
+
             for (int i = 0; i < kps.Length - 1; i++)
             {
                 model.KContents.Add(db.KnowledgePoints.Find(int.Parse(kps[i])).KContent);
             }
+
             model.CID = cid;
             model.mis = mission;
             model.MID = mid;
@@ -101,10 +104,10 @@ namespace LMSweb.Models
                 {
                     kp_str += kp.KID.ToString() + ",";
                 }
-                model.mission.relatedKP = kp_str;
-                model.mission.CID = model.CID;
+                model.Mission.relatedKP = kp_str;
+                model.Mission.CID = model.CID;
 
-                db.Missions.Add(model.mission);
+                db.Missions.Add(model.Mission);
                 db.SaveChanges();
                 
                 return RedirectToAction("Index", new { cid = model.CID });
@@ -132,7 +135,7 @@ namespace LMSweb.Models
             }
             var vmodel = new MissionCreateViewModel();
             var cname = db.Courses.Find(cid).CName;
-            vmodel.mission = mission;
+            vmodel.Mission = mission;
             vmodel.KnowledgeList = GetKnowledge(cid, db.KnowledgePoints.Where(kp => kp.CID == mission.CID).Select(kp => kp.KID));
             vmodel.CID = cid;
             vmodel.CName = cname;
@@ -143,7 +146,7 @@ namespace LMSweb.Models
         [ValidateAntiForgeryToken]
         public ActionResult Edit(MissionCreateViewModel model)
         {
-            var mission = model.mission;
+            var mission = model.Mission;
             if (ModelState.IsValid)
             {
                 db.Entry(mission).State = EntityState.Modified;
@@ -155,7 +158,7 @@ namespace LMSweb.Models
                 {
                     kp_str += kp.KID.ToString() + ",";
                 }
-                model.mission.relatedKP = kp_str;
+                model.Mission.relatedKP = kp_str;
                 mission.CID = model.CID;
 
                 db.SaveChanges();
@@ -169,7 +172,6 @@ namespace LMSweb.Models
         public ActionResult Delete(string mid, string cid)
         {
             
-
             if (mid == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -218,6 +220,7 @@ namespace LMSweb.Models
             db.EvalutionResponse.RemoveRange(eresponse);
             db.Missions.Remove(mission);
             db.SaveChanges();
+
             return RedirectToAction("Index", new { cid });
         }
         protected override void Dispose(bool disposing)
@@ -243,14 +246,15 @@ namespace LMSweb.Models
         {
             Mission mission = db.Missions.Find(mid);  //old
             var model = new MissionCreateViewModel();   //new
-            model.mission = new Mission();
-            model.mission.MID = mission.MID;
-            model.mission.Start = mission.Start;
-            model.mission.End = mission.End;
-            model.mission.MName = mission.MName;
-            model.mission.MDetail = mission.MDetail;
+
+            model.Mission = new Mission();
+            model.Mission.MID = mission.MID;
+            model.Mission.Start = mission.Start;
+            model.Mission.End = mission.End;
+            model.Mission.MName = mission.MName;
+            model.Mission.MDetail = mission.MDetail; // Regex.Replace(mission.MDetail, @"\r\n?|\n", "<br />");
             model.KnowledgeList = GetKnowledge(cid);
-            model.mission.CID = cid;
+            model.Mission.CID = cid;
             model.CID = cid;
             model.CName = mission.course.CName;
            

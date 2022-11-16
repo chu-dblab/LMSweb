@@ -568,7 +568,12 @@
                 }
             });
         });*@
+    </script>
 
+    <script>
+        let text = document.getElementsByTagName("td")[0].textContent;
+        let converted = text.replace(/\n/g, "<br />");
+        document.getElementsByTagName("td")[0].innerHTML = converted;
     </script>
 }
 

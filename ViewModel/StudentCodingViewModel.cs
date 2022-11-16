@@ -22,5 +22,6 @@ namespace LMSweb.ViewModel
         public bool IsDiscuss { get; set; }
         public IEnumerable<LMSweb.Models.LearningBehavior> learningbehaviors { get; set; }
         public LMSweb.Models.LearningBehavior lbr { get; set; }
+        public bool IsUpDateSuccess { get; set; }
     }
 }

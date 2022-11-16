@@ -22,7 +22,7 @@ namespace LMSweb.ViewModel
         public IEnumerable<int> SelectKnowledgeList { get; set; }
 
         [Required]
-        public LMSweb.Models.Mission mission { get; set; }
+        public LMSweb.Models.Mission Mission { get; set; }
 
     }
 }

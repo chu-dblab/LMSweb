@@ -16,6 +16,7 @@ namespace LMSweb.ViewModel
         public string End { get; set; }
         public string DrawingImgPath { get; set; }
         public bool IsDiscuss { get; set; }
+        public bool IsUpDateSuccess { get; set; }
 
     }
 }

@@ -21,35 +21,35 @@
          <h4><b>編輯任務</b></h4>
          <hr />
          @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-         @Html.HiddenFor(model => model.mission.MID)
+         @Html.HiddenFor(model => model.Mission.MID)
          <div class="mb-3">
-             @Html.LabelFor(model => model.mission.MName, htmlAttributes: new { @class = "control-label col-md-2" })
+             @Html.LabelFor(model => model.Mission.MName, htmlAttributes: new { @class = "control-label col-md-2" })
              <div class="col-5">
-                 @Html.EditorFor(model => model.mission.MName, new { htmlAttributes = new { @class = "form-control" } })
-                 @Html.ValidationMessageFor(model => model.mission.MName, "", new { @class = "text-danger" })
+                 @Html.EditorFor(model => model.Mission.MName, new { htmlAttributes = new { @class = "form-control" } })
+                 @Html.ValidationMessageFor(model => model.Mission.MName, "", new { @class = "text-danger" })
              </div>
          </div>
        
          <div class="mb-3">
-             @Html.LabelFor(model => model.mission.MDetail, htmlAttributes: new { @class = "control-label col-md-2" })
+             @Html.LabelFor(model => model.Mission.MDetail, htmlAttributes: new { @class = "control-label col-md-2" })
              <div class="col-5">
-                 @Html.TextAreaFor(model => model.mission.MDetail, 10, 53, new { htmlAttributes = new { @class = "form-control" } })
-                 @Html.ValidationMessageFor(model => model.mission.MDetail, "", new { @class = "text-danger" })
+                 @Html.TextAreaFor(model => model.Mission.MDetail, 10, 53, new { htmlAttributes = new { @class = "form-control" } })
+                 @Html.ValidationMessageFor(model => model.Mission.MDetail, "", new { @class = "text-danger" })
              </div>
          </div>
          <div class="mb-3">
-             @Html.LabelFor(model => model.mission.Start, htmlAttributes: new { @class = "control-label col-md-2" })
+             @Html.LabelFor(model => model.Mission.Start, htmlAttributes: new { @class = "control-label col-md-2" })
              <div class="col-5">
-                 @Html.EditorFor(model => model.mission.Start, new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })
-                 @Html.ValidationMessageFor(model => model.mission.Start, "", new { @class = "text-danger" })
+                 @Html.EditorFor(model => model.Mission.Start, new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })
+                 @Html.ValidationMessageFor(model => model.Mission.Start, "", new { @class = "text-danger" })
              </div>
         </div>
 
          <div class="mb-3">
-             @Html.LabelFor(model => model.mission.End, htmlAttributes: new { @class = "control-label col-md-2" })
+             @Html.LabelFor(model => model.Mission.End, htmlAttributes: new { @class = "control-label col-md-2" })
              <div class="col-5">
-                 @Html.EditorFor(model => model.mission.End, new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })
-                 @Html.ValidationMessageFor(model => model.mission.End, "", new { @class = "text-danger" })
+                 @Html.EditorFor(model => model.Mission.End, new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })
+                 @Html.ValidationMessageFor(model => model.Mission.End, "", new { @class = "text-danger" })
                  
              </div>
          </div>

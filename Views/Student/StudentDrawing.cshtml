@@ -41,12 +41,25 @@
         }
         else
         {
-            <div class="mb-3">
+            if (Model.IsUpDateSuccess)  //作法一
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <span>上傳成功</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+
+            <div id="file-upload" class="mb-3">
                 <form action="@Url.Action("StudentDrawing", "Student", new { cid = Model.CID, mid = Model.MID, gid = Model.GID})" method="post" enctype="multipart/form-data">
-                    <input type="file" accept=".png, .jpg, .jpeg" name="File" id="file" />
-                    <input type="submit" id="File" value="上傳" class="btn btn-primary" />
+                    <div class="mb-2">
+                        <label for="formFile" class="form-label">請上傳流程圖</label>
+                        <input type="file" accept=".png, .jpg, .jpeg" name="File" id="file" class="form-control"/>
+                    </div>
+                    <input type="submit" value="上傳" class="btn btn-primary" />
                 </form>
             </div>
+
+            <p>上傳檔預覽:<img id="demo" width="1060" /></p>
 
             if (Model.DrawingImgPath == null)
             {
@@ -56,9 +69,6 @@
             {
                 <img class="mb-3" src="~/UploadImages/@Model.DrawingImgPath" width="1060" />
             }
-            <p>上傳檔預覽 :<img id="demo" width="1060" /></p>
-            <br />
-            
         }
 
     </div>
@@ -111,15 +121,17 @@
         }
         $('#file').change(function () {
             var file = $('#file')[0].files[0];
-            var reader = new FileReader;
+            var reader = new FileReader();
             reader.onload = function (e) {
                 $('#demo').attr('src', e.target.result);
             };
             reader.readAsDataURL(file);
         });
 
+        //作法二: 使用fetch()或是$.ajax()發送post要求(Controller中[HttpPost]StudentDrawing()要改寫一下)
+        //$('input[type="submit"]').submit((e) => {
+        //    e.preventDefault();        
+        //});
     </script>
 
 }
-
-

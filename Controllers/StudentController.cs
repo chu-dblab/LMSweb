@@ -217,6 +217,7 @@ namespace LMSweb.Controllers
             var readcode = new TextIO();
             var code = db.StudentCodes.Find(cid, mid, gid);
             var pt = db.StudentCodes.Where(p => p.GID == gid && p.MID == mid).FirstOrDefault();
+            
             model.CID = cid;
             model.MID = mid;
             model.MName = mname;
@@ -253,6 +254,7 @@ namespace LMSweb.Controllers
         {
             StudentCodingViewModel model = new StudentCodingViewModel();
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
+            
             var claimData = claims.Claims.Where(x => x.Type == "SID").ToList();   //抓出當初記載Claims陣列中的SID
             var sid = claimData[0].Value;
             var stu = db.Students.Where(s => s.SID == sid);
@@ -269,6 +271,8 @@ namespace LMSweb.Controllers
             model.MID = mid;
             model.MName = mname;
             model.CName = cname;
+            model.IsUpDateSuccess = false;
+            model.End = db.Missions.Find(mid).End;
 
             if (sd != null)
             {
@@ -298,9 +302,12 @@ namespace LMSweb.Controllers
 
                 db.StudentCodes.Add(studentCode);
                 db.SaveChanges();
+
+                model.IsUpDateSuccess = true;
             }
 
-            return RedirectToAction("StudentCoding", "Student", new { mid, cid });
+            //return RedirectToAction("StudentCoding", "Student", new { mid, cid });
+            return View(model);
         }
 
         private string imgfileSavedPath = WebConfigurationManager.AppSettings["ImagesPath"];
@@ -311,6 +318,7 @@ namespace LMSweb.Controllers
         {
             DrawingViewModel model = new DrawingViewModel();
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
+
             var claimData = claims.Claims.Where(x => x.Type == "SID").ToList(); //抓出當初記載Claims陣列中的SID
             var sid = claimData[0].Value;
             var stu = db.Students.Where(s => s.SID == sid);
@@ -321,6 +329,7 @@ namespace LMSweb.Controllers
             var mname = db.Missions.Find(mid).MName;
             var pt = db.StudentDraws.Where(p => p.GID == gid && p.MID == mid).FirstOrDefault();
             var misChat = db.Missions.Find(mid).IsDiscuss;
+
             model.IsDiscuss = misChat;
             model.CID = cid;
             model.MID = mid;
@@ -328,14 +337,18 @@ namespace LMSweb.Controllers
             model.GName = gname;
             model.CName = cname;
             model.MName = mname;
+            model.IsUpDateSuccess = false;
             model.End = db.Missions.Find(mid).End;
+
             if (pt != null)
             {
                 model.DrawingImgPath = pt.DrawingImgPath;
+                //Response.Write("<Script language='JavaScript'>alert('\\已經有上傳成功檔案');</Script>");
             }
             else
             {
                 model.DrawingImgPath = null;
+
             }
 
             return View(model);
@@ -346,6 +359,8 @@ namespace LMSweb.Controllers
         {
             DrawingViewModel model = new DrawingViewModel();
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
+            var missionObj = db.Missions.Find(mid);
+
             var claimData = claims.Claims.Where(x => x.Type == "SID").ToList();   //抓出當初記載Claims陣列中的SID
             var sid = claimData[0].Value;
             var stu = db.Students.Where(s => s.SID == sid);
@@ -353,16 +368,20 @@ namespace LMSweb.Controllers
             var gid = stuG.GID;
             var gname = stuG.GName;
             var cname = db.Courses.Find(cid).CName;
-            var mname = db.Missions.Find(mid).MName;
+            //var mname = db.Missions.Find(mid).MName;
             var sd = db.StudentDraws.Where(s => s.GID == gid && s.MID == mid).SingleOrDefault();
+
             model.GID = gid;
             model.GName = gname;
             model.CID = cid;
             model.MID = mid;
-            model.MName = mname;
+            model.MName = missionObj.MName;
+            model.End = missionObj.End;
+            model.IsDiscuss = missionObj.IsDiscuss;
             model.CName = cname;
-            
-            if(sd != null)
+            model.IsUpDateSuccess = false;
+
+            if (sd != null)
             {
                 db.StudentDraws.Remove(sd);
             }
@@ -381,6 +400,7 @@ namespace LMSweb.Controllers
 
                 string fullFilePath = Path.Combine(Server.MapPath(imgfileSavedPath), newFileName);
                 file.SaveAs(fullFilePath);
+
                 studentDraw.DrawingImgPath = newFileName;
                 studentDraw.CID = cid;
                 studentDraw.MID = mid;
@@ -388,9 +408,13 @@ namespace LMSweb.Controllers
 
                 db.StudentDraws.Add(studentDraw);
                 db.SaveChanges();
+                model.IsUpDateSuccess = true;
+                model.DrawingImgPath = newFileName;
             }
 
-            return RedirectToAction("StudentDrawing", "Student", new { mid, cid});
+            //return RedirectToAction("StudentDrawing", "Student", new { mid, cid});
+            return View(model);
+            
         }
         public ActionResult ShowImage(string id)
         {
@@ -476,7 +500,7 @@ namespace LMSweb.Controllers
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
             var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
-            
+
             foreach (var qr in goalSetting.QRs)
             {
                 var response = new Response();
@@ -488,9 +512,10 @@ namespace LMSweb.Controllers
                 db.Responses.Add(response);
             }
             db.SaveChanges();
-            
+
             return Json(new { redirectToUrl = Url.Action("StudentMissionDetail", "Student", new { cid = goalSetting.CID, mid = goalSetting.MID }) });
         }
+
 
         [HttpGet]
         [Authorize(Roles = "Student")]
