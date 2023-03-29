@@ -1,8 +1,35 @@
 ﻿@model LMSweb.ViewModel.MissionViewModel
 @{
-    Layout = "~/Views/Shared/_TeacherLayout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="cardArticle">
+<nav class="navbar navbar-expand-lg navbar-light navBG" style="border-radius: 0 0 5px 5px;">
+    <div class="container">
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item ">
+                    <a class="nav-link text-light  active" href="@Url.Action("TeacherHomePage","Teacher")">
+                        <i class="bi bi-house-door"></i>
+                        回課程首頁
+                    </a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link text-light" href="@Url.Action("Index", "Missions", new { CID = Model.CID})">任務管理</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link text-light active" aria-current="page" href="@Url.Action("StudentManagement", "Course", new { CID = Model.CID})">學生名單</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link text-light " href="@Url.Action("TeacherJourney","LearningBehaviors", new { CID = Model.CID})">學習表現</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light " href="@Url.Action("TeacherEvalutionJourney","LearningBehaviors",new {CID = Model.CID})">學習表現(互評版)</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="cardArticle mt-3">
     <h4>@Model.CName</h4>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">

@@ -1,10 +1,17 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="zh-tw">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>結合後設認知策略與運算思維框架的互動式程式設計合作學習環境</title>
     <style>
+        body {
+            --bs-body-bg: #484848;
+        }
+
+        nav {
+            background-color: #A7A7A7
+        }
         .header {
             padding: 20px;
             text-align: left;
@@ -35,43 +42,36 @@
             border: 1px solid #dee2e6;
             border-color: #cdcdcd;
         }
-
-        .body {
-            background-color: #f8f8f8
-        }
-        .navBG {
-            background-color: #69899f
-        }
     </style>
 
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <link href="~/Content/bootstrap-select.min.css" rel="stylesheet" />
     <link href="~/Content/jasny-bootstrap.min.css" rel="stylesheet" />
     <link href="~/Content/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
-    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 </head>
-<body class="body">
-    <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-light navBG " style="border-radius: 0 0 5px 5px;">
-            <div class="container-fluid">
-                <header>
-                    <h2 class="text-light">
-                        結合後設認知策略與運算思維框架的互動式程式設計合作學習環境
-                    </h2>
-                </header>
-                <ul class="navbar-nav px-3 text-light">
-                    <li class="text-light">@Html.Partial("_LoginPartial")</li>
-                </ul>
-            </div>
-        </nav>
-    </div>
-    <div class="container">
-        @RenderBody()
-        <hr />
-        <footer>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light navBG text-white">
+        <div class="container">
+            <header>
+                <h2 class="text-light">
+                    結合後設認知策略與運算思維框架的互動式程式設計合作學習環境
+                </h2>
+            </header>
+            <ul class="navbar-nav px-3 text-light">
+                <li class="text-light">@Html.Partial("_LoginPartial")</li>
+            </ul>
+        </div>
+    </nav>
+
+    @RenderBody()
+
+    <footer>
+        <div class="container">
             <p>&copy; @DateTime.Now.Year </p>
-        </footer>
-    </div>
+        </div>
+    </footer>
+
 
     <script src="~/Scripts/jquery-3.6.0.min.js"></script>
     <script src="~/Scripts/popper.min.js"></script>
