@@ -69,7 +69,7 @@
                 </div>
                 <div class="form-actions no-color row p-3">
                     <input type="submit" value="送出" class="btn btn-primary col-5" />
-                    <input type="button" value="取消" class="btn btn-secondary col-5 ms-auto" onclick="location.href='@Url.Action("TeacherHomePage", "Teacher", new { cid = Model.CID})'" />
+                    <a href="@Url.Action("TeacherHomePage", "Teacher", new { cid = Model.CID})" class="btn btn-secondary col-5 ms-auto">取消</a>
                 </div>
             </div>
         }
