@@ -1,0 +1,32 @@
+﻿* {
+    font-family: "Noto Sans CJK TC", "Microsoft JhengHei", PingFang, STHeiti, sans-serif, serif;
+}
+
+body {
+    --bs-body-bg: #484848;
+    --bs-card-bg: #484848;
+}
+
+nav {
+    background-color: #A7A7A7
+}
+
+.header {
+    padding: 20px;
+    text-align: left;
+}
+
+.cardArticle {
+    position: relative;
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 1200px;
+    margin: 20px auto 20px;
+    padding: 30px 50px 30px;
+    border-radius: 5px;
+    background: #F0F0F2;
+    border: 1px solid #dee2e6;
+    border-color: #cdcdcd;
+}
+
