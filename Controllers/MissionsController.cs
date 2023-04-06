@@ -4,9 +4,6 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 using LMSweb.ViewModel;
 
@@ -18,8 +15,9 @@ namespace LMSweb.Models
         private LMSmodel db = new LMSmodel();
         public ActionResult Index(string cid)
         {
-            MissionViewModel model = new MissionViewModel();
-           
+            /* 盈琪寫的Code
+             MissionViewModel model = new MissionViewModel();
+
             if (cid == null)
             {
                 model.missions = db.Missions.Where(m => m.CID == cid);
@@ -30,7 +28,29 @@ namespace LMSweb.Models
             model.CID = course.CID;
             model.CName = course.CName;
 
-            return View(model);
+            return View(model);*/
+
+            if (cid == null)
+            {
+                return RedirectToAction("TeacherHomePage", "Teacher");
+            }
+            var mission_datas = db.Missions.Where(c => c.CID == cid).Select(m => new MissionData()
+            {
+                MID = m.MID,
+                Name = m.MName,
+                StartDate = m.Start,
+                EndDate = m.End
+            }).ToList();
+            var course_data = db.Courses.Where(c => c.CID == cid).FirstOrDefault();
+
+            var mission_list = new MissionIndexViewModel()
+            {
+                CourseID = course_data.CID,
+                CourseName = course_data.CName,
+                Missions = mission_datas
+            };
+
+            return View(mission_list);
         }
 
         public ActionResult Details(string mid,string cid)

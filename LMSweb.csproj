@@ -496,6 +496,7 @@
     <Compile Include="ViewModel\LearnBViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MissionCreateViewModel.cs" />
+    <Compile Include="ViewModel\MissionIndexViewModel.cs" />
     <Compile Include="ViewModel\MissionViewModel.cs" />
     <Compile Include="ViewModel\QuestionViewModel.cs" />
     <Compile Include="ViewModel\ReflectionViewModel.cs" />
