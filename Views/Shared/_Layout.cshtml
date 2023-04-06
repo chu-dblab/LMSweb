@@ -3,84 +3,62 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>結合後設認知策略與運算思維框架的互動式程式設計合作學習環境</title>
-    <style>
-        body {
-            --bs-body-bg: #484848;
-        }
+    <title>LMSWeb2.0</title>
 
-        nav {
-            background-color: #A7A7A7
-        }
-        .header {
-            padding: 20px;
-            text-align: left;
-        }
-        .cardArticle {
-            position: relative;
-            display: block;
-            box-sizing: border-box;
-            width: 100%;
-            max-width: 1200px;
-            margin: 20px auto 20px;
-            padding: 30px 50px 30px;
-            border-radius: 5px;
-            background: #F0F0F2;
-            border: 1px solid #dee2e6;
-            border-color: #cdcdcd;
-        }
-        .article {
-            position: relative;
-            display: block;
-            box-sizing: border-box;
-            width: 100%;
-            max-width: 1200px;
-            margin: 20px auto 20px;
-            padding: 30px 50px 50px;
-            border-radius: 5px;
-            background: #F0F0F2;
-            border: 1px solid #dee2e6;
-            border-color: #cdcdcd;
-        }
-    </style>
+    <link href="~/Content/MyCSS/AllViewCSS.css" rel="stylesheet"/>
 
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <link href="~/Content/bootstrap-select.min.css" rel="stylesheet" />
     <link href="~/Content/jasny-bootstrap.min.css" rel="stylesheet" />
-    <link href="~/Content/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
+    @*<link href="~/Content/bootstrap-datepicker3.min.css" rel="stylesheet"/>*@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light navBG text-white">
+    <nav class="navbar navbar-expand-lg navbar-light text-white">
         <div class="container">
             <header>
+                @*@Url.Action("TeacherHomePage", "Teacher")*@
                 <h2 class="text-light">
-                    結合後設認知策略與運算思維框架的互動式程式設計合作學習環境
+                    LMSWeb 2.0
                 </h2>
             </header>
-            <ul class="navbar-nav px-3 text-light">
+            <ul class="navbar-nav text-light">
                 <li class="text-light">@Html.Partial("_LoginPartial")</li>
             </ul>
         </div>
     </nav>
 
-    @RenderBody()
+    <div class="min-vh-100 d-flex flex-wrap">
+        <div class="w-100 mb-auto">@RenderBody()</div>
+        <footer class="w-100">
+            <div class="container d-flex flex-wrap text-white">
+                <p class="d-block">&copy; @DateTime.Now.Year</p>
+                <p class="ms-auto d-block">結合社會共享調節與互動式同儕互評的程式設計合作學習環境</p>
+            </div>
+        </footer>
+    </div>
 
-    <footer>
-        <div class="container">
-            <p>&copy; @DateTime.Now.Year </p>
-        </div>
-    </footer>
+
+    @*
+        目前所有頁面都使用同一個 footer
+        Nick Lu
+    *@
 
 
-    <script src="~/Scripts/jquery-3.6.4.min.js"></script>
-    @*<script src="~/Scripts/popper.min.js"></script>*@
+    @* 舊版 *@
+    @*<script src="~/Scripts/jquery-3.6.0.min.js"></script>*@
     @*<script src="~/Scripts/jasny-bootstrap.min.js"></script>*@
-    @*<script src="~/Scripts/bootstrap-datepicker.min.js"></script>*@
 
-
-    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+    @* 怪怪的東西 *@
+    @*<script src="~/Scripts/bootstrap.min.js"></script>*@
     @*<script src="~/Scripts/bootstrap-select.js"></script>*@
+    @*<script src="~/Scripts/popper.min.js"></script>*@
+    @*<script src="~/Scripts/bootstrap-datepicker.min.js"></script>*@
+    
+    <script src="~/Scripts/jquery-3.6.4.min.js"></script>
+    <script src="~/Scripts/moment.js"></script>
+    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+
     @RenderSection("scripts", required: false)
 </body>
 </html>

@@ -5,48 +5,47 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<div class="cardArticle">
-    <h4>課程資訊</h4>
-</div>
-<div class="article">
+<div class="container">
+    <div class="card m-3 p-3">
+        <div class="row m-2">
+            <p class="col flex-shrink-1 w-auto fs-2 my-auto">課程資訊</p>
+        </div>
+    </div>
 
-    <div>
-        <table class="table table-striped" >
+    <div class="card m-3 bg-white">
+        <table class="table table-striped">
             <thead>
-                <tr>
-                    <th>#</th>
-                    <th>
+                <tr class="row m-3">
+                    <th class="col-1">#</th>
+                    <th class="col-2">
                         課程名稱
                     </th>
-                    <th>
+                    <th class="col-2">
                         授課老師
                     </th>
-                    <th>
+                    <th class="col-2">
                         組名
                     </th>
-                    <th>
+                    <th class="col-2">
                         組員
                     </th>
                 </tr>
             </thead>
             <tbody id="number">
-                <tr>
-                    <td></td>
-                    <td>
+                <tr class="row mx-3 my-1">
+                    <td class="col-1"></td>
+                    <td class="col-2">
                         @Html.DisplayFor(model => model.CName)
                     </td>
-                    <td>
+                    <td class="col-2">
                         @Html.DisplayFor(model => model.TName)
                     </td>
-                    <td>
+                    <td class="col-2">
                         @Html.DisplayFor(model => model.GName)
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     </td>
-                    <td>
-                        @if (Model.Groups != null )
+                    <td class="col-2">
+                        @if (Model.Groups != null)
                         {
                             foreach (var item in Model.Groups)
                             {
@@ -61,10 +60,10 @@
                             }
                         }
                     </td>
-                    <td>
+                    <td class="col flex-shrink-1">
                         @if (Model.Enter)
                         {
-                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <div class="d-grid gap-2 d-md-flex justify-content-end">
                                 <button type="button" class=" btn btn-primary" onclick="location.href='@Url.Action("StudentMission", "Student", new { cid = Model.CID })'">
                                     進入我的課程
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
@@ -75,7 +74,7 @@
                         }
                         else
                         {
-                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <div class="d-grid gap-2 d-md-flex justify-content-end">
                                 <button type="button" class=" btn btn-secondary" disabled="disabled" onclick="location.href='@Url.Action("StudentMission", "Student", new { cid = Model.CID })'">
                                     進入我的課程
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
@@ -84,8 +83,7 @@
                                 </button>
                             </div>
                         }
-
-</tr>
+                </tr>
             </tbody>
         </table>
     </div>

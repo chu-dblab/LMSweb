@@ -5,16 +5,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container">
-    <div class="article col-4">
-        <h4>新增課程</h4>
+<div class="container ms-auto">
+    <div class="card col-4 mx-auto bg-white my-5 p-3">
+        <h4 class="align-self-center">新增課程</h4>
 
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
 
             <div class="form-horizontal">
-                <hr />
                 @Html.ValidationSummary(true, "", new { @class = "text-danger", sortOrder = ViewBag.DateSortParm })
                 <div class="mb-3">
                     <div class="col">
@@ -47,7 +46,7 @@
                     </div>
                 </div>*@
 
-                @* 新版 目前 dropdown 有一些問題無法順利展開 *@
+                @* 新版 *@
                 <div class="dropdown mb-3">
                     <button class="btn btn-secondary dropdown-toggle w-100" type="button" id="dropdownMenuButton"
                             data-bs-toggle="dropdown" aria-expanded="false">
