@@ -1,10 +1,10 @@
 ﻿@model LMSweb.ViewModel.MissionViewModel
 @{
     ViewBag.Title = "Details";
-    Layout = "~/Views/Shared/_TeacherLayout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @*這頁有註解的先留著 有可能會再次開放(By琪20221008)*@
-<style>
+@*<style>
     table {
         border-collapse: collapse;
         /*margin: 10px auto;*/
@@ -38,232 +38,263 @@
         border: 1px solid #dee2e6;
         border-color: #cdcdcd;
     }
-</style>
-<div class="cardArticle">
-    <h4>@Model.CName</h4>
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="@Url.Action("Index", "Missions", new { CID = Model.CID})">任務列表</a></li>
-            <li class="breadcrumb-item active" aria-current="page">@Model.MName</li>
-        </ol>
-    </nav>
-</div>
-<div class="MissionDetailArticle">
-    <div>
-        <div class="row mb-3">
-            <div class="col-9">
-                <h4><b>@Model.MName</b></h4>
+</style>*@
+
+<nav class="navbar navbar-expand-lg navbar-light navBG" style="border-radius: 0 0 5px 5px;">
+    <div class="container">
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item ">
+                    <a class="nav-link text-light active" href="@Url.Action("TeacherHomePage","Teacher")">
+                        <i class="bi bi-house-door"></i>
+                        回課程首頁
+                    </a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link text-light" href="@Url.Action("Index", "Missions", new { CID = Model.CID})">任務管理</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link text-light active" aria-current="page" href="@Url.Action("StudentManagement", "Course", new { CID = Model.CID})">學生名單</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link text-light " href="@Url.Action("TeacherJourney","LearningBehaviors", new { CID = Model.CID})">學習表現</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light " href="@Url.Action("TeacherEvalutionJourney","LearningBehaviors",new {CID = Model.CID})">學習表現(互評版)</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <div class="card m-3 p-3">
+        <div class="row m-2">
+            <h1 class="w-auto fs-2 my-auto">@Model.CName</h1>
+            <ol class="breadcrumb bg-white m-3">
+                <li class="breadcrumb-item"><a href="@Url.Action("Index", "Missions", new { CID = Model.CID})">任務列表</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@Model.MName</li>
+            </ol>
+        </div>
+    </div>
+    <div class="card m-3 p-3 bg-white ">
+        <div class="mx-3">
+            <div class="row mb-3">
+                <div class="col">
+                    <h3>@Model.MName</h3>
+                </div>
+                <div class="col d-flex justify-content-end me-2">
+                    <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Edit", "Missions", new {  mid = Model.MID, cid = Model.CID})'">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                            <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                        </svg>
+                        編輯任務內容
+                    </button>
+                </div>
             </div>
-            <div class="col">
-                <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Edit", "Missions", new {  mid = Model.MID, cid = Model.CID})'">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+            <div class="mb-3">
+                <button type="button" class="btn btn-outline-primary" onclick="location.href='@Url.Action("TeacherChat","Teacher",new { mid = Model.MID, cid=Model.CID })'">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-dots" viewBox="0 0 16 16">
+                        <path d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
+                        <path d="m2.165 15.803.02-.004c1.83-.363 2.948-.842 3.468-1.105A9.06 9.06 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.437 10.437 0 0 1-.524 2.318l-.003.011a10.722 10.722 0 0 1-.244.637c-.079.186.074.394.273.362a21.673 21.673 0 0 0 .693-.125zm.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6c0 3.193-3.004 6-7 6a8.06 8.06 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a10.97 10.97 0 0 0 .398-2z" />
                     </svg>
-                    編輯任務內容
+                    學生討論區
+                </button>
+                <button type="button" class="btn btn-outline-primary" onclick="location.href='@Url.Action("StudentSurvey","Course",new { mid = Model.MID, cid=Model.CID })'">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-text" viewBox="0 0 16 16">
+                        <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z" />
+                        <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z" />
+                        <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z" />
+                    </svg>
+                    後設認知問卷答題情況
+                </button>
+                <button type="button" class="btn btn-outline-primary" onclick="location.href='@Url.Action("Index","Groups",new { mid = Model.MID, cid=Model.CID })'">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-book" viewBox="0 0 16 16">
+                        <path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z" />
+                    </svg>
+                    批改作業
                 </button>
             </div>
-        </div>
-        <div class="mb-3">
-            <button type="button" class="btn btn-outline-primary" onclick="location.href='@Url.Action("TeacherChat","Teacher",new { mid = Model.MID, cid=Model.CID })'">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-dots" viewBox="0 0 16 16">
-                    <path d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
-                    <path d="m2.165 15.803.02-.004c1.83-.363 2.948-.842 3.468-1.105A9.06 9.06 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.437 10.437 0 0 1-.524 2.318l-.003.011a10.722 10.722 0 0 1-.244.637c-.079.186.074.394.273.362a21.673 21.673 0 0 0 .693-.125zm.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6c0 3.193-3.004 6-7 6a8.06 8.06 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a10.97 10.97 0 0 0 .398-2z" />
-                </svg>
-                學生討論區
-            </button>
-            <button type="button" class="btn btn-outline-primary" onclick="location.href='@Url.Action("StudentSurvey","Course",new { mid = Model.MID, cid=Model.CID })'">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-text" viewBox="0 0 16 16">
-                    <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z" />
-                    <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z" />
-                    <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z" />
-                </svg>
-                後設認知問卷答題情況
-            </button>
-            <button type="button" class="btn btn-outline-primary" onclick="location.href='@Url.Action("Index","Groups",new { mid = Model.MID, cid=Model.CID })'">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-book" viewBox="0 0 16 16">
-                    <path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z" />
-                </svg>
-                批改作業
-            </button>
-        </div>
 
-        <br />
-        <table>
-            <tr>
-                <th class="col-6">
-                    @Html.DisplayNameFor(model => model.mis.MDetail)
-                </th>
-                <td>
-                    @Html.DisplayFor(model => model.mis.MDetail)
-                </td>
-            </tr>
-            <tr>
-                <th class="col-6">
-                    @Html.DisplayNameFor(model => model.mis.Start)
-                </th>
-                <td>
-                    @Html.DisplayFor(model => model.mis.Start)
-                </td>
-            </tr>
-            <tr>
-                <th class="col-6">
-                    @Html.DisplayNameFor(model => model.mis.End)
-                </th>
-                <td>
-                    @Html.DisplayFor(model => model.mis.End)
-                </td>
-            </tr>
-            <tr>
-                <th class="col-6">
-                    @Html.DisplayNameFor(model => model.mis.relatedKP)
-                </th>
-                <td>
-                    @foreach (var kp in Model.KContents)
+            <table class="table table-bordered table-secondary fs-5">
+                <tbody class="">
+                    <tr class="row">
+                        <th class="col-2 text-center">
+                            @Html.DisplayNameFor(model => model.mis.MDetail)
+                        </th>
+                        <td class="col-10">
+                            @Html.DisplayFor(model => model.mis.MDetail)
+                        </td>
+                    </tr>
+                    <tr class="row">
+                        <th class="col-2 text-center">
+                            @Html.DisplayNameFor(model => model.mis.Start)
+                        </th>
+                        <td class="col-10">
+                            @Html.DisplayFor(model => model.mis.Start)
+                        </td>
+                    </tr>
+                    <tr class="row">
+                        <th class="col-2 text-center">
+                            @Html.DisplayNameFor(model => model.mis.End)
+                        </th>
+                        <td class="col-10">
+                            @Html.DisplayFor(model => model.mis.End)
+                        </td>
+                    </tr>
+                    @* 關閉知識點 *@
+                    @*<tr class="row">
+                        <th class="col-2 text-center ">
+                            @Html.DisplayNameFor(model => model.mis.relatedKP)
+                        </th>
+                        <td class="col-10">
+                            @foreach (var kp in Model.KContents)
+                            {
+                                @kp
+                                <br>
+                            }
+                        </td>
+                    </tr>*@
+                </tbody>
+            </table>
+            <br />
+            @*<div class="mb-3">
+                    後設認知開啟/關閉 :
+                    @if (Model.mis.AddMetacognition)  //true
                     {
-                        @kp
-                        <br>
+                        <button type="button" class="btn btn-success" id="is_AddMeta">後設認知狀態 : 開啟</button>
                     }
-                </td>
-            </tr>
-        </table>
-        <br />
-        @*<div class="mb-3">
-                後設認知開啟/關閉 :
-                @if (Model.mis.AddMetacognition)  //true
-                {
-                    <button type="button" class="btn btn-success" id="is_AddMeta">後設認知狀態 : 開啟</button>
-                }
-                else   //false
-                {
-                    <button type="button" class="btn btn-secondary" id="is_AddMeta">後設認知狀態 : 關閉</button>
-                }
-            </div>*@
-        <div class="mb-3">
-            題目設置 :
-            <button type="button" class="btn btn-outline-dark" id="question" onclick="location.href='@Url.Action("Index","Questions",new { mid = Model.MID, cid=Model.CID })'">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-card-list" viewBox="0 0 16 16">
-                    <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
-                    <path d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-1-5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zM4 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm0 2.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z" />
-                </svg>
-                後設認知題目
-            </button>
-            @*<button type="button" class="btn btn-outline-dark" onclick="location.href='@Url.Action("PersonalAbility","Questions",new { mid = Model.MID, cid=Model.CID })'">
+                    else   //false
+                    {
+                        <button type="button" class="btn btn-secondary" id="is_AddMeta">後設認知狀態 : 關閉</button>
+                    }
+                </div>*@
+            <div class="mb-3">
+                題目設置 :
+                <button type="button" class="btn btn-outline-dark" id="question" onclick="location.href='@Url.Action("Index","Questions",new { mid = Model.MID, cid=Model.CID })'">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-card-list" viewBox="0 0 16 16">
                         <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
                         <path d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-1-5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zM4 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm0 2.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z" />
                     </svg>
-                    自評互評題目
-                </button>*@
-        </div>
-        <div class="mb-3">
-            功能開啟/關閉 :
-        </div>
-        <div class="mb-3">
-            @if (Model.course.IsAddMetacognition)
-            {
-                if (Model.mis.IsGoalSetting)
+                    後設認知題目
+                </button>
+                @*<button type="button" class="btn btn-outline-dark" onclick="location.href='@Url.Action("PersonalAbility","Questions",new { mid = Model.MID, cid=Model.CID })'">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-card-list" viewBox="0 0 16 16">
+                            <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
+                            <path d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-1-5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zM4 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm0 2.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z" />
+                        </svg>
+                        自評互評題目
+                    </button>*@
+            </div>
+            <div class="mb-3">
+                功能開啟/關閉 :
+            </div>
+            <div class="mb-3">
+                @if (Model.course.IsAddMetacognition)
                 {
-                    <button type="button" class="btn btn-success" id="is_Goalsetting">目標設置開啟</button>
+                    if (Model.mis.IsGoalSetting)
+                    {
+                        <button type="button" class="btn btn-success" id="is_Goalsetting">目標設置開啟</button>
+                    }
+                    else
+                    {
+                        <button type="button" class="btn btn-secondary" id="is_Goalsetting">目標設置關閉</button>
+                    }
                 }
                 else
                 {
-                    <button type="button" class="btn btn-secondary" id="is_Goalsetting">目標設置關閉</button>
-                }
-            }
-            else
-            {
-                <button type="button" class="btn btn-secondary" id="is_Goalsetting" hidden>目標設置關閉</button>
-            }
-
-            @if (Model.mis.IsDiscuss)
-            {
-                <button type="button" class="btn btn-success" id="is_Discuss">討論區開啟</button>
-            }
-            else
-            {
-                <button type="button" class="btn btn-secondary" id="is_Discuss">討論區關閉</button>
-            }
-            @if (Model.mis.IsDrawing)
-            {
-                <button type="button" class="btn btn-success" id="is_Drawing">流程圖開啟</button>
-            }
-            else
-            {
-                <button type="button" class="btn btn-secondary" id="is_Drawing">流程圖關閉</button>
-            }
-            @if (Model.mis.IsCoding)
-            {
-                <button type="button" class="btn btn-success" id="is_Coding">程式碼開啟</button>
-            }
-            else
-            {
-                <button type="button" class="btn btn-secondary" id="is_Coding">程式碼關閉</button>
-            }
-            @if (Model.course.IsAddPeerAssessmemt)
-            {
-                if (Model.mis.IsAssess)
-                {
-                    <button type="button" class="btn btn-success" id="is_Assess">自評與互評開啟</button>
-                }
-                else
-                {
-                    <button type="button" class="btn btn-secondary" id="is_Assess">自評與互評關閉</button>
+                    <button type="button" class="btn btn-secondary" id="is_Goalsetting" hidden>目標設置關閉</button>
                 }
 
-                if (Model.mis.IsGReflect)
+                @if (Model.mis.IsDiscuss)
                 {
-                    <button type="button" class="btn btn-success" id="is_GReflect">組間互評開啟</button>
+                    <button type="button" class="btn btn-success" id="is_Discuss">討論區開啟</button>
                 }
                 else
                 {
-                    <button type="button" class="btn btn-secondary" id="is_GReflect">組間互評關閉</button>
+                    <button type="button" class="btn btn-secondary" id="is_Discuss">討論區關閉</button>
                 }
-            }
-            else
-            {
-                <button type="button" class="btn btn-secondary" hidden id="is_Assess">自評與互評關閉</button>
-                <button type="button" class="btn btn-secondary" hidden id="is_GReflect">組間互評關閉</button>
+                @if (Model.mis.IsDrawing)
+                {
+                    <button type="button" class="btn btn-success" id="is_Drawing">流程圖開啟</button>
+                }
+                else
+                {
+                    <button type="button" class="btn btn-secondary" id="is_Drawing">流程圖關閉</button>
+                }
+                @if (Model.mis.IsCoding)
+                {
+                    <button type="button" class="btn btn-success" id="is_Coding">程式碼開啟</button>
+                }
+                else
+                {
+                    <button type="button" class="btn btn-secondary" id="is_Coding">程式碼關閉</button>
+                }
+                @if (Model.course.IsAddPeerAssessmemt)
+                {
+                    if (Model.mis.IsAssess)
+                    {
+                        <button type="button" class="btn btn-success" id="is_Assess">自評與互評開啟</button>
+                    }
+                    else
+                    {
+                        <button type="button" class="btn btn-secondary" id="is_Assess">自評與互評關閉</button>
+                    }
 
-            }
+                    if (Model.mis.IsGReflect)
+                    {
+                        <button type="button" class="btn btn-success" id="is_GReflect">組間互評開啟</button>
+                    }
+                    else
+                    {
+                        <button type="button" class="btn btn-secondary" id="is_GReflect">組間互評關閉</button>
+                    }
+                }
+                else
+                {
+                    <button type="button" class="btn btn-secondary" hidden id="is_Assess">自評與互評關閉</button>
+                    <button type="button" class="btn btn-secondary" hidden id="is_GReflect">組間互評關閉</button>
 
-            @if (Model.course.IsAddMetacognition)
-            {
-                if (Model.mis.IsReflect)
-                {
-                    <button type="button" class="btn btn-success" id="is_Reflect">自我反思開啟</button>
                 }
-                else
-                {
-                    <button type="button" class="btn btn-secondary" id="is_Reflect">自我反思關閉</button>
-                }
-            }
-            else
-            {
-                <button type="button" class="btn btn-secondary" id="is_Reflect" hidden>自我反思</button>
-            }
 
-            @if (Model.mis.Is_Journey)
-            {
-                if (Model.course.IsAddPeerAssessmemt)
+                @if (Model.course.IsAddMetacognition)
                 {
-                    <button type="button" class="btn btn-success" id="is_ejourney">學習表現(互評版)開啟</button>
+                    if (Model.mis.IsReflect)
+                    {
+                        <button type="button" class="btn btn-success" id="is_Reflect">自我反思開啟</button>
+                    }
+                    else
+                    {
+                        <button type="button" class="btn btn-secondary" id="is_Reflect">自我反思關閉</button>
+                    }
                 }
                 else
                 {
-                    <button type="button" class="btn btn-success" id="is_journey">學習表現開啟</button>
+                    <button type="button" class="btn btn-secondary" id="is_Reflect" hidden>自我反思</button>
                 }
-            }
-            else
-            {
-                if (Model.course.IsAddPeerAssessmemt)
+
+                @if (Model.mis.Is_Journey)
                 {
-                    <button type="button" class="btn btn-secondary" id="is_ejourney">學習表現(互評版)關閉</button>
+                    if (Model.course.IsAddPeerAssessmemt)
+                    {
+                        <button type="button" class="btn btn-success" id="is_ejourney">學習表現(互評版)開啟</button>
+                    }
+                    else
+                    {
+                        <button type="button" class="btn btn-success" id="is_journey">學習表現開啟</button>
+                    }
                 }
                 else
                 {
-                    <button type="button" class="btn btn-secondary" id="is_journey">學習表現關閉</button>
+                    if (Model.course.IsAddPeerAssessmemt)
+                    {
+                        <button type="button" class="btn btn-secondary" id="is_ejourney">學習表現(互評版)關閉</button>
+                    }
+                    else
+                    {
+                        <button type="button" class="btn btn-secondary" id="is_journey">學習表現關閉</button>
+                    }
                 }
-            }
+            </div>
         </div>
     </div>
 </div>
