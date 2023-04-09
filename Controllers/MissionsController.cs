@@ -55,35 +55,59 @@ namespace LMSweb.Models
 
         public ActionResult Details(string mid,string cid)
         {
-            if (mid == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Mission mission = db.Missions.Find(mid);
-            if (mission == null)
-            {
-                return HttpNotFound();
-            }
+            /*
+                先註解起來(盈琪他們寫的Code)
+                if (mid == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Mission mission = db.Missions.Find(mid);
+                if (mission == null)
+                {
+                    return HttpNotFound();
+                }
 
-            var model = new MissionViewModel();
-            var mname = db.Missions.Find(mid).MName;
-            var course = db.Courses.Find(cid);
-            var kps = mission.relatedKP.Split(',');
-            model.KContents = new List<string>();
-            for (int i = 0; i < kps.Length - 1; i++)
-            {
-                model.KContents.Add(db.KnowledgePoints.Find(int.Parse(kps[i])).KContent);
-            }
-            model.CID = cid;
-            model.mis = mission;
-            model.MID = mid;
-            model.course = course;
-            model.CName = course.CName;
-            model.MName = mname;
+                var model = new MissionViewModel();
+                var mname = db.Missions.Find(mid).MName;
+                var course = db.Courses.Find(cid);
+                var kps = mission.relatedKP.Split(',');
+                model.KContents = new List<string>();
+                for (int i = 0; i < kps.Length - 1; i++)
+                {
+                    model.KContents.Add(db.KnowledgePoints.Find(int.Parse(kps[i])).KContent);
+                }
+                model.CID = cid;
+                model.mis = mission;
+                model.MID = mid;
+                model.course = course;
+                model.CName = course.CName;
+                model.MName = mname;
+            */
+
+            var data = db.Missions.Where(m => m.CID == cid && m.MID == mid)
+                .Select(m => new MissionDetailViewModel { 
+                MissionID = m.MID,
+                CourseID = m.CID,
+                CourseName = m.course.CName,
+                Name = m.MName,
+                Content = m.MDetail,
+                StartDate = m.Start,
+                EndDate = m.End,
+                IsAssess = m.IsAssess,
+                IsCoding = m.IsCoding,
+                IsDiscuss = m.IsDiscuss,
+                IsDrawing = m.IsDrawing,
+                IsGoalSetting = m.IsGoalSetting,
+                IsGReflect = m.IsGReflect,
+                IsReflect = m.IsReflect,
+                Is_Journey = m.Is_Journey,
+                IsAddMetacognition = m.course.IsAddMetacognition,
+                IsAddPeerAssessmemt = m.course.IsAddPeerAssessmemt
+            }).FirstOrDefault();
 
             
            
-            return View(model);
+            return View(data);
         }
 
         public JsonResult GetKnowledgeJSON(string cid, IEnumerable<int> SelectKnowledgeList = null)
