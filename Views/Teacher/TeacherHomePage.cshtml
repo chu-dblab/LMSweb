@@ -2,16 +2,21 @@
 
 @{
     ViewBag.Title = "Index";
-    
+
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+@section header {
+    @Html.Partial("../Shared/Header/HeaderNavbar")
+}
+
 
 <div class="container">
 
     @*<div class="card row flex-wrap d-flex m-3">
-        <h1 class="col-5">課程列表</h1>
-        <a href="@Url.Action("CourseCreate", "Teacher")" class="btn btn-primary col flex-shrink-0 w-auto ms-auto">content</a>
-    </div>*@
+            <h1 class="col-5">課程列表</h1>
+            <a href="@Url.Action("CourseCreate", "Teacher")" class="btn btn-primary col flex-shrink-0 w-auto ms-auto">content</a>
+        </div>*@
 
     <div class="card m-3 p-3">
         <div class="row m-2">

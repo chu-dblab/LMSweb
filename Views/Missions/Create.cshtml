@@ -4,6 +4,12 @@
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+@section header {
+    @Html.Partial("../Shared/Header/HeaderNavbar")
+}
+
+
 <div class="container bg-white">
     <div class="cardArticle">
         <h4>@Model.CName</h4>

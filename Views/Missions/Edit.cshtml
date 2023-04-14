@@ -5,6 +5,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@section header {
+    @Html.Partial("../Shared/Header/HeaderNavbar")
+}
+
+
 <nav class="navbar navbar-expand-lg navbar-light navBG" style="border-radius: 0 0 5px 5px;">
     <div class="container">
         <div class="collapse navbar-collapse">
@@ -90,13 +95,13 @@
                 </div>
 
                 @*<div class="mb-3">
-                    <label> 知識點</label>
-                    <div class="col-5">
-                        @Html.ListBoxFor(model => model.SelectKnowledgeList, Model.KnowledgeList, htmlAttributes: new { @class = "form-control selectpicker", multiple = "", @data_live_search = "true", title = "請選擇知識點..." })
+                        <label> 知識點</label>
+                        <div class="col-5">
+                            @Html.ListBoxFor(model => model.SelectKnowledgeList, Model.KnowledgeList, htmlAttributes: new { @class = "form-control selectpicker", multiple = "", @data_live_search = "true", title = "請選擇知識點..." })
+                        </div>
                     </div>
-                </div>
-                @Html.HiddenFor(model => model.CID, htmlAttributes: new { @value = Model.CID })
-                <br />*@
+                    @Html.HiddenFor(model => model.CID, htmlAttributes: new { @value = Model.CID })
+                    <br />*@
                 <div class="mb-3">
                     <div class="col">
                         <input type="submit" value="儲存" class="btn btn-primary" />
