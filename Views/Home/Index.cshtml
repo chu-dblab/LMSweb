@@ -1,4 +1,5 @@
 ﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Home Page";
 }
 <head>
@@ -16,8 +17,13 @@
 </head>
 
 <body>
-    <div class="carl">
-        <p class="font-weight-bold text-center display-4 "style="padding:100px 30px 150px 30px">
+    <div class="carl row">
+
+        <div class="col-1 ms-auto" >
+            @Html.Partial("_LoginPartial")
+        </div>
+
+        <p class="font-weight-bold text-center display-4 " style="padding:100px 30px 150px 30px">
             Welcome!
         </p>
     </div>

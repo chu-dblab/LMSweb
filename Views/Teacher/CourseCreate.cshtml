@@ -5,6 +5,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@section header {
+    @Html.Partial("../Shared/Header/HeaderNavbar")
+}
+
+
 <div class="container ms-auto">
     <div class="card col-4 mx-auto bg-white my-5 p-3">
         <h4 class="align-self-center">新增課程</h4>
@@ -30,21 +35,21 @@
                 </div>
                 @* 舊版 *@
                 @*<div class="mb-3">
-                    <div class="col-5">
-                        <div class="checkbox">
-                            @Html.EditorFor(model => model.IsAddMetacognition)
-                            @Html.ValidationMessageFor(model => model.IsAddMetacognition, "", new { @class = "text-danger" })加入後設認知
+                        <div class="col-5">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.IsAddMetacognition)
+                                @Html.ValidationMessageFor(model => model.IsAddMetacognition, "", new { @class = "text-danger" })加入後設認知
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="mb-3">
-                    <div class="col-5">
-                        <div class="checkbox">
-                            @Html.EditorFor(model => model.IsAddPeerAssessmemt)
-                            @Html.ValidationMessageFor(model => model.IsAddPeerAssessmemt, "", new { @class = "text-danger" })加入同儕互評
+                    <div class="mb-3">
+                        <div class="col-5">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.IsAddPeerAssessmemt)
+                                @Html.ValidationMessageFor(model => model.IsAddPeerAssessmemt, "", new { @class = "text-danger" })加入同儕互評
+                            </div>
                         </div>
-                    </div>
-                </div>*@
+                    </div>*@
 
                 @* 新版 *@
                 <div class="dropdown mb-3">
