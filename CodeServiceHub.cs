@@ -36,7 +36,7 @@ namespace LMSweb
                 model_insert.MID = viewModel.MID;
                 model_insert.GID = viewModel.GID;
                 model_insert.IsEdit = viewModel.IsEdit;
-                //model_insert.course = db.Courses.Find(viewModel.CID);
+                //model_insert.course = db.Courses.Find(viewModel.CourseID);
                 //model_insert.mission = db.Missions.Find(viewModel.MID);
                 //model_insert.group = db.Groups.Find(viewModel.GID);
                 model_insert.CodePath = FileName;
@@ -48,7 +48,7 @@ namespace LMSweb
                 model_update.MID = viewModel.MID;
                 model_update.GID = viewModel.GID;
                 model_update.IsEdit = viewModel.IsEdit;
-                //model_update.course = db.Courses.Find(viewModel.CID);
+                //model_update.course = db.Courses.Find(viewModel.CourseID);
                 //model_update.mission = db.Missions.Find(viewModel.MID);
                 //model_update.group = db.Groups.Find(viewModel.GID);
                 model_update.CodePath = FileName;

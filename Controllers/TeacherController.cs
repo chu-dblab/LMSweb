@@ -79,7 +79,7 @@ namespace LMSweb.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Teacher")]
-        public ActionResult CourseCreate([Bind(Include = "CID, CName, IsAddMetacognition, IsAddPeerAssessmemt, CreateTime")] Course course)
+        public ActionResult CourseCreate([Bind(Include = "CourseID, CourseName, IsAddMetacognition, IsAddPeerAssessmemt, CreateTime")] Course course)
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
             var claimData = claims.Claims.Where(x => x.Type == "TID").ToList();   //抓出當初記載Claims陣列中的TID
@@ -117,7 +117,7 @@ namespace LMSweb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CourseEdit([Bind(Include = "CID,TID,CName, IsAddMetacognition, IsAddPeerAssessmemt")] Course course)
+        public ActionResult CourseEdit([Bind(Include = "CourseID,TID,CourseName, IsAddMetacognition, IsAddPeerAssessmemt")] Course course)
         {
             if (ModelState.IsValid)
             {
@@ -212,7 +212,7 @@ namespace LMSweb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CID,TID,CName")] Course course)
+        public ActionResult Create([Bind(Include = "CourseID,TID,CourseName")] Course course)
         {
             if (ModelState.IsValid)
             {

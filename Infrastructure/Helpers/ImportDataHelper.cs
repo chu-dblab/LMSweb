@@ -41,7 +41,7 @@ namespace LMSweb.Infrastructure.Helpers
             excelFile.AddMapping<Student>(x => x.SPassword, "密碼");
             excelFile.AddMapping<Student>(x => x.Sex, "性別");
             //excelFile.AddMapping<Student>(x => x.Score, "分數");
-            //excelFile.AddMapping<Student>(x => x.CID, "CID");
+            //excelFile.AddMapping<Student>(x => x.CourseID, "CourseID");
 
             //SheetName
             var excelContent = excelFile.Worksheet<Student>("工作表1").Where(s =>s.SID != "");
@@ -64,7 +64,7 @@ namespace LMSweb.Infrastructure.Helpers
                     //student.SPassword = row.SPassword;
                     student.Sex = row.Sex;
                     //student.Score = row.Score;
-                    //student.CID = row.CID;
+                    //student.CourseID = row.CourseID;
 
 
                     if (string.IsNullOrWhiteSpace(row.SID))

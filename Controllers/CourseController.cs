@@ -71,7 +71,7 @@ namespace LMSweb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult StudentEdit([Bind(Include = "SID,CID,SName,SPassword,Sex,Score")] Student student)
+        public ActionResult StudentEdit([Bind(Include = "SID,CourseID,SName,SPassword,Sex,Score")] Student student)
         {
             if (ModelState.IsValid)
             {

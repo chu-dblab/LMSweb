@@ -32,8 +32,8 @@ namespace LMSweb.Migrations
         {
             DropForeignKey("dbo.EvalutionResponses", "SID", "dbo.Students");
             DropForeignKey("dbo.EvalutionResponses", "QID", "dbo.Questions");
-            DropForeignKey("dbo.EvalutionResponses", "CID", "dbo.Courses");
-            DropIndex("dbo.EvalutionResponses", new[] { "CID" });
+            DropForeignKey("dbo.EvalutionResponses", "CourseID", "dbo.Courses");
+            DropIndex("dbo.EvalutionResponses", new[] { "CourseID" });
             DropIndex("dbo.EvalutionResponses", new[] { "SID" });
             DropIndex("dbo.EvalutionResponses", new[] { "QID" });
             DropTable("dbo.EvalutionResponses");

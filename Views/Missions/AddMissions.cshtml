@@ -4,11 +4,11 @@
     Layout = "~/Views/Shared/_TeacherLayout.cshtml";
 }
 <div class="cardArticle">
-    <h4>@Model.CName</h4>
+    <h4>@Model.CourseName</h4>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="@Url.Action("Index", "Missions", new { CID = Model.CID})">任務列表</a></li>
-            <li class="breadcrumb-item"><a href="@Url.Action("SelectMissions", "Missions", new { CID = Model.CID})">複製任務</a></li>
+            <li class="breadcrumb-item"><a href="@Url.Action("Index", "Missions", new { CID = Model.CourseID})">任務列表</a></li>
+            <li class="breadcrumb-item"><a href="@Url.Action("SelectMissions", "Missions", new { CID = Model.CourseID})">複製任務</a></li>
             <li class="breadcrumb-item active" aria-current="page">複製任務內容</li>
         </ol>
     </nav>
@@ -18,44 +18,44 @@
     @using (Html.BeginForm("Create", "Missions"))
     {
         @Html.AntiForgeryToken()
-        @Html.HiddenFor(model => model.mission.MID, new { @class = "form-control", @Value = "M" + DateTime.Now.ToString("yyMMddHHmmss") })
+        @Html.HiddenFor(model => model.MID, new { @class = "form-control", @Value = "M" + DateTime.Now.ToString("yyMMddHHmmss") })
         <div class="mb-3">
-            @Html.LabelFor(model => model.mission.MName, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.MID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-5">
-                @Html.EditorFor(model => model.mission.MName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.mission.MName, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="mb-3">
-            @Html.LabelFor(model => model.mission.MDetail, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Contents, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-5">
 
-                @Html.EditorFor(model => model.mission.MDetail, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.mission.MDetail, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Contents, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Contents, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="mb-3">
-            @Html.LabelFor(model => model.mission.Start, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-5">
 
-                @Html.EditorFor(model => model.mission.Start, new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })
-                @Html.ValidationMessageFor(model => model.mission.Start, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })
+                @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
 
 
             </div>
         </div>
 
         <div class="mb-3">
-            @Html.LabelFor(model => model.mission.End, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-5">
 
-                @Html.EditorFor(model => model.mission.End, new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })
-                @Html.ValidationMessageFor(model => model.mission.End, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })
+                @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
 
             </div>
         </div>
-        @Html.LabelFor(model => model.mission.relatedKP, htmlAttributes: new { @class = "control-label col-md-2" })
+        @*@Html.LabelFor(model => model.mission.relatedKP, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="input-group mb-3">
             <div style="width: 635px;">
                 <div class="row justify-content-between">
@@ -67,21 +67,22 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>*@
 
 
-        @Html.HiddenFor(model => model.CID, htmlAttributes: new { @value = Model.CID })
+        @Html.HiddenFor(model => model.CourseID, htmlAttributes: new { @value = Model.CourseID })
 
         <div class="mb-3">
             <div class="col">
                 <input type="submit" value="儲存" class="btn btn-primary" />
-                <input type="button" value="取消" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Missions" , new { cid = Model.CID })'" />
+                <input type="button" value="取消" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Missions" , new { cid = Model.CourseID })'" />
             </div>
         </div>
     }
 </div>
 
 
+@* 以下可以刪除了
 @section scripts
 {
     <script type="text/javascript">
@@ -123,7 +124,7 @@
         });
     </script>
 
-}
+}*@
 
 
 

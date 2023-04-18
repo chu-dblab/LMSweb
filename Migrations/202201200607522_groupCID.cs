@@ -7,12 +7,12 @@ namespace LMSweb.Migrations
     {
         public override void Up()
         {
-            AddColumn("dbo.Groups", "CID", c => c.String());
+            AddColumn("dbo.Groups", "CourseID", c => c.String());
         }
         
         public override void Down()
         {
-            DropColumn("dbo.Groups", "CID");
+            DropColumn("dbo.Groups", "CourseID");
         }
     }
 }

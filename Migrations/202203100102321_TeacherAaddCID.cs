@@ -7,16 +7,16 @@
     {
         public override void Up()
         {
-            AddColumn("dbo.TeacherAssessments", "CID", c => c.String(maxLength: 128));
-            CreateIndex("dbo.TeacherAssessments", "CID");
-            AddForeignKey("dbo.TeacherAssessments", "CID", "dbo.Courses", "CID");
+            AddColumn("dbo.TeacherAssessments", "CourseID", c => c.String(maxLength: 128));
+            CreateIndex("dbo.TeacherAssessments", "CourseID");
+            AddForeignKey("dbo.TeacherAssessments", "CourseID", "dbo.Courses", "CourseID");
         }
         
         public override void Down()
         {
-            DropForeignKey("dbo.TeacherAssessments", "CID", "dbo.Courses");
-            DropIndex("dbo.TeacherAssessments", new[] { "CID" });
-            DropColumn("dbo.TeacherAssessments", "CID");
+            DropForeignKey("dbo.TeacherAssessments", "CourseID", "dbo.Courses");
+            DropIndex("dbo.TeacherAssessments", new[] { "CourseID" });
+            DropColumn("dbo.TeacherAssessments", "CourseID");
         }
     }
 }

@@ -34,7 +34,7 @@ namespace LMSweb.Controllers
             
             gmodel.Groups = db.Groups.Where(g => mis.CID == g.CID).ToList();
             gmodel.CID = cid;
-            gmodel.CName = mis.course.CName;
+            gmodel.CName = mis.Course.CName;
             gmodel.MName = mname;
             var stu = db.Students.Where(s => s.group.CID == cid).ToList();
             gmodel.IsUploadDraw = db.StudentDraws.Where(sd => sd.MID == mid).ToList();

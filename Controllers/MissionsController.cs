@@ -20,13 +20,13 @@ namespace LMSweb.Models
 
             if (cid == null)
             {
-                model.missions = db.Missions.Where(m => m.CID == cid);
+                model.missions = db.Missions.Where(m => m.CourseID == cid);
                 return View(model);
             }
-            var course = db.Courses.Single(c => c.CID == cid);
-            model.missions = db.Missions.Where(m => m.CID == cid);
-            model.CID = course.CID;
-            model.CName = course.CName;
+            var course = db.Courses.Single(c => c.CourseID == cid);
+            model.missions = db.Missions.Where(m => m.CourseID == cid);
+            model.CourseID = course.CourseID;
+            model.CourseName = course.CourseName;
 
             return View(model);*/
 
@@ -76,11 +76,11 @@ namespace LMSweb.Models
                 {
                     model.KContents.Add(db.KnowledgePoints.Find(int.Parse(kps[i])).KContent);
                 }
-                model.CID = cid;
+                model.CourseID = cid;
                 model.mis = mission;
                 model.MID = mid;
                 model.course = course;
-                model.CName = course.CName;
+                model.CourseName = course.CourseName;
                 model.MName = mname;
             */
 
@@ -88,7 +88,7 @@ namespace LMSweb.Models
                 .Select(m => new MissionDetailViewModel { 
                 MissionID = m.MID,
                 CourseID = m.CID,
-                CourseName = m.course.CName,
+                CourseName = m.Course.CName,
                 Name = m.MName,
                 Content = m.MDetail,
                 StartDate = m.Start,
@@ -101,8 +101,8 @@ namespace LMSweb.Models
                 IsGReflect = m.IsGReflect,
                 IsReflect = m.IsReflect,
                 Is_Journey = m.Is_Journey,
-                IsAddMetacognition = m.course.IsAddMetacognition,
-                IsAddPeerAssessmemt = m.course.IsAddPeerAssessmemt
+                IsAddMetacognition = m.Course.IsAddMetacognition,
+                IsAddPeerAssessmemt = m.Course.IsAddPeerAssessmemt
             }).FirstOrDefault();
 
             
@@ -110,34 +110,44 @@ namespace LMSweb.Models
             return View(data);
         }
 
+        /*      
         public JsonResult GetKnowledgeJSON(string cid, IEnumerable<int> SelectKnowledgeList = null)
         {
-             return Json(new { Data = new MultiSelectList(db.KnowledgePoints.Where(kp => kp.CID == cid), "KID", "KContent", SelectKnowledgeList) }, JsonRequestBehavior.AllowGet);
+            return Json(new { Data = new MultiSelectList(db.KnowledgePoints.Where(kp => kp.CourseID == cid), "KID", "KContent", SelectKnowledgeList) }, JsonRequestBehavior.AllowGet);
         }
 
-        public IEnumerable<SelectListItem> GetKnowledge(string cid, IEnumerable<int> SelectKnowledgeList=null)
+        public IEnumerable<SelectListItem> GetKnowledge(string cid, IEnumerable<int> SelectKnowledgeList = null)
         {
-            return new MultiSelectList(db.KnowledgePoints.Where(kp => kp.CID == cid), "KID", "KContent", SelectKnowledgeList);
+            return new MultiSelectList(db.KnowledgePoints.Where(kp => kp.CourseID == cid), "KID", "KContent", SelectKnowledgeList);
         }
+        */
 
         [HttpGet]
         public ActionResult Create(string cid)
         {
-            var model = new MissionCreateViewModel();
-            var cname = db.Courses.Find(cid).CName;
+            /*var model = new MissionCreateViewModel();
+            var cname = db.Courses.Find(cid).CourseName;
             model.KnowledgeList = GetKnowledge(cid);
-            model.CID = cid;
-            model.CName = cname;
+            model.CourseID = cid;
+            model.CourseName = cname;
 
-            return View(model);
+            return View(model);*/
+            var course = db.Courses.Find(cid);
+
+            var createModel = new MissionCreateViewModel
+            {
+                CourseID = course.CID,
+                CourseName = course.CName
+            };
+            return View(createModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(MissionCreateViewModel model)
         {
-            
-            if (ModelState.IsValid)
+
+            /*if (ModelState.IsValid)
             {
                 var kps = db.KnowledgePoints.Where(x => model.SelectKnowledgeList.ToList().Contains(x.KID)).ToList();
                 string kp_str = "";
@@ -146,26 +156,43 @@ namespace LMSweb.Models
                     kp_str += kp.KID.ToString() + ",";
                 }
                 model.mission.relatedKP = kp_str;
-                model.mission.CID = model.CID;
+                model.mission.CID = model.CourseID;
 
                 db.Missions.Add(model.mission);
                 db.SaveChanges();
                 
-                return RedirectToAction("Index", new { cid = model.CID });
+                return RedirectToAction("Index", new { cid = model.CourseID });
             }
             var vmodel = new MissionCreateViewModel();
-            var cname = db.Courses.Find(model.CID).CName;
-            vmodel.KnowledgeList = GetKnowledge(model.CID);
-            vmodel.CID = model.CID;
-            model.CName = cname;
+            var cname = db.Courses.Find(model.CourseID).CName;
+            vmodel.KnowledgeList = GetKnowledge(model.CourseID);
+            vmodel.CourseID = model.CourseID;
+            model.CourseName = cname;
 
-            return View(vmodel);
+            return View(vmodel);*/
+
+            if(ModelState.IsValid)
+            {
+                var missionData = new Mission
+                {
+                    CID = model.CourseID,
+                    MID = model.MID,
+                    MName = model.Name,
+                    MDetail = model.Contents,
+                    Start = model.StartDate,
+                    End = model.EndDate
+                };
+                db.Missions.Add(missionData);
+                db.SaveChanges();
+                return RedirectToAction("Index", new { cid = model.CourseID });
+            }
+            return View(model);
         }
 
         [HttpGet]
         public ActionResult Edit(string mid, string cid)
         {
-            if (mid == null)
+            /*if (mid == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -178,16 +205,30 @@ namespace LMSweb.Models
             var cname = db.Courses.Find(cid).CName;
             vmodel.mission = mission;
             vmodel.KnowledgeList = GetKnowledge(cid, db.KnowledgePoints.Where(kp => kp.CID == mission.CID).Select(kp => kp.KID));
-            vmodel.CID = cid;
-            vmodel.CName = cname;
+            vmodel.CourseID = cid;
+            vmodel.CourseName = cname;
 
-            return View(vmodel);
+            return View(vmodel);*/
+            var missionData = (from mission in db.Missions
+                              from course in db.Courses
+                              where mission.CID == course.CID && mission.MID == mid && mission.CID == cid
+                              select new MissionCreateViewModel
+                              {
+                                  CourseID = course.CID,
+                                  CourseName = course.CName,
+                                  MID = mission.MID,
+                                  Name = mission.MName,
+                                  Contents = mission.MDetail,
+                                  StartDate = mission.Start,
+                                  EndDate = mission.End
+                              }).FirstOrDefault();
+            return View(missionData);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(MissionCreateViewModel model)
         {
-            var mission = model.mission;
+            /*var mission = model.mission;
             if (ModelState.IsValid)
             {
                 db.Entry(mission).State = EntityState.Modified;
@@ -200,20 +241,38 @@ namespace LMSweb.Models
                     kp_str += kp.KID.ToString() + ",";
                 }
                 model.mission.relatedKP = kp_str;
-                mission.CID = model.CID;
+                mission.CID = model.CourseID;
 
                 db.SaveChanges();
 
-                return RedirectToAction("Index", new { cid = model.CID});
+                return RedirectToAction("Index", new { cid = model.CourseID});
             }
-            model.CID = mission.CID;
+            model.CourseID = mission.CID;
+            return View(model);*/
+
+            if(ModelState.IsValid)
+            {
+                var original = db.Missions
+                    .Where(m=>m.CID == model.CourseID && m.MID == model.MID)
+                    .FirstOrDefault();
+                var newMission = new Mission
+                {
+                    CID = model.CourseID,
+                    MID = model.MID,
+                    MName = model.Name,
+                    MDetail = model.Contents,
+                    Start = model.StartDate,
+                    End = model.EndDate,
+                };
+                db.Entry(original).CurrentValues.SetValues(newMission);
+                db.SaveChanges();
+                return RedirectToAction("Index", new { cid = model.CourseID });
+            }
             return View(model);
         }
         [HttpGet]
         public ActionResult Delete(string mid, string cid)
         {
-            
-
             if (mid == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -276,7 +335,7 @@ namespace LMSweb.Models
         {
             MissionViewModel model = new MissionViewModel();
             var cname = db.Courses.Find(cid).CName;
-            model.missions = db.Missions.ToList();
+            model.missions = db.Missions.Where(m=>m.CID == cid).ToList();
             model.CID = cid;
             model.CName = cname;
 
@@ -285,7 +344,7 @@ namespace LMSweb.Models
 
         public ActionResult AddMissions(string mid, string cid)
         {
-            Mission mission = db.Missions.Find(mid);  //old
+            /*Mission mission = db.Missions.Find(mid);  //old
             var model = new MissionCreateViewModel();   //new
             model.mission = new Mission();
             model.mission.MID = mission.MID;
@@ -295,10 +354,24 @@ namespace LMSweb.Models
             model.mission.MDetail = mission.MDetail;
             model.KnowledgeList = GetKnowledge(cid);
             model.mission.CID = cid;
-            model.CID = cid;
-            model.CName = mission.course.CName;
+            model.CourseID = cid;
+            model.CourseName = mission.Course.CName;
            
-            return View(model);
+            return View(model);*/
+            var missionData = (from mission in db.Missions
+                              from course in db.Courses
+                              where mission.CID == course.CID && mission.MID == mid && course.CID == cid
+                              select new MissionCreateViewModel
+                              {
+                                  CourseID = course.CID,
+                                  CourseName = course.CName,
+                                  MID = mission.MID,
+                                  Name = mission.MName,
+                                  Contents = mission.MDetail,
+                                  StartDate = mission.Start,
+                                  EndDate = mission.End
+                              }).FirstOrDefault();
+            return View(missionData);
         }
 
         [HttpPost]

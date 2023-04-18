@@ -31,10 +31,10 @@
         {
             DropForeignKey("dbo.StudentCodes", "MID", "dbo.Missions");
             DropForeignKey("dbo.StudentCodes", "GID", "dbo.Groups");
-            DropForeignKey("dbo.StudentCodes", "CID", "dbo.Courses");
+            DropForeignKey("dbo.StudentCodes", "CourseID", "dbo.Courses");
             DropIndex("dbo.StudentCodes", new[] { "GID" });
             DropIndex("dbo.StudentCodes", new[] { "MID" });
-            DropIndex("dbo.StudentCodes", new[] { "CID" });
+            DropIndex("dbo.StudentCodes", new[] { "CourseID" });
             DropTable("dbo.StudentCodes");
         }
     }

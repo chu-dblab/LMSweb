@@ -58,12 +58,12 @@ namespace LMSweb.Migrations
             DropForeignKey("dbo.Responses", "QID", "dbo.Questions");
             DropForeignKey("dbo.Options", "QID", "dbo.Questions");
             DropForeignKey("dbo.Questions", "MID", "dbo.Missions");
-            DropForeignKey("dbo.Questions", "CID", "dbo.Courses");
+            DropForeignKey("dbo.Questions", "CourseID", "dbo.Courses");
             DropIndex("dbo.Responses", new[] { "SID" });
             DropIndex("dbo.Responses", new[] { "QID" });
             DropIndex("dbo.Options", new[] { "QID" });
             DropIndex("dbo.Questions", new[] { "MID" });
-            DropIndex("dbo.Questions", new[] { "CID" });
+            DropIndex("dbo.Questions", new[] { "CourseID" });
             DropTable("dbo.Responses");
             DropTable("dbo.Options");
             DropTable("dbo.Questions");

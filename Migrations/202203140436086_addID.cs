@@ -9,7 +9,7 @@ namespace LMSweb.Migrations
         {
             DropForeignKey("dbo.StudentDraws", "Group_GID", "dbo.Groups");
             DropIndex("dbo.StudentDraws", new[] { "Group_GID" });
-            RenameColumn(table: "dbo.StudentDraws", name: "Course_CID", newName: "CID");
+            RenameColumn(table: "dbo.StudentDraws", name: "Course_CID", newName: "CourseID");
             RenameColumn(table: "dbo.StudentDraws", name: "Group_GID", newName: "GID");
             RenameColumn(table: "dbo.StudentDraws", name: "Mission_MID", newName: "MID");
             RenameIndex(table: "dbo.StudentDraws", name: "IX_Mission_MID", newName: "IX_MID");
@@ -28,7 +28,7 @@ namespace LMSweb.Migrations
             RenameIndex(table: "dbo.StudentDraws", name: "IX_MID", newName: "IX_Mission_MID");
             RenameColumn(table: "dbo.StudentDraws", name: "MID", newName: "Mission_MID");
             RenameColumn(table: "dbo.StudentDraws", name: "GID", newName: "Group_GID");
-            RenameColumn(table: "dbo.StudentDraws", name: "CID", newName: "Course_CID");
+            RenameColumn(table: "dbo.StudentDraws", name: "CourseID", newName: "Course_CID");
             CreateIndex("dbo.StudentDraws", "Group_GID");
             AddForeignKey("dbo.StudentDraws", "Group_GID", "dbo.Groups", "GID");
         }

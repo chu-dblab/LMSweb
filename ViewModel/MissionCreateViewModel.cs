@@ -7,22 +7,25 @@ using System.Web.Mvc;
 
 namespace LMSweb.ViewModel
 {
-    [MetadataType(typeof(MissionCreateViewModel))]
     public class MissionCreateViewModel
     {
         [Required]
-        public string CID { get; set; }
-        public string CName { get; set; }
+        public string CourseID { get; set; }
+        public string CourseName { get; set; }
 
-        public IEnumerable<SelectListItem> KnowledgeList { get; set; }
+        [Display(Name = "任務編號")]
+        public string MID { get; set; }
 
+        [Display(Name = "任務名稱")]
+        public string Name { get; set; }
 
-        [Required]
-        [Display(Name ="知識點")]
-        public IEnumerable<int> SelectKnowledgeList { get; set; }
+        [Display(Name = "任務內容")]
+        public string Contents { get; set; }
 
-        [Required]
-        public LMSweb.Models.Mission mission { get; set; }
+        [Display(Name = "任務開始時間")]
+        public string StartDate { get; set; }
 
+        [Display(Name = "任務結束時間")]
+        public string EndDate { get; set; }
     }
 }

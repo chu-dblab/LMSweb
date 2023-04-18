@@ -77,7 +77,7 @@ namespace LMSweb.Controllers
  
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CID,KID,KContent")] KnowledgePoint knowledgePoint)
+        public ActionResult Edit([Bind(Include = "CourseID,KID,KContent")] KnowledgePoint knowledgePoint)
         {
             if (ModelState.IsValid)
             {

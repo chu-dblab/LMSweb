@@ -63,13 +63,11 @@ namespace LMSweb.Models
 
         [Display(Name = "自我反思是否開放")]
         public bool Is_Journey { get; set; }
-        [Display(Name = "知識點")]
-        public string relatedKP { get; set; }
 
         [Display(Name = "課程編號")]
         public string CID { get; set; }
 
-        public virtual Course course { get; set; }
+        public virtual Course Course { get; set; }
 
         public virtual ICollection<Student> Students { get; set; }
         public virtual ICollection<StudentMission> StudentMissions { get; set; }

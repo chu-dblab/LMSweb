@@ -152,7 +152,7 @@ namespace LMSweb.Controllers
                 return HttpNotFound();
             }
             var model = new MissionViewModel();
-            var kps = mission.relatedKP.Split(',');
+            //var kps = mission.relatedKP.Split(',');
             var course = db.Courses.Find(cid);
             var mname = db.Missions.Find(mid).MName;
             model.CID = cid;
@@ -162,10 +162,10 @@ namespace LMSweb.Controllers
             model.course = course;
             model.MName = mname;
             model.KContents = new List<string>();
-            for (int i = 0; i < kps.Length - 1; i++)
+            /*for (int i = 0; i < kps.Length - 1; i++)
             {
                 model.KContents.Add(db.KnowledgePoints.Find(int.Parse(kps[i])).KContent);
-            }
+            }*/
 
             return View(model);
         }
@@ -184,17 +184,17 @@ namespace LMSweb.Controllers
             var model = new MissionViewModel();
             var CID = db.Missions.Find(mid).CID;
             var cname = db.Courses.Find(CID).CName;
-            var kps = mission.relatedKP.Split(',');
+            //var kps = mission.relatedKP.Split(',');
             model.mis = mission;
             model.CID = CID;
             model.MID = mid;
             model.CName = cname;
             model.MName = db.Missions.Find(mid).MName;
             model.KContents = new List<string>();
-            for (int i = 0; i < kps.Length - 1; i++)
+            /*for (int i = 0; i < kps.Length - 1; i++)
             {
                 model.KContents.Add(db.KnowledgePoints.Find(int.Parse(kps[i])).KContent);
-            }
+            }*/
 
             return View(model);
         }
