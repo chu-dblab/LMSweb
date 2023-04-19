@@ -9,209 +9,94 @@
     @Html.Partial("../Shared/Header/HeaderNavbar")
 }
 
+<nav class="navbar navbar-expand-lg navbar-light navBG" style="border-radius: 0 0 5px 5px;">
+    <div class="container">
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item ">
+                    <a class="nav-link text-light active" href="@Url.Action("TeacherHomePage","Teacher")">
+                        <i class="bi bi-house-door"></i>
+                        回課程首頁
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="@Url.Action("Index", "Missions", new { CID = Model.CourseID})">任務管理</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light active" aria-current="page" href="@Url.Action("StudentManagement", "Course", new { CID = Model.CourseID})">學生名單</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light " href="@Url.Action("TeacherJourney","LearningBehaviors", new { CID = Model.CourseID})">學習表現</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light " href="@Url.Action("TeacherEvalutionJourney","LearningBehaviors",new {CID = Model.CourseID})">學習表現(互評版)</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
 
-<div class="container bg-white">
-    <div class="cardArticle">
-        <h4>@Model.CourseName</h4>
-        <nav aria-label="breadcrumb">
+<div class="container">
+    <div class="card m-3 p-4">
+        <h1 class="w-auto fs-2 my-auto">@Model.CourseName</h1>
+            @*<nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="@Url.Action("Index", "Missions", new { CID = Model.CourseID})">任務列表</a></li>
                 <li class="breadcrumb-item active" aria-current="page">新增任務</li>
             </ol>
-        </nav>
-    </div>
-    <div class="article">
-        <h4><b>新增任務</b></h4>
-        <hr />
+        </nav>*@
+</div>
+    <div class="card m-3 p-4">
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
 
-            <div class="form-horizontal">
+        <div class="form-horizontal">
+            <h4 class="fs-3 text-center my-1">新增任務</h4>
 
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="mb-3">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.MID, new { @class = "form-control", @Value = $"M{DateTime.Now.ToString("yyMMddHHmmss")}" })
+            @Html.HiddenFor(model => model.CourseID, new { @class = "form-control", @Value = $"{Model.CourseID}" })
+            @Html.ValidationMessageFor(model => model.MID, "", new { @class = "text-danger" })
 
-                    <div class="col-7">
-                        @Html.HiddenFor(model => model.MID, new { @class = "form-control", @Value = $"M{DateTime.Now.ToString("yyMMddHHmmss")}" })
-                        @Html.HiddenFor(model => model.CourseID, new { @class = "form-control", @Value = $"{Model.CourseID}" })
-                        @Html.ValidationMessageFor(model => model.MID, "", new { @class = "text-danger" })
-                    </div>
+
+            <div class="mb-3 my-1">
+                @Html.LabelFor(model => model.Name, new { @class = "form-label ms-2 fs-5 my-1" })
+                <div class="row mx-1">
+                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control col-12 fs-5" })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                 </div>
-                <div class="mb-3">
-                    @Html.LabelFor(model => model.Name, new { @class = "form-label col-md-2" })
-                    <div class="col-5">
-                        @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="mb-3">
-                    @Html.LabelFor(model => model.Contents, new { @class = "form-label col-md-2" })
-                    <div class="col-5">
-                        @Html.TextAreaFor(model => model.Contents, 8, 53,  new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Contents, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="mb-3">
-                    @Html.LabelFor(model => model.StartDate, new { @class = "form-label col-md-2" })
-                    <div class="col-5">
-                        @Html.TextBoxFor(model => model.StartDate, new { type = "datetime-local", @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    @Html.LabelFor(model => model.EndDate, new { @class = "form-label col-md-2" })
-                    <div class="col-5">
-                        @Html.TextBoxFor(model => model.EndDate, new { type = "datetime-local", @class = "form-control",id = "datetimepicker1" })
-                        @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-
-
-                @*@Html.LabelFor(model => model.mission.relatedKP, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="input-group mb-3">
-                        <div class="col-5">
-                            <div class="row justify-content-between">
-                                <div class="col-10">
-                                    @Html.ListBoxFor(model => model.SelectKnowledgeList, Model.KnowledgeList, htmlAttributes: new { @class = "form-control selectpicker", multiple = "", @data_live_search = "true", @data_live_search_placeholder = "輸入知識點關鍵字", title = "請選擇知識點..." })
-                                    @Html.ValidationMessageFor(model => model.SelectKnowledgeList, "", new { @class = "text-danger" })
-                                </div>
-                                <div class="col-2">
-                                    <input type="button" value="管理知識點" onclick="myFunction()" class="btn btn-primary" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>*@
-
-                @*<br />
-                    <label class="mb-3">總成績權重調整(權重總和應等於100) : </label>
-                    <div class="container">
-
-                        <div class="row">
-                            <div class="col">
-                                <div class="row">
-                                    合作學習權重 :
-                                    <div class="col-5">
-                                        <input type="number" class="form-control" value="30" id="mission_discuss_k" name="mission.discuss_k" />
-                                    </div>%
-                                    @Html.ValidationMessageFor(model => model.mission.discuss_k, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="row">
-                                    個人表現權重 :
-                                    <div class="col-5">
-                                        <input type="number" class="form-control" value="30" id="mission_per_k" name="mission.per_k" />
-                                    </div>%
-                                    @Html.ValidationMessageFor(model => model.mission.per_k, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="row">
-                                    小組成果權重 :
-                                    <div class="col-5">
-                                        <input type="number" class="form-control" value="40" id="mission_group_k" name="mission.group_k" />
-                                    </div>%
-                                    @Html.ValidationMessageFor(model => model.mission.group_k, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
-                    <div id="demo" class="text-danger"></div>*@
-                <br />
-                <div class="mb-3">
-                    <div class="col">
-                        <input type="submit" value="送出" class="btn btn-primary" />
-                        <a class="btn btn-secondary" href="@Url.Action("Index", "Missions" , new { cid = Model.CourseID })">取消</a>
-                    </div>
-                </div>
-
-
             </div>
+            <div class="mb-3 my-1">
+                @Html.LabelFor(model => model.Contents, new { @class = "form-label ms-2 fs-5 my-1" })
+                <div class="row mx-1">
+                    @Html.TextAreaFor(model => model.Contents, new { @class = "form-control col-12 fs-5", rows = "10" })
+                    @Html.ValidationMessageFor(model => model.Contents, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="mb-3 my-1">
+                @Html.LabelFor(model => model.StartDate, new { @class = "form-label ms-2 fs-5 my-1" })
+                <div class="row mx-1">
+                    @Html.TextBoxFor(model => model.StartDate, new { type = "datetime-local", @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="mb-3 my-1">
+                @Html.LabelFor(model => model.EndDate, new { @class = "form-label ms-2 fs-5 my-1" })
+                <div class="row mx-1">
+                    @Html.TextBoxFor(model => model.EndDate, new { type = "datetime-local", @class = "form-control", id = "datetimepicker1" })
+                    @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <div class="row">
+                    <input type="submit" value="送出" class="btn btn-primary w-auto px-5 ms-auto" />
+                    <a class="btn btn-secondary w-auto px-5 ms-1 me-3" href="@Url.Action("Index", "Missions" , new { cid = Model.CourseID })">取消</a>
+                </div>
+            </div>
+        </div>
         }
     </div>
 </div>
-@* 以下可以砍了
-    @section scripts
-{
-    <script>
-        $(function () {
-            $('#SelectKnowledgeList').on('shown.bs.select', function (e) {
-                $('#SelectKnowledgeList').empty();
-                $.ajax({
-                    type: "GET",
-                    url: '@Url.Action("GetKnowledgeJSON", "Missions", new { cid = Model.CID})',
-                    dataType: "json",
-                    success: function (response) {
-                        console.log(response);
-                        //var options = []
-                        $.each(response['Data'], function (index, item) {
-                            $('#SelectKnowledgeList').append('<option value="' + item.Value + '">' + item.Text + '</option>');
-                        });
-                        $('#SelectKnowledgeList').selectpicker('refresh');
-                    },
-                    error: function (thrownError) {
-                        console.log(thrownError);
-                    }
-                });
-            });
-        })
-        function myFunction() {
-            const myWindow = window.open('@Url.Action("Index", "KnowledgePoints", new { CID = Model.CID})', "", "width=600,height=600");
-        }
-        function kpListReLoad() {
-            var kps = $(this).next('.cities'); // get the associated cities dropdownlist
-            cities.empty(); // clear existing options
-            $.ajax({
-                type: "GET",
-                url: '@Url.Action("GetKnowledgeJSON", "Missions")',
-                dataType: "json",
-                success: function (response) {
-                    console.log(response);
-                    var options = []
-                    $.each(response['Data'], function (index, item) {
-                        options.append($('<option</option>').val(item.value).html(item.Text));
-                    });
-                },
-                error: function (thrownError) {
-                    console.log(thrownError);
-                }
-            });
-        }
-        //$("input[type='number']").change(function () {
-        //    var discuss = parseInt($("#mission_discuss_k").val());
-        //    var per = parseInt($("#mission_per_k").val());
-        //    var group = parseInt($("#mission_group_k").val());
-        //    let total = discuss + per + group;
-
-        //    console.log(discuss);
-        //    console.log(per);
-        //    console.log(group);
-        //    console.log(total);
-
-        //    if (total != 100) {
-        //        $("#demo").html("三個權重加起來必須是100");
-        //    }
-        //    else {
-        //        $("#demo").html("");
-        //    }
-
-        //});
-
-        $('#kpModal').on('show.bs.modal', function (event) {
-            var modal = $(this)
-            var text = ''
-            $("input[name='all_student']").each(function () {
-                if ($(this).prop("checked")) {
-                    text += $(this).attr('id') + '<br/>';
-                }
-            });
-
-        });
-    </script>
-
-}*@

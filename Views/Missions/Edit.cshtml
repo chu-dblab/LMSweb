@@ -94,20 +94,11 @@
 
                     </div>
                 </div>
-
-                @*<div class="mb-3">
-                        <label> 知識點</label>
-                        <div class="col-5">
-                            @Html.ListBoxFor(model => model.SelectKnowledgeList, Model.KnowledgeList, htmlAttributes: new { @class = "form-control selectpicker", multiple = "", @data_live_search = "true", title = "請選擇知識點..." })
-                        </div>
-                    </div>
-                    @Html.HiddenFor(model => model.CID, htmlAttributes: new { @value = Model.CID })
-                    <br />*@
                 <div class="mb-3">
                     <div class="row">
                         <input type="submit" value="儲存" class="btn btn-primary w-auto px-5 ms-auto" />
                         <a class="btn btn-secondary w-auto px-5 ms-1 me-3" href="@Url.Action("Index", "Missions" , new { cid = Model.CourseID })">取消</a>
-</div>
+                    </div>
                 </div>
             </div>
         }
