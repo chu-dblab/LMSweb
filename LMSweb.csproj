@@ -464,6 +464,14 @@
     <Compile Include="Migrations\202304190159033_add_table_user.designer.cs">
       <DependentUpon>202304190159033_add_table_user.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202304190913462_alter_column_name_Users.cs" />
+    <Compile Include="Migrations\202304190913462_alter_column_name_Users.designer.cs">
+      <DependentUpon>202304190913462_alter_column_name_Users.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202304190920399_alter_column_role_rolename.cs" />
+    <Compile Include="Migrations\202304190920399_alter_column_role_rolename.designer.cs">
+      <DependentUpon>202304190920399_alter_column_role_rolename.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\Course.cs" />
@@ -1710,12 +1718,12 @@
     <Content Include="Views\Teacher\CourseDelete.cshtml" />
     <Content Include="Views\KnowledgePoints\Index.cshtml" />
     <Content Include="Views\Teacher\CourseEdit.cshtml" />
-    <Content Include="Views\Teacher\TeacherHomePage.cshtml" />
+    <Content Include="Views\Teacher\Home.cshtml" />
     <Content Include="Views\Shared\_TeacherLayout.cshtml" />
     <Content Include="Views\Course\StudentCreate.cshtml" />
     <Content Include="Views\Course\StudentDelete.cshtml" />
     <Content Include="Views\Course\StudentEdit.cshtml" />
-    <Content Include="Views\Student\StudentHomePage.cshtml" />
+    <Content Include="Views\Student\Home.cshtml" />
     <Content Include="Views\Student\Login.cshtml" />
     <Content Include="Views\Missions\Delete.cshtml" />
     <Content Include="Views\Missions\Details.cshtml" />
@@ -1873,6 +1881,7 @@
     <Content Include="UploadImages\第7組_0-M220322154938.docx" />
     <Content Include="UploadImages\第7組_0-M220411151446220418153655.pdf" />
     <Content Include="Views\Shared\Header\HeaderNavbar.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2059,6 +2068,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202304190159033_add_table_user.resx">
       <DependentUpon>202304190159033_add_table_user.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202304190913462_alter_column_name_Users.resx">
+      <DependentUpon>202304190913462_alter_column_name_Users.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202304190920399_alter_column_role_rolename.resx">
+      <DependentUpon>202304190920399_alter_column_role_rolename.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

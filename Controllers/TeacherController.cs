@@ -59,10 +59,10 @@ namespace LMSweb.Controllers
         }
 
         [Authorize(Roles = "Teacher")]
-        public ActionResult TeacherHomePage()
+        public ActionResult Home()
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            var claimData = claims.Claims.Where(x => x.Type == "TID").ToList();   //抓出當初記載Claims陣列中的TID
+            var claimData = claims.Claims.Where(x => x.Type == "UID").ToList();   //抓出當初記載Claims陣列中的TID
             var tid = claimData[0].Value; //取值(因為只有一筆)
             var courses = db.Courses.Where(c => c.TID == tid);
 

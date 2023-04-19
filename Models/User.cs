@@ -9,14 +9,14 @@ namespace LMSweb.Models
     public class User
     {
         [Key]
-        public string UID { get; set; }
+        public string ID { get; set; }
         [Required]
         public string Name { get; set; }
         [Required]
-        public string Password { get; set; }
+        public string UPassword { get; set; } //因為Password在T-SQL內是個關鍵字所以在前面加個U來表示
         [Required]
         public string Gender { get; set; }
         [Required]
-        public string Role { get; set; }
+        public string RoleName { get; set; } //因為Role在T-SQL內是個關鍵字所以在後方補上Name
     }
 }

@@ -63,11 +63,11 @@ namespace LMSweb.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Student")]
-        public ActionResult StudentHomePage()
+        public ActionResult Home()
         {
             StudentHomePageViewModel vmodel = new StudentHomePageViewModel();
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            var claimData = claims.Claims.Where(x => x.Type == "SID").ToList();   //抓出當初記載Claims陣列中的SID
+            var claimData = claims.Claims.Where(x => x.Type == "UID").ToList();   //抓出當初記載Claims陣列中的SID
             var sid = claimData[0].Value; //取值(因為只有一筆)
             var stuG = db.Students.Find(sid).group;
             var studentCourse = db.Students.Where(s => s.SID == sid);
