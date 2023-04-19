@@ -12,7 +12,7 @@
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item ">
-                    <a class="nav-link text-light active" href="@Url.Action("TeacherHomePage","Teacher")">
+                    <a class="nav-link text-light active" href="@Url.Action("Home","Teacher")">
                         <i class="bi bi-house-door"></i>
                         回課程首頁
                     </a>
@@ -75,29 +75,27 @@
                 @foreach (var item in Model.missions)
                 {
                     <tr class="row w-100">
-                        <td class="col-1">
+                        <td class="pt-3 col-1">
                         </td>
-                        <td class="col">
+                        <td class="pt-3 col">
                             @Html.DisplayFor(modelItem => item.Course.CName)
                         </td>
-                        <td class="col">
+                        <td class="pt-3 col">
                             @Html.DisplayFor(modelItem => item.MName)
                         </td>
-                        <td class="col-3">
+                        <td class="pt-3 col-3">
                             @Html.DisplayFor(modelItem => item.MDetail)
                         </td>
-                        <td class="col">
+                        <td class="pt-3 col">
                             @Html.DisplayFor(modelItem => item.Start)
                         </td>
-                        <td class="col">
+                        <td class="pt-3 col">
                             @Html.DisplayFor(modelItem => item.End)
 
                         </td>
-                        <td class="col">
-                            <a class="btn btn-primary w-auto mx-auto" onclick="location.href='@Url.Action("AddMissions", "Missions", new { mid = item.MID, cid = Model.CID})'">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
-                                </svg>
+                        <td class="pt-2 col">
+                            <a href="@Url.Action("AddMissions", "Missions", new { mid = item.MID, cid = Model.CID})" class="btn btn-primary w-auto mx-2">
+                                <i class="bi bi-plus-lg"></i>
                                 複製此任務
                             </a>
                         </td>

@@ -2,13 +2,11 @@
 
 @{
     ViewBag.Title = "Create";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @section header {
     @Html.Partial("../Shared/Header/HeaderNavbar")
 }
-
 
 <div class="container ms-auto">
     <div class="card col-4 mx-auto bg-white my-5 p-3">
@@ -20,14 +18,11 @@
 
             <div class="form-horizontal">
                 @Html.ValidationSummary(true, "", new { @class = "text-danger", sortOrder = ViewBag.DateSortParm })
-                <div class="mb-3">
-                    <div class="col">
-                        @Html.HiddenFor(model => model.CID, new { @class = "form-control", @Value = "C" + DateTime.Now.ToString("yyMMddHHmmss") })
-                        @Html.ValidationMessageFor(model => model.CID, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="mb-3">
-                    @Html.LabelFor(model => model.CName, htmlAttributes: new { @class = "control-label col" })
+                @Html.HiddenFor(model => model.CID, new { @class = "form-control", @Value = "C" + DateTime.Now.ToString("yyMMddHHmmss") })
+                @Html.ValidationMessageFor(model => model.CID, "", new { @class = "text-danger" })
+
+                <div class="mb-3 mt-2">
+                    @Html.LabelFor(model => model.CName, htmlAttributes: new { @class = "control-label col mb-1" })
                     <div class="col">
                         @Html.EditorFor(model => model.CName, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.CName, "", new { @class = "text-danger" })
@@ -73,7 +68,7 @@
                 </div>
                 <div class="form-actions no-color row p-3">
                     <input type="submit" value="送出" class="btn btn-primary col-5" />
-                    <a href="@Url.Action("TeacherHomePage", "Teacher", new { cid = Model.CID})" class="btn btn-secondary col-5 ms-auto">取消</a>
+                    <a href="@Url.Action("Home", "Teacher", new { cid = Model.CID})" class="btn btn-secondary col-5 ms-auto">取消</a>
                 </div>
             </div>
         }

@@ -3,51 +3,75 @@
 @{
     ViewBag.Title = "Edit";
 }
-<div class="article">
-    <h4>編輯課程</h4>
 
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
+@section header {
+    @Html.Partial("../Shared/Header/HeaderNavbar")
+}
 
-        <div class="form-horizontal">
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+<div class="container ms-auto">
+    <div class="card col-4 mx-auto bg-white my-5 p-3">
+        <h4 class="align-self-center">修改課程</h4>
 
-            @Html.HiddenFor(model => model.CID)
-            @Html.HiddenFor(model => model.TID)
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
 
-            <div class="mb-3">
-                @Html.LabelFor(model => model.CName, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-5">
-                    @Html.EditorFor(model => model.CName, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.CName, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="mb-3">
-                <div class="col-5">
-                    <div class="checkbox">
-                        @Html.EditorFor(model => model.IsAddMetacognition)
-                        @Html.ValidationMessageFor(model => model.IsAddMetacognition, "", new { @class = "text-danger" })加入後設認知
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger", sortOrder = ViewBag.DateSortParm })
+                @Html.HiddenFor(model => model.CID, new { @class = "form-control", @Value = "C" + DateTime.Now.ToString("yyMMddHHmmss") })
+                @Html.ValidationMessageFor(model => model.CID, "", new { @class = "text-danger" })
+
+
+                <div class="mb-3 mt-2">
+                    @Html.LabelFor(model => model.CName, htmlAttributes: new { @class = "control-label col-md-2 mb-1" })
+                    <div class="col">
+                        @Html.EditorFor(model => model.CName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CName, "", new { @class = "text-danger" })
                     </div>
                 </div>
-            </div>
-            <div class="mb-3">
-                <div class="col-5">
-                    <div class="checkbox">
-                        @Html.EditorFor(model => model.IsAddPeerAssessmemt)
-                        @Html.ValidationMessageFor(model => model.IsAddPeerAssessmemt, "", new { @class = "text-danger" })加入同儕互評
+                @* 舊版 *@
+                @*<div class="mb-3">
+                        <div class="col-5">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.IsAddMetacognition)
+                                @Html.ValidationMessageFor(model => model.IsAddMetacognition, "", new { @class = "text-danger" })加入後設認知
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="col-5">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.IsAddPeerAssessmemt)
+                                @Html.ValidationMessageFor(model => model.IsAddPeerAssessmemt, "", new { @class = "text-danger" })加入同儕互評
+                            </div>
+                        </div>
+                    </div>*@
+
+                @* 新版 *@
+                <div class="dropdown mb-3">
+                    <button class="btn btn-secondary dropdown-toggle w-100" type="button" id="dropdownMenuButton"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                        請選擇操作實驗組別
+                    </button>
+                    <ul class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
+                        <li><a class="dropdown-item" href="#">實驗組一：同儕互評</a></li>
+                        <li><a class="dropdown-item" href="#">實驗組二：自我調節</a></li>
+                        <li><a class="dropdown-item" href="#">實驗組三：互動式同儕互評</a></li>
+                        <li><a class="dropdown-item" href="#">實驗組四：社會共享調節</a></li>
+                        <li><a class="dropdown-item" href="#">實驗組五：互動式同儕互評&社會共享調節</a></li>
+                    </ul>
+                </div>
+                <div class="mb-3">
+                    <div class="col-5">
+                        @Html.EditorFor(model => model.CreateTime, new { htmlAttributes = new { @class = "form-control", @Value = DateTime.Now, @hidden = "true" } })
+                        @Html.ValidationMessageFor(model => model.CreateTime, "", new { @class = "text-danger" })
                     </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="儲存" class="btn btn-primary" />
-                    <input type="button" value="取消" class="btn btn-secondary" onclick="location.href='@Url.Action("TeacherHomePage", "Teacher", new { cid = Model.CID})'"/>
+                <div class="form-actions no-color row p-3">
+                    <input type="submit" value="儲存" class="btn btn-primary col-5" />
+                    <a href="@Url.Action("Home", "Teacher", new { cid = Model.CID})" class="btn btn-secondary col-5 ms-auto">取消</a>
                 </div>
             </div>
-        </div>
-    }
-
-
+        }
+    </div>
 </div>

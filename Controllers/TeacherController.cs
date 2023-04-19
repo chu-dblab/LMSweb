@@ -41,7 +41,7 @@ namespace LMSweb.Controllers
 
                 Request.GetOwinContext().Authentication.SignIn(identity); //授權(登入)
 
-                return RedirectToAction("TeacherHomePage", "Teacher");　
+                return RedirectToAction("Home", "Teacher");　
             }
             else
             {
@@ -94,7 +94,7 @@ namespace LMSweb.Controllers
                 db.Courses.Add(course);
                 db.SaveChanges();
 
-                return RedirectToAction("TeacherHomePage", "Teacher");
+                return RedirectToAction("Home", "Teacher");
             }
 
             return View(course);
@@ -124,7 +124,7 @@ namespace LMSweb.Controllers
                 db.Entry(course).State = EntityState.Modified;
                 db.SaveChanges();
 
-                return RedirectToAction("TeacherHomePage", "Teacher", null);
+                return RedirectToAction("Home", "Teacher", null);
             }
             return View(course);
         }
@@ -181,7 +181,7 @@ namespace LMSweb.Controllers
             db.EvalutionResponse.RemoveRange(eresponse);
             db.SaveChanges();
 
-            return RedirectToAction("TeacherHomePage", "Teacher", null);
+            return RedirectToAction("Home", "Teacher", null);
         }
 
         public ActionResult Details()
@@ -219,7 +219,7 @@ namespace LMSweb.Controllers
                 db.Courses.Add(course);
                 db.SaveChanges();
 
-                return RedirectToAction("TeacherHomePage");
+                return RedirectToAction("Home");
             }
 
              return View(course);

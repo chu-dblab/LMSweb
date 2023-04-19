@@ -1883,6 +1883,7 @@
     <Content Include="Views\Shared\Header\HeaderNavbar.cshtml" />
     <Content Include="Views\Missions\_Layout.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Teacher\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
