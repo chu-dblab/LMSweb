@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LMSweb.Models;
+using LMSweb.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -9,10 +11,16 @@ namespace LMSweb.Controllers
 {
     public class HomeController : Controller
     {
+        private LMSmodel db;
+
+        public HomeController()
+        {
+            db = new LMSmodel();
+        }
         public ActionResult Index()
         {
             //teacher
-            try
+            /*try
             {
                 ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
                 var claimData = claims.Claims.Where(x => x.Type == "TID").ToList();   //抓出當初記載Claims陣列中的TID
@@ -24,10 +32,10 @@ namespace LMSweb.Controllers
             catch
             {
 
-            }
+            }*/
 
             //student
-            try
+            /*try
             {
                 ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
                 var claimData = claims.Claims.Where(x => x.Type == "SID").ToList();   //抓出當初記載Claims陣列中的TID
@@ -38,8 +46,13 @@ namespace LMSweb.Controllers
             catch
             {
 
-            }
+            }*/
 
+            return View();
+        }
+
+        public ActionResult Login()
+        {
             return View();
         }
     }
