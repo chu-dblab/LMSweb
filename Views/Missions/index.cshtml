@@ -110,10 +110,10 @@
                                 @Html.DisplayFor(modelItem => item.Name)
                             </td>
                             <td class="startTime">
-                                @Html.DisplayFor(modelItem => item.StartDate.Split('T')[0])
+                                @Html.DisplayFor(modelItem => item.StartDate)
                             </td>
                             <td class="endTime">
-                                @Html.DisplayFor(modelItem => item.EndDate.Split('T')[0])
+                                @Html.DisplayFor(modelItem => item.EndDate)
                             </td>
                             <td class="d-grid gap-2 d-md-flex justify-content-md-end">
                                 <a href="@Url.Action("Details","Missions", new { mid=item.MID, cid = Model.CourseID})" class="btn btn-primary">
@@ -137,7 +137,7 @@
 </div>
 
 
-@section scripts
+@*@section scripts
 {
     <script>
         let startTime, endTime;
@@ -168,4 +168,4 @@
             //endTime =  dateToDisplay(endTime)
         }
     </script>
-}
+}*@
