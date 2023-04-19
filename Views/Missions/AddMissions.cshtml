@@ -18,28 +18,28 @@
     @using (Html.BeginForm("Create", "Missions"))
     {
         @Html.AntiForgeryToken()
-        @Html.HiddenFor(model => model.MID, new { @class = "form-control", @Value = "M" + DateTime.Now.ToString("yyMMddHHmmss") })
+        @Html.HiddenFor(model => model.MID, new { @class = "form-control", @Value = $"M{DateTime.Now.ToString("yyMMddHHmmss")}" })
         <div class="mb-3">
-            @Html.LabelFor(model => model.MID, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.MID, htmlAttributes: new { @class = "form-label col-md-2" })
             <div class="col-5">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextBoxFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="mb-3">
-            @Html.LabelFor(model => model.Contents, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Contents, new { @class = "form-label col-md-2" })
             <div class="col-5">
 
-                @Html.EditorFor(model => model.Contents, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextAreaFor(model => model.Contents, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Contents, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="mb-3">
-            @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "form-label col-md-2" })
             <div class="col-5">
 
-                @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })
+                @Html.TextBoxFor(model => model.StartDate, new { @class = "form-control", type = "datetime-local" })
                 @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
 
 
@@ -47,10 +47,10 @@
         </div>
 
         <div class="mb-3">
-            @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "form-label col-md-2" })
             <div class="col-5">
 
-                @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })
+                @Html.TextBoxFor(model => model.EndDate, new { @class = "form-control", type = "datetime-local" })
                 @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
 
             </div>
@@ -75,8 +75,8 @@
         <div class="mb-3">
             <div class="col">
                 <input type="submit" value="儲存" class="btn btn-primary" />
-                <input type="button" value="取消" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Missions" , new { cid = Model.CourseID })'" />
-            </div>
+                <a class="btn btn-secondary" href="@Url.Action("Index", "Missions" , new { cid = Model.CourseID })">取消</a>
+</div>
         </div>
     }
 </div>

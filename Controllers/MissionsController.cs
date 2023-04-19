@@ -179,8 +179,8 @@ namespace LMSweb.Models
                     MID = model.MID,
                     MName = model.Name,
                     MDetail = model.Contents,
-                    Start = model.StartDate,
-                    End = model.EndDate
+                    Start = model.StartDate.Replace("T"," "),
+                    End = model.EndDate.Replace("T", " ")
                 };
                 db.Missions.Add(missionData);
                 db.SaveChanges();
@@ -261,8 +261,8 @@ namespace LMSweb.Models
                     MID = model.MID,
                     MName = model.Name,
                     MDetail = model.Contents,
-                    Start = model.StartDate,
-                    End = model.EndDate,
+                    Start = model.StartDate.Replace("T", " "),
+                    End = model.EndDate.Replace("T", " "),
                 };
                 db.Entry(original).CurrentValues.SetValues(newMission);
                 db.SaveChanges();
