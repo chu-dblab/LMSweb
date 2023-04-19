@@ -1881,6 +1881,7 @@
     <Content Include="UploadImages\第7組_0-M220322154938.docx" />
     <Content Include="UploadImages\第7組_0-M220411151446220418153655.pdf" />
     <Content Include="Views\Shared\Header\HeaderNavbar.cshtml" />
+    <Content Include="Views\Missions\_Layout.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>

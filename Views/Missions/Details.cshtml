@@ -1,44 +1,7 @@
 ﻿@model LMSweb.ViewModel.MissionDetailViewModel
 @{
     ViewBag.Title = "Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@*這頁有註解的先留著 有可能會再次開放(By琪20221008)*@
-@*<style>
-        table {
-            border-collapse: collapse;
-            /*margin: 10px auto;*/
-        }
-
-            table tr {
-                border-bottom: solid 2px #F0F0F2;
-            }
-
-        th {
-            background-color: cadetblue;
-            color: #F0F0F2;
-            text-align: center;
-            padding: 10px 0;
-        }
-
-        td {
-            padding: 10px 10px;
-        }
-
-        .MissionDetailArticle {
-            position: relative;
-            display: block;
-            box-sizing: border-box;
-            width: 100%;
-            max-width: 1200px;
-            margin: 20px auto 20px;
-            padding: 30px 0px 50px 70px;
-            border-radius: 5px;
-            background: #F0F0F2;
-            border: 1px solid #dee2e6;
-            border-color: #cdcdcd;
-        }
-    </style>*@
 
 @section header {
     @Html.Partial("../Shared/Header/HeaderNavbar")
@@ -127,7 +90,7 @@
                             @Html.DisplayNameFor(model => model.Content)
                         </th>
                         <td class="col-10">
-                            @Html.DisplayFor(model => model.Content)
+                            @Html.DisplayFor(model => model.Content , new {  })
                         </td>
                     </tr>
                     <tr class="row">
