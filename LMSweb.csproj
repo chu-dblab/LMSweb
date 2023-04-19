@@ -460,6 +460,10 @@
     <Compile Include="Migrations\202304180203372_drop_cloumn_relatedKP.designer.cs">
       <DependentUpon>202304180203372_drop_cloumn_relatedKP.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202304190159033_add_table_user.cs" />
+    <Compile Include="Migrations\202304190159033_add_table_user.designer.cs">
+      <DependentUpon>202304190159033_add_table_user.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\Course.cs" />
@@ -487,6 +491,7 @@
     <Compile Include="Models\StudentMission.cs" />
     <Compile Include="Models\Teacher.cs" />
     <Compile Include="Models\TeacherAssessment.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\TextIO.cs" />
     <Compile Include="Startup.cs" />
@@ -1872,7 +1877,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="FileUpload\" />
-    <Folder Include="packages\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -2052,6 +2056,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202304180203372_drop_cloumn_relatedKP.resx">
       <DependentUpon>202304180203372_drop_cloumn_relatedKP.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202304190159033_add_table_user.resx">
+      <DependentUpon>202304190159033_add_table_user.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
