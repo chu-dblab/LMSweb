@@ -1,7 +1,25 @@
 ﻿@model LMSweb.ViewModel.CourseViewModel
 @{
-    Layout = "~/Views/Shared/_TeacherLayout.cshtml";
+    //Layout = "~/Views/Shared/_TeacherLayout.cshtml";
 }
+
+@section NavPills {
+    <ul class="nav nav-pills me-auto ms-3">
+        <li class="nav-item">
+            <a class="text-white nav-link " aria-current="page" href="@Url.Action("Index", "Missions", new { CID = Model.CID})">任務管理</a>
+        </li>
+        <li class="nav-item">
+            <a class="text-white nav-link active" aria-current="page" href="@Url.Action("StudentManagement", "Course", new { CID = Model.CID})">學生名單</a>
+        </li>
+        <li class="nav-item">
+            <a class="text-white nav-link" href="@Url.Action("TeacherJourney","LearningBehaviors", new { CID = Model.CID})">學習表現</a>
+        </li>
+        <li class="nav-item">
+            <a class="text-white nav-link" href="@Url.Action("TeacherEvalutionJourney","LearningBehaviors",new {CID = Model.CID})">學習表現(互評版)</a>
+        </li>
+    </ul>
+}
+
 <div class="cardArticle">
     <h4>@Model.CName</h4>
     <p>學生列表</p>
@@ -16,7 +34,7 @@
                 <a class="nav-link" href="@Url.Action("StudentGroup", "Course", new { CID = Model.CID})"><h5>分組名單</h5></a>
             </li>
         </ul>
-    </div>     
+    </div>
     <br />
     <div class="card-body" style="padding: 20px 50px 50px;">
         <p>
@@ -53,8 +71,8 @@
                 </tr>
             </thead>
             <tbody id="number">
-               @foreach (var item in Model.students)
-               {
+                @foreach (var item in Model.students)
+                {
                     <tr>
                         <td>
                         </td>
@@ -83,7 +101,7 @@
                             </button>
                         </td>
                     </tr>
-               }
+                }
             </tbody>
         </table>
         @Html.Partial("_UploadFile")

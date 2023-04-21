@@ -1,7 +1,25 @@
 ﻿@model LMSweb.ViewModel.GroupCreateViewModel
 @{
-    Layout = "~/Views/Shared/_TeacherLayout.cshtml";
+//Layout = "~/Views/Shared/_TeacherLayout.cshtml";
 }
+
+@section NavPills {
+    <ul class="nav nav-pills me-auto ms-3">
+        <li class="nav-item">
+            <a class="text-white nav-link" aria-current="page" href="@Url.Action("Index", "Missions", new { CID = Model.CID})">任務管理</a>
+        </li>
+        <li class="nav-item">
+            <a class="text-white nav-link active" aria-current="page" href="@Url.Action("StudentManagement", "Course", new { CID = Model.CID})">學生名單</a>
+        </li>
+        <li class="nav-item">
+            <a class="text-white nav-link" href="@Url.Action("TeacherJourney","LearningBehaviors", new { CID = Model.CID})">學習表現</a>
+        </li>
+        <li class="nav-item">
+            <a class="text-white nav-link" href="@Url.Action("TeacherEvalutionJourney","LearningBehaviors",new {CID = Model.CID})">學習表現(互評版)</a>
+        </li>
+    </ul>
+}
+
 <div class="cardArticle">
     <h4>@Model.CName</h4>
     <p>學生分組</p>
@@ -9,7 +27,7 @@
 <div class="card " style="box-sizing: border-box; width: 100%; max-width: 1200px; margin: 20px auto 20px; border-radius: 5px; border: 1px solid #dee2e6; border-color: #cdcdcd;">
     <div class="card-header" style="padding: 30px 50px 8px 50px;">
         <ul class="nav nav-tabs card-header-tabs">
-            <li class="nav-item">   
+            <li class="nav-item">
                 <a class="nav-link " href="@Url.Action("StudentManagement", "Course", new { CID = Model.CID})"><h5>修課名單</h5></a>
             </li>
             <li class="nav-item">
@@ -21,7 +39,7 @@
     <div class="card-body" style="padding: 20px 50px 50px;">
         <div class="mb-3">
             <label>
-                分組數量 : 
+                分組數量 :
                 <input type="text" min="1" max="10" placeholder="需要分成多少組" v-model="groupNum" id="groupN" />
             </label>
             <button class="btn btn-primary" id="groupclick">隨機分組</button>
@@ -104,7 +122,7 @@
                             <div class="card">
                                 <div class="card-header">
                                     <div class="row">
-                                        <div class="col-8">                                           
+                                        <div class="col-8">
                                             @Html.DisplayFor(modelItem => item.GName)
                                             <a type="button" data-id="@item.GName" data-gid="@item.GID" class="open-Dialog " style="padding: 5px 5px 5px 5px" data-bs-toggle="modal" href="#editGnameModal">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="grey" class="bi bi-pencil-fill" viewBox="0 0 16 16">
@@ -219,7 +237,7 @@
         var students = [];
         $("input[name='all_student']").each(function () {
             if ($(this).prop("checked")) {
-                students.push($(this).val());               
+                students.push($(this).val());
             }
         });
         console.log(students);

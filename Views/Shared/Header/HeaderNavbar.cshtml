@@ -1,11 +1,30 @@
 ﻿<nav class="navbar navbar-expand-lg navbar-light text-white">
     <div class="container">
-        <header>
-            @*@Url.Action("Home", "Teacher")*@
-            <a class="text-light text-decoration-none h3" href="@Url.Action("Home","Teacher")">
-                LMSWeb 2.0
-            </a>
-        </header>
+
+        <a class="text-light text-decoration-none h3 my-auto" href="@Url.Action("Home","Teacher")">
+            LMSWeb 2.0
+        </a>
+
+        @*@if (User.Identity.IsAuthenticated)
+        {
+            <ul class="nav nav-pills me-auto ms-3">
+                <li class="nav-item">
+                    <a class="text-white nav-link active" aria-current="page" href="@Url.Action("Index", "Missions", new { CID = Model.CourseID})">任務管理</a>
+                </li>
+                <li class="nav-item">
+                    <a class="text-white nav-link" aria-current="page" href="@Url.Action("StudentManagement", "Course", new { CID = Model.CourseID})">學生名單</a>
+                </li>
+                <li class="nav-item">
+                    <a class="text-white nav-link" href="@Url.Action("TeacherJourney","LearningBehaviors", new { CID = Model.CourseID})">學習表現</a>
+                </li>
+                <li class="nav-item">
+                    <a class="text-white nav-link" href="@Url.Action("TeacherEvalutionJourney","LearningBehaviors",new {CID = Model.CourseID})">學習表現(互評版)</a>
+                </li>
+            </ul>
+        }*@
+
+        @RenderSection("NavPills", required: false)
+
         <ul class="navbar-nav text-light">
             <li class="text-light">@Html.Partial("_LoginPartial")</li>
         </ul>

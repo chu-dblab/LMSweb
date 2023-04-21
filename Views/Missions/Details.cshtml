@@ -3,28 +3,60 @@
     ViewBag.Title = "Details";
 }
 
-@section header {
-    @Html.Partial("../Shared/Header/HeaderNavbar")
+@section NavPills {
+    <ul class="nav nav-pills me-auto ms-3">
+        <li class="nav-item">
+            <a class="text-white nav-link active" aria-current="page" href="@Url.Action("Index", "Missions", new { CID = Model.CourseID})">任務管理</a>
+        </li>
+        <li class="nav-item">
+            <a class="text-white nav-link" aria-current="page" href="@Url.Action("StudentManagement", "Course", new { CID = Model.CourseID})">學生名單</a>
+        </li>
+        <li class="nav-item">
+            <a class="text-white nav-link" href="@Url.Action("TeacherJourney","LearningBehaviors", new { CID = Model.CourseID})">學習表現</a>
+        </li>
+        <li class="nav-item">
+            <a class="text-white nav-link" href="@Url.Action("TeacherEvalutionJourney","LearningBehaviors",new {CID = Model.CourseID})">學習表現(互評版)</a>
+        </li>
+    </ul>
 }
 
 
-<nav class="navbar navbar-expand-lg navbar-light navBG" style="border-radius: 0 0 5px 5px;">
+@*@section header {
+        @Html.Partial("../Shared/Header/HeaderNavbar")
+    }*@
+
+
+<!--<nav class="navbar navbar-expand-lg navbar-light navBG" style="border-radius: 0 0 5px 5px;">
     <div class="container">
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item ">
-                    <a class="nav-link text-light active" href="@Url.Action("Home","Teacher")">
-                        <i class="bi bi-house-door"></i>
-                        回課程首頁
-                    </a>
-                </li>
-                <li class="nav-item ">
+        <div class="collapse navbar-collapse">-->
+@*<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item ">
+            <a class="nav-link text-light active" href="@Url.Action("Home","Teacher")">
+                <i class="bi bi-house-door"></i>
+                回課程首頁
+            </a>
+        </li>
+        <li class="nav-item ">
+            <a class="nav-link text-light" href="@Url.Action("Index", "Missions", new { CID = Model.CourseID})">任務管理</a>
+        </li>
+        <li class="nav-item ">
+            <a class="nav-link text-light active" aria-current="page" href="@Url.Action("StudentManagement", "Course", new { CID = Model.CourseID})">學生名單</a>
+        </li>
+        <li class="nav-item ">
+            <a class="nav-link text-light " href="@Url.Action("TeacherJourney","LearningBehaviors", new { CID = Model.CourseID})">學習表現</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-light " href="@Url.Action("TeacherEvalutionJourney","LearningBehaviors",new {CID = Model.CourseID})">學習表現(互評版)</a>
+        </li>
+    </ul>*@
+<!--<ul class="nav nav-tabs">
+                <li class="nav-item">
                     <a class="nav-link text-light" href="@Url.Action("Index", "Missions", new { CID = Model.CourseID})">任務管理</a>
                 </li>
-                <li class="nav-item ">
+                <li class="nav-item">
                     <a class="nav-link text-light active" aria-current="page" href="@Url.Action("StudentManagement", "Course", new { CID = Model.CourseID})">學生名單</a>
                 </li>
-                <li class="nav-item ">
+                <li class="nav-item">
                     <a class="nav-link text-light " href="@Url.Action("TeacherJourney","LearningBehaviors", new { CID = Model.CourseID})">學習表現</a>
                 </li>
                 <li class="nav-item">
@@ -33,17 +65,44 @@
             </ul>
         </div>
     </div>
-</nav>
+</nav>-->
+
 <div class="container">
+
     <div class="card m-3 p-3">
-        <div class="row m-2">
-            <h1 class="w-auto fs-2 my-auto">@Model.CourseName</h1>
-            <ol class="breadcrumb bg-white m-3">
-                <li class="breadcrumb-item"><a href="@Url.Action("Index", "Missions", new { CID = Model.CourseID})">任務列表</a></li>
-                <li class="breadcrumb-item active" aria-current="page">@Model.Name</li>
-            </ol>
+        <h1 class="w-auto m-2 fs-2">@Model.CourseName</h1>
+        @*<div class="row m-2">
+                <h1 class="w-auto fs-2">@Model.CourseName</h1>
+                <ol class="breadcrumb bg-white ms-2">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Missions", new { CID = Model.CourseID})">任務列表</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">@Model.Name</li>
+                </ol>
+            </div>*@
+        @* 任務引導模組 *@
+        <div class="btn-group w-100 mt-3" role="group" aria-label="Basic outlined example">
+            <button type="button" disabled class="btn opacity-75 btn-secondary">目標設置</button>
+            <button type="button" disabled class="btn opacity-75 btn-secondary">合作討論</button>
+            <button type="button" disabled class="btn opacity-100 btn-primary">畫流程圖</button>
+            <button type="button" disabled class="btn opacity-100 btn-outline-primary">寫程式碼</button>
+            <button type="button" disabled class="btn opacity-100 btn-outline-primary">同儕評價</button>
+            <button type="button" disabled class="btn opacity-100 btn-outline-primary">評價回饋</button>
+            <button type="button" disabled class="btn opacity-100 btn-outline-primary">團隊反思</button>
         </div>
     </div>
+
+    <!--<div class="card m-3 p-3">-->
+    @* 任務引導模組 *@
+    <!--<div class="btn-group w-100 mt-3" role="group" aria-label="Basic outlined example">
+            <button type="button" disabled class="btn opacity-75 btn-secondary">目標設置</button>
+            <button type="button" disabled class="btn opacity-75 btn-secondary">合作討論</button>
+            <button type="button" disabled class="btn opacity-100 btn-primary">畫流程圖</button>
+            <button type="button" disabled class="btn opacity-100 btn-outline-primary">寫程式碼</button>
+            <button type="button" disabled class="btn opacity-100 btn-outline-primary">同儕評價</button>
+            <button type="button" disabled class="btn opacity-100 btn-outline-primary">評價回饋</button>
+            <button type="button" disabled class="btn opacity-100 btn-outline-primary">團隊反思</button>
+        </div>
+    </div>-->
+
     <div class="card m-3 p-3 bg-white ">
         <div class="mx-3">
             <div class="row mb-3">
@@ -90,7 +149,7 @@
                             @Html.DisplayNameFor(model => model.Content)
                         </th>
                         <td class="col-10">
-                            @Html.DisplayFor(model => model.Content , new {  })
+                            @Html.DisplayFor(model => model.Content, new { })
                         </td>
                     </tr>
                     <tr class="row">

@@ -1,67 +1,86 @@
 ﻿@model LMSweb.ViewModel.StudentViewModel
 @{
     ViewBag.Title = "Create";
-    Layout = "~/Views/Shared/_TeacherLayout.cshtml";
+    //Layout = "~/Views/Shared/_TeacherLayout.cshtml";
 }
-<div class="cardArticle">
-    <h4>@Model.CName</h4>
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
+
+@section NavPills {
+    <ul class="nav nav-pills me-auto ms-3">
+        <li class="nav-item">
+            <a class="text-white nav-link" aria-current="page" href="@Url.Action("Index", "Missions", new { CID = Model.CID})">任務管理</a>
+        </li>
+        <li class="nav-item">
+            <a class="text-white nav-link active" aria-current="page" href="@Url.Action("StudentManagement", "Course", new { CID = Model.CID})">學生名單</a>
+        </li>
+        <li class="nav-item">
+            <a class="text-white nav-link" href="@Url.Action("TeacherJourney","LearningBehaviors", new { CID = Model.CID})">學習表現</a>
+        </li>
+        <li class="nav-item">
+            <a class="text-white nav-link" href="@Url.Action("TeacherEvalutionJourney","LearningBehaviors",new {CID = Model.CID})">學習表現(互評版)</a>
+        </li>
+    </ul>
+}
+
+<div class="container">
+    <div class="card m-3 p-4">
+        <h4>@Model.CName</h4>
+        <ol class="breadcrumb bg-white">
             <li class="breadcrumb-item"><a href="@Url.Action("StudentManagement", "Course", new { CID = Model.CID})">學生列表</a></li>
             <li class="breadcrumb-item active" aria-current="page">新增學生</li>
         </ol>
-    </nav>
+    </div>
+    <div class="card m-3 p-4">
+        <h4><b>新增學生</b></h4>
+        <hr />
+        @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "registerform" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.student.SName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-5">
+                        @Html.EditorFor(model => model.student.SName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.student.SName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.student.SID, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-5">
+                        @Html.EditorFor(model => model.student.SID, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.student.SID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.student.Sex, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-5">
+                        <select class="form-select" id="student.Sex" name="student.Sex">
+                            <option selected>請選擇性別...</option>
+                            <option value="男">男</option>
+                            <option value="女">女</option>
+                        </select>
+                        @Html.ValidationMessageFor(model => model.student.Sex, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                @Html.HiddenFor(model => model.student.CID, new { @class = "form-control", @Value = Model.CID })
+                @Html.HiddenFor(model => model.student.SPassword, new { @class = "form-control" })
+                <div class="mb-3">
+                    <input type="submit" value="送出" class="btn btn-primary" />
+                    <input type="button" value="取消" class="btn btn-secondary" onclick="location.href='@Url.Action("StudentManagement", "Course", new { cid = Model.CID})'" />
+                </div>
+            </div>
+        }
+    </div>
 </div>
-<div class="article">
-    <h4><b>新增學生</b></h4>
-    <hr />
-    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "registerform" }))
-    {
-        @Html.AntiForgeryToken()
-        <div class="form-horizontal">
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="mb-3">
-                @Html.LabelFor(model => model.student.SName, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-5">
-                    @Html.EditorFor(model => model.student.SName, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.student.SName, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="mb-3">
-                @Html.LabelFor(model => model.student.SID, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-5">
-                    @Html.EditorFor(model => model.student.SID, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.student.SID, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="mb-3">
-                @Html.LabelFor(model => model.student.Sex, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-5">
-                    <select class="form-select" id="student.Sex" name="student.Sex">
-                        <option selected>請選擇性別...</option>
-                        <option value="男">男</option>
-                        <option value="女">女</option>
-                    </select>
-                    @Html.ValidationMessageFor(model => model.student.Sex, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            @Html.HiddenFor(model => model.student.CID, new { @class = "form-control", @Value = Model.CID })
-            @Html.HiddenFor(model => model.student.SPassword, new { @class = "form-control"})
-            <div class="mb-3">
-                <input type="submit" value="送出" class="btn btn-primary" />
-                <input type="button" value="取消" class="btn btn-secondary" onclick="location.href='@Url.Action("StudentManagement", "Course", new { cid = Model.CID})'" />
-            </div>
-        </div>
-    }
-</div>
+
 @section scripts
 {
-<script>
-    $(function () {
-        $("#registerform").submit(function (e) {
-            $("#student_SPassword").val($("#student_SID").val());
-            return true;
+    <script>
+        $(function () {
+            $("#registerform").submit(function (e) {
+                $("#student_SPassword").val($("#student_SID").val());
+                return true;
+            });
         });
-    });
-</script>
+    </script>
 }

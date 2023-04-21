@@ -1,17 +1,38 @@
 ﻿@model LMSweb.ViewModel.GoalSettingViewModel
 @{
     ViewBag.Title = "StudentReflectionResult";
-    Layout = "~/Views/Shared/_StudentLayout.cshtml";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<style>
-    .message-btn {
-        position: fixed;
-        width: 100px;
-        height: 100px;
-        right: 50px;
-        bottom: 50px;
-    }
-</style>
+
+@section NavPills {
+    <ul class="nav nav-pills me-auto ms-3">
+        <li class="nav-item">
+            <a class="text-white nav-link" aria-current="page" href="@Url.Action("Index", "Missions", new { CID = Model.CID})">任務管理</a>
+        </li>
+        <li class="nav-item">
+            <a class="text-white nav-link active" aria-current="page" href="@Url.Action("StudentManagement", "Course", new { CID = Model.CID})">學生名單</a>
+        </li>
+        <li class="nav-item">
+            <a class="text-white nav-link" href="@Url.Action("TeacherJourney","LearningBehaviors", new { CID = Model.CID})">學習表現</a>
+        </li>
+        <li class="nav-item">
+            <a class="text-white nav-link" href="@Url.Action("TeacherEvalutionJourney","LearningBehaviors",new {CID = Model.CID})">學習表現(互評版)</a>
+        </li>
+    </ul>
+}
+
+@section topCSS{
+    <style>
+        .message-btn {
+            position: fixed;
+            width: 100px;
+            height: 100px;
+            right: 50px;
+            bottom: 50px;
+        }
+    </style>
+}
+
 <div class="cardArticle">
     <h4>@Model.CName</h4>
     <nav aria-label="breadcrumb">
@@ -78,7 +99,7 @@
                 </tbody>
             </table>
         </div>
-     }
+    }
 </div>
 <!-- 懸浮聊天室 -->
 <body>

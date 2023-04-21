@@ -2,7 +2,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Home Page";
 }
-<head>
+
+@section topCSS {
     <style>
         .carl {
             align-items: center;
@@ -14,14 +15,10 @@
             opacity: 0.8;
         }
     </style>
-</head>
+}
 
 <body>
     <div class="carl row">
-
-        <div class="col-1 ms-auto" >
-            @Html.Partial("_LoginPartial")
-        </div>
 
         @*<img src="https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="Alternate Text" />*@
         <p class="font-weight-bold text-center display-4 " style="padding:100px 30px 150px 30px">
