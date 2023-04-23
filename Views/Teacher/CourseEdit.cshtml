@@ -4,9 +4,9 @@
     ViewBag.Title = "Edit";
 }
 
-@section header {
+@*@section header {
     @Html.Partial("../Shared/Header/HeaderNavbar")
-}
+}*@
 
 <div class="container ms-auto">
     <div class="card col-4 mx-auto bg-white my-5 p-3">
@@ -52,7 +52,7 @@
                 </div>
                 <div class="form-actions no-color row p-3">
                     <input type="submit" value="儲存" class="btn btn-primary col-5" />
-                    <a href="@Url.Action("Home", "Teacher", new { cid = Model.CID})" class="btn btn-secondary col-5 ms-auto">取消</a>
+                    <a href="@Url.Action("Home", "Teacher")" class="btn btn-secondary col-5 ms-auto">取消</a>
                 </div>
             </div>
         }

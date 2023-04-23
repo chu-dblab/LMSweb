@@ -259,7 +259,7 @@ namespace LMSweb.Controllers
                 Group group = new Group();
                 group.GName = GName;
                 group.CID = cid;
-                group.Students = (ICollection <Student>)db.Students.Where(x => StudentList.Contains(x.SID)).ToList();
+                group.Students = db.Students.Where(x => StudentList.Contains(x.SID)).ToList();
                 db.Groups.Add(group);
 
                 db.SaveChanges();

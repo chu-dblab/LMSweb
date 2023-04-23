@@ -20,18 +20,25 @@ namespace LMSweb
             //      實務上很少這樣做，有牽涉到身分(Role)就會像之前一樣登入頁只會有一個，再透過資料庫查詢出登入的使用者是什麼身分
             //      也方便和Google、FB...等服務做身分驗證API串接
 
-            app.UseCookieAuthentication(new CookieAuthenticationOptions
+            /*app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = "Student",
-                LoginPath = new PathString("/Student/Login"),
+                LoginPath = new PathString("/Home/Login"),
                 ExpireTimeSpan = TimeSpan.FromMinutes(30)   //設置cookie保留的時間
-            });
+            });*/
+
+            /* app.UseCookieAuthentication(new CookieAuthenticationOptions
+             {
+                 AuthenticationType = "Teacher",
+                 LoginPath = new PathString("/Home/Login"),
+                 ExpireTimeSpan = TimeSpan.FromMinutes(30)
+             });*/
 
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
-                AuthenticationType = "Teacher",
-                LoginPath = new PathString("/Teacher/Login"),
-                ExpireTimeSpan = TimeSpan.FromMinutes(30)
+                AuthenticationType = CookieAuthenticationDefaults.AuthenticationType,
+                LoginPath = new PathString("/Home/Login"),
+                ExpireTimeSpan = TimeSpan.FromMinutes(30)   //設置cookie保留的時間
             });
             app.MapSignalR();
         }

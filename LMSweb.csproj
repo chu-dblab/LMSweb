@@ -472,6 +472,10 @@
     <Compile Include="Migrations\202304190920399_alter_column_role_rolename.designer.cs">
       <DependentUpon>202304190920399_alter_column_role_rolename.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202304231634214_add_columns_mission_and_course.cs" />
+    <Compile Include="Migrations\202304231634214_add_columns_mission_and_course.designer.cs">
+      <DependentUpon>202304231634214_add_columns_mission_and_course.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\Course.cs" />
@@ -503,6 +507,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\TextIO.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModel\CourseCreateViewModel.cs" />
     <Compile Include="ViewModel\CourseViewModel.cs" />
     <Compile Include="ViewModel\DiscussViewModel.cs" />
     <Compile Include="ViewModel\DrawingViewModel.cs" />
@@ -2084,6 +2089,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202304190920399_alter_column_role_rolename.resx">
       <DependentUpon>202304190920399_alter_column_role_rolename.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202304231634214_add_columns_mission_and_course.resx">
+      <DependentUpon>202304231634214_add_columns_mission_and_course.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
