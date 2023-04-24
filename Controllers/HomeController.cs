@@ -1,5 +1,6 @@
 ﻿using LMSweb.Models;
 using LMSweb.ViewModel;
+using Microsoft.Owin.Security.Cookies;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,7 +47,7 @@ namespace LMSweb.Controllers
                     new Claim(ClaimTypes.Role, loginUser.RoleName),
                     new Claim(ClaimTypes.Name, loginUser.Name),
                     new Claim("UID",loginUser.ID)
-                }, loginUser.RoleName);
+                }, CookieAuthenticationDefaults.AuthenticationType);
 
                 Request.GetOwinContext().Authentication.SignIn(identity); //授權(登入)
                 return RedirectToAction("Home", loginUser.RoleName);

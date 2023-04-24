@@ -38,7 +38,10 @@ namespace LMSweb
             {
                 AuthenticationType = CookieAuthenticationDefaults.AuthenticationType,
                 LoginPath = new PathString("/Home/Login"),
-                ExpireTimeSpan = TimeSpan.FromMinutes(30)   //設置cookie保留的時間
+                ExpireTimeSpan = TimeSpan.FromMinutes(30),   //設置cookie保留的時間
+                CookieHttpOnly = true,
+                CookieSameSite = SameSiteMode.Strict,
+                CookieSecure = CookieSecureOption.SameAsRequest
             });
             app.MapSignalR();
         }
