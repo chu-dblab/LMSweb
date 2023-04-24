@@ -9,19 +9,22 @@ using System.Web.Mvc;
 
 namespace LMSweb.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private LMSmodel db;
-
         public HomeController()
         {
             db = new LMSmodel();
         }
+
+        [AllowAnonymous]
         public ActionResult Index()
         {
             return View();
         }
 
+        [AllowAnonymous]
         public ActionResult Login()
         {
             return View();
@@ -50,8 +53,8 @@ namespace LMSweb.Controllers
             }
             else
             {
-                ModelState.AddModelError("", "輸入的帳密可能有誤或是沒有註冊");
-                return View();
+                ModelState.AddModelError("","輸入的帳密可能有誤或是沒有註冊");
+                return View(login);
             }            
         }
 

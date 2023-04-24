@@ -16,96 +16,46 @@ namespace LMSweb.Controllers
     public class TeacherController : Controller
     {
         private LMSmodel db = new LMSmodel();
-        [AllowAnonymous]
-        public ActionResult Login()
-        {
-            return View(new LoginViewModel());
-        }
 
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginViewModel login)
-        {
-            var result = db.Teachers.Where(x => x.TID == login.ID && x.TPassword == login.Password).FirstOrDefault(); //驗證
-            if (result != null) //資料庫有資料(這個人)
-            {
-                //授權
-                // 建立使用者的登入資訊
-                ClaimsIdentity identity = new ClaimsIdentity(new[] {
-                    //加入使用者的相關資訊
-                    new Claim(ClaimTypes.Role, "Teacher"),
-                    new Claim(ClaimTypes.Name, result.TName),
-                    new Claim("TID",result.TID)
-                }, "Teacher");
-
-                Request.GetOwinContext().Authentication.SignIn(identity); //授權(登入)
-
-                return RedirectToAction("Home", "Teacher");　
-            }
-            else
-            {
-                ModelState.AddModelError("", "輸入的帳密可能有誤或是沒有註冊");
-               
-                return View("Login");
-            }
-
-        }
-
-        public ActionResult Logout()
-        {
-            Request.GetOwinContext().Authentication.SignOut();
-            return RedirectToAction("Index", "Home");
-        }
-
-        [Authorize(Roles = "Teacher")]
         public ActionResult Home()
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            var claimData = claims.Claims.Where(x => x.Type == "UID").ToList();   //抓出當初記載Claims陣列中的TID
-            if (claimData.Count() > 0)
-            {
-                var tid = claimData[0].Value; //取值(因為只有一筆)
-                var courses = db.Courses.Where(c => c.TID == tid);
-                return View(courses.ToList());
-            } else
-            {
-                return View("Login");
-            }
-            
-
-            
+            var claimData = claims.Claims.Where(x => x.Type == "UID").FirstOrDefault();   //抓出當初記載Claims陣列中的TID
+            var tid = claimData.Value; //取值(因為只有一筆)
+            var courses = db.Courses.Where(c => c.TID == tid);
+            return View(courses.ToList());
         }
 
-        [Authorize(Roles = "Teacher")]
         public ActionResult CourseCreate()
         {
-            Course course = new Course();
-
-            return View(course);
+            return View();
         }
 
         [HttpPost]
-        [Authorize(Roles = "Teacher")]
-        public ActionResult CourseCreate([Bind(Include = "CourseID, CourseName, IsAddMetacognition, IsAddPeerAssessmemt, CreateTime")] Course course)
+        public ActionResult CourseCreate(CourseCreateViewModel courseViewModel)
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            var claimData = claims.Claims.Where(x => x.Type == "TID").ToList();   //抓出當初記載Claims陣列中的TID
-            var tid = claimData[0].Value; //取值(因為只有一筆)
-            course.TID = tid;
+            var claimData = claims.Claims.Where(x => x.Type == "UID").FirstOrDefault();   //抓出當初記載Claims陣列中的TID
+            var tid = claimData.Value; //取值(因為只有一筆)
 
-            ModelState.Clear();
-            TryValidateModel(ModelState);
-
-            if (ModelState.IsValid)
+            if(ModelState.IsValid)
             {
+                Course course = new Course
+                {
+                    TID = tid,
+                    CreateTime = DateTime.Now.ToString(),
+                    CID = $"C{DateTime.Now.ToString("yyMMddHHmmss")}",
+                    CName = courseViewModel.Name,
+                    TestType = courseViewModel.TestType,
+                    // 以下欄位要根據TestType來決定其值，或是要刪除這兩個欄位
+                    IsAddMetacognition = false,
+                    IsAddPeerAssessmemt = false
+                };
                 db.Courses.Add(course);
                 db.SaveChanges();
-
-                return RedirectToAction("Home", "Teacher");
+                return RedirectToAction("Home");
             }
-
-            return View(course);
+            return View(courseViewModel);
         }
 
         public ActionResult CourseEdit(string cid)
@@ -125,14 +75,14 @@ namespace LMSweb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CourseEdit([Bind(Include = "CourseID,TID,CourseName, IsAddMetacognition, IsAddPeerAssessmemt")] Course course)
+        public ActionResult CourseEdit([Bind(Include = "CID,TID,CourseName, IsAddMetacognition, IsAddPeerAssessmemt")] Course course)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(course).State = EntityState.Modified;
                 db.SaveChanges();
 
-                return RedirectToAction("Home", "Teacher", null);
+                return RedirectToAction("Home");
             }
             return View(course);
         }
@@ -192,106 +142,6 @@ namespace LMSweb.Controllers
             return RedirectToAction("Home", "Teacher", null);
         }
 
-        public ActionResult Details()
-        {
-            ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            var claimData = claims.Claims.Where(x => x.Type == "TID").ToList();   //抓出當初記載Claims陣列中的TID
-            var tid = claimData[0].Value; //取值(因為只有一筆)
-
-            if (tid == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Teacher teacher = db.Teachers.Find(tid);
-            if (teacher == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(teacher);
-        }
-
-        public ActionResult Create()
-        {
-            ViewBag.TID = new SelectList(db.Teachers, "TID", "TName");
-
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CourseID,TID,CourseName")] Course course)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Courses.Add(course);
-                db.SaveChanges();
-
-                return RedirectToAction("Home");
-            }
-
-             return View(course);
-        }
-       
-        public ActionResult SettingPage()
-        {
-            ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            var claimData = claims.Claims.Where(x => x.Type == "TID").ToList();   //抓出當初記載Claims陣列中的TID
-            var tid = claimData[0].Value; //取值(因為只有一筆)
-            if (tid == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Teacher teacher = db.Teachers.Find(tid);
-            if (teacher == null)
-            {
-                return HttpNotFound();
-            }
-           
-            return View(teacher);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult SettingPage([Bind(Include = "TID, TPassword, TName, Email")] Teacher teacher)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(teacher).State = EntityState.Modified;
-                db.SaveChanges();
-
-                return RedirectToAction("SettingPage");
-            }
-            
-            return View(teacher);
-        }
-
-        public ActionResult Delete(string cid)
-        {
-            if (cid == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Course course = db.Courses.Find(cid);
-            if (course == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(course);
-        }
-
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string cid)
-        {
-            Course course = db.Courses.Find(cid);
-            db.Courses.Remove(course);
-            db.SaveChanges();
-
-            return RedirectToAction("Index");
-        }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -308,8 +158,8 @@ namespace LMSweb.Controllers
             var mis = db.Missions.Find(mid);
 
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            var claimData = claims.Claims.Where(x => x.Type == "TID").ToList();   //抓出當初記載Claims陣列中的SID
-            var tid = claimData[0].Value;            
+            var claimData = claims.Claims.Where(x => x.Type == "UID").FirstOrDefault();   //抓出當初記載Claims陣列中的SID
+            var tid = claimData.Value;            
             var mname = db.Missions.Find(mid).MName;
             var cname = db.Courses.Find(cid).CName;
            

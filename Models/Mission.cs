@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel;
 
 namespace LMSweb.Models
 {
@@ -30,6 +31,7 @@ namespace LMSweb.Models
         [DataType(DataType.DateTime)]
         [Display(Name = "結束時間")]
         public string End { get; set; }
+        public string CurrentAction { get; set; }
 
         //[Display(Name = "合作學習權重")]
         //public int discuss_k { get; set; }

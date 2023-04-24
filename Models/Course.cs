@@ -33,6 +33,9 @@ namespace LMSweb.Models
         [Display(Name = "是否加入同儕互評")]
         public bool IsAddPeerAssessmemt { get; set; }
 
+        [Required]
+        public int TestType { get; set; }
+
         public string CreateTime { get; set; }
 
         [Required]

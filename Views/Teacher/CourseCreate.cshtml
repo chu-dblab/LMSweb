@@ -1,4 +1,4 @@
-﻿@model LMSweb.Models.Course
+﻿@model LMSweb.ViewModel.CourseCreateViewModel
 
 @{
     ViewBag.Title = "Create";
@@ -18,14 +18,12 @@
 
             <div class="form-horizontal">
                 @Html.ValidationSummary(true, "", new { @class = "text-danger", sortOrder = ViewBag.DateSortParm })
-                @Html.HiddenFor(model => model.CID, new { @class = "form-control", @Value = "C" + DateTime.Now.ToString("yyMMddHHmmss") })
-                @Html.ValidationMessageFor(model => model.CID, "", new { @class = "text-danger" })
 
                 <div class="mb-3 mt-2">
-                    @Html.LabelFor(model => model.CName, htmlAttributes: new { @class = "control-label col mb-1" })
+                    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col mb-1" })
                     <div class="col">
-                        @Html.EditorFor(model => model.CName, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.CName, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
@@ -43,15 +41,9 @@
                         <li><a class="dropdown-item" href="#">實驗組五：互動式同儕互評&社會共享調節</a></li>
                     </ul>
                 </div>
-                <div class="mb-3">
-                    <div class="col-5">
-                        @Html.EditorFor(model => model.CreateTime, new { htmlAttributes = new { @class = "form-control", @Value = DateTime.Now, @hidden = "true" } })
-                        @Html.ValidationMessageFor(model => model.CreateTime, "", new { @class = "text-danger" })
-                    </div>
-                </div>
                 <div class="form-actions no-color row p-3">
                     <input type="submit" value="送出" class="btn btn-primary col-5" />
-                    <a href="@Url.Action("Home", "Teacher", new { cid = Model.CID})" class="btn btn-secondary col-5 ms-auto">取消</a>
+                    <a href="@Url.Action("Home", "Teacher")" class="btn btn-secondary col-5 ms-auto">取消</a>
                 </div>
             </div>
         }
