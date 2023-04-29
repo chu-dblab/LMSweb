@@ -508,6 +508,7 @@
     <Compile Include="Service\TextIO.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModel\CourseCreateViewModel.cs" />
+    <Compile Include="ViewModel\CourseEditViewModel.cs" />
     <Compile Include="ViewModel\CourseViewModel.cs" />
     <Compile Include="ViewModel\DiscussViewModel.cs" />
     <Compile Include="ViewModel\DrawingViewModel.cs" />
@@ -530,6 +531,7 @@
     <Compile Include="ViewModel\StudentViewModel.cs" />
     <Compile Include="ViewModel\SurveyViewModel.cs" />
     <Compile Include="ViewModel\SurveyQuestionViewModel.cs" />
+    <Compile Include="ViewModel\TeacherHomeViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include=".gitattributes" />
