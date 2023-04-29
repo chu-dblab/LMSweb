@@ -22,7 +22,12 @@ namespace LMSweb.Controllers
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
             var claimData = claims.Claims.Where(x => x.Type == "UID").FirstOrDefault();   //抓出當初記載Claims陣列中的TID
             var tid = claimData.Value; //取值(因為只有一筆)
-            var courses = db.Courses.Where(c => c.TID == tid);
+            var courses = db.Courses.Where(c => c.TID == tid).Select(x => new TeacherHomeViewModel
+            {
+                CourseID = x.CID,
+                CourseName = x.CName,
+                TestType = x.TestType
+            });
             return View(courses.ToList());
         }
 
