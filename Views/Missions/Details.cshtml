@@ -20,6 +20,31 @@
     </ul>
 }
 
+@functions {
+    string GetChartDisplayClass(string input)
+    {
+
+        //0 == 還沒做
+        //1 == 正在做
+        //2 == 已經做完
+
+        if (input == "0") return "step align-self-center opacity-50";
+        else if (input == "1") return "step align-self-center active";
+        else if (input == "2") return "step align-self-center";
+        else return"step align-self-center";
+    }
+
+    string GetChartStepDisplay(string step, string type)
+    {
+        return "";
+    }
+
+    string GetChartDisplay(string mode ,string typeCode)
+    {
+        return "";
+    }
+}
+
 <div class="container">
 
     <div class="card m-3 p-3">
@@ -30,16 +55,6 @@
                     <li class="breadcrumb-item"><a href="@Url.Action("Index", "Missions", new { CID = Model.CourseID})">任務列表</a></li>
                     <li class="breadcrumb-item active" aria-current="page">@Model.Name</li>
                 </ol>
-            </div>*@
-        @* 任務引導模組 *@
-        @*<div class="btn-group w-100 mt-3" role="group" aria-label="Basic outlined example">
-                <button type="button" disabled class="btn opacity-75 btn-secondary">目標設置</button>
-                <button type="button" disabled class="btn opacity-75 btn-secondary">合作討論</button>
-                <button type="button" disabled class="btn opacity-100 btn-primary">畫流程圖</button>
-                <button type="button" disabled class="btn opacity-100 btn-outline-primary">寫程式碼</button>
-                <button type="button" disabled class="btn opacity-100 btn-outline-primary">同儕評價</button>
-                <button type="button" disabled class="btn opacity-100 btn-outline-primary">評價回饋</button>
-                <button type="button" disabled class="btn opacity-100 btn-outline-primary">團隊反思</button>
             </div>*@
     </div>
 
@@ -59,49 +74,56 @@
 
                 <div id="stepper4" class="bs-stepper vertical h-100">
                     <div class="bs-stepper-header w-100" role="tablist">
-                        <div class="step align-self-center" data-target="#test-vl-1">
+
+                        @*
+                        0 == 還沒做
+                        1 == 正在做
+                        2 == 已經做完
+                        *@
+                        @*@int k = "2210000"*@ 
+                        <div class="@GetChartDisplayClass("2")" data-target="#test-vl-1">
                             <button type="button" class="step-trigger" role="tab" id="stepper4trigger1" aria-controls="test-vl-1">
                                 <span class="bs-stepper-circle">1</span>
                                 <span class="bs-stepper-label">目標設置</span>
                             </button>
                         </div>
                         <div class="bs-stepper-line"></div>
-                        <div class="step align-self-center" data-target="#test-vl-2">
+                        <div class="@GetChartDisplayClass("2")" data-target="#test-vl-2">
                             <button type="button" class="step-trigger" role="tab" id="stepper4trigger2" aria-controls="test-vl-2">
                                 <span class="bs-stepper-circle">2</span>
                                 <span class="bs-stepper-label">合作討論</span>
                             </button>
                         </div>
                         <div class="bs-stepper-line"></div>
-                        <div class="step align-self-center active" data-target="#test-vl-3">
+                        <div class="@GetChartDisplayClass("1")" data-target="#test-vl-3">
                             <button type="button" class="step-trigger" role="tab" id="stepper4trigger3" aria-controls="test-vl-3">
                                 <span class="bs-stepper-circle">3</span>
                                 <span class="bs-stepper-label">畫流程圖</span>
                             </button> 
                         </div>
                         <div class="bs-stepper-line"></div>
-                        <div class="step align-self-center opacity-50" data-target="#test-vl-3">
+                        <div class="@GetChartDisplayClass("0")" data-target="#test-vl-3">
                             <button type="button" class="step-trigger" role="tab" id="stepper4trigger3" aria-controls="test-vl-4">
                                 <span class="bs-stepper-circle">4</span>
                                 <span class="bs-stepper-label">寫程式碼</span>
                             </button>
                         </div>
                         <div class="bs-stepper-line"></div>
-                        <div class="step align-self-center opacity-50" data-target="#test-vl-3">
+                        <div class="@GetChartDisplayClass("0")" data-target="#test-vl-3">
                             <button type="button" class="step-trigger" role="tab" id="stepper4trigger3" aria-controls="test-vl-5">
                                 <span class="bs-stepper-circle">5</span>
                                 <span class="bs-stepper-label">同儕互評</span>
                             </button>
                         </div>
                         <div class="bs-stepper-line"></div>
-                        <div class="step align-self-center opacity-50" data-target="#test-vl-3">
+                        <div class="@GetChartDisplayClass("0")" data-target="#test-vl-3">
                             <button type="button" class="step-trigger" role="tab" id="stepper4trigger3" aria-controls="test-vl-6">
                                 <span class="bs-stepper-circle">6</span>
                                 <span class="bs-stepper-label">評價回饋</span>
                             </button>
                         </div>
                         <div class="bs-stepper-line"></div>
-                        <div class="step align-self-center opacity-50" data-target="#test-vl-3">
+                        <div class="@GetChartDisplayClass("0")" data-target="#test-vl-3">
                             <button type="button" class="step-trigger" role="tab" id="stepper4trigger3" aria-controls="test-vl-7">
                                 <span class="bs-stepper-circle">7</span>
                                 <span class="bs-stepper-label">團隊反思</span>
