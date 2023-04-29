@@ -20,8 +20,8 @@
 
     <div class="card m-3 p-3">
         <div class="row m-2">
-            <p class="col flex-shrink-1 w-auto fs-2 my-auto">課程列表</p>
-            <div class="col-2 justify-content-end d-flex">
+            <p class="col col-md flex-shrink-1 w-auto fs-2 my-auto">課程列表</p>
+            <div class="col col-md-2 justify-content-end d-flex">
                 <a class="btn btn-primary w-auto py-2 fs-5" href='@Url.Action("CourseCreate", "Teacher")'>
                     新增課程
                 </a>
@@ -35,8 +35,8 @@
                 <div class="col-12 col-md-6 col-lg-3">
                     <div class="card mb-3 shadow-sm" style="border-radius: 15px; ">
                         <div class="card-body">
-                            <div class="card-title pricing-card-title text-center" style="padding: 30px 20px 30px;">
-                                <h3 class="">@Html.DisplayFor(modelItem => item.CName, new { @class = "fw-bold" })</h3>
+                            <div class="card-title pricing-card-title text-center mt-2 py-2 px-1">
+                                <p class="h3" style="min-height: 80px">@Html.DisplayFor(modelItem => item.CName, new { @class = "fw-bold" })</p>
                             </div>
 
                             @*<p>實驗組五：互動式同儕互評&社會共享調節</p>*@

@@ -16,45 +16,65 @@
         {
             @Html.AntiForgeryToken()
 
-            <div class="form-horizontal">
-                @Html.ValidationSummary(true, "", new { @class = "text-danger", sortOrder = ViewBag.DateSortParm })
-                @Html.HiddenFor(model => model.CID, new { @class = "form-control", @Value = "C" + DateTime.Now.ToString("yyMMddHHmmss") })
-                @Html.ValidationMessageFor(model => model.CID, "", new { @class = "text-danger" })
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger", sortOrder = ViewBag.DateSortParm })
+        @Html.HiddenFor(model => model.CID, new { @class = "form-control", @Value = "C" + DateTime.Now.ToString("yyMMddHHmmss") })
+        @Html.ValidationMessageFor(model => model.CID, "", new { @class = "text-danger" })
 
 
-                <div class="mb-3 mt-2">
-                    @Html.LabelFor(model => model.CName, htmlAttributes: new { @class = "control-label col-md-2 mb-1" })
-                    <div class="col">
-                        @Html.EditorFor(model => model.CName, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.CName, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                @* 新版 *@
-                <div class="dropdown mb-3">
-                    <button class="btn btn-secondary dropdown-toggle w-100" type="button" id="dropdownMenuButton"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                        請選擇操作實驗組別
-                    </button>
-                    <ul class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
-                        <li><a class="dropdown-item" href="#">實驗組一：同儕互評</a></li>
-                        <li><a class="dropdown-item" href="#">實驗組二：自我調節</a></li>
-                        <li><a class="dropdown-item" href="#">實驗組三：互動式同儕互評</a></li>
-                        <li><a class="dropdown-item" href="#">實驗組四：社會共享調節</a></li>
-                        <li><a class="dropdown-item" href="#">實驗組五：互動式同儕互評&社會共享調節</a></li>
-                    </ul>
-                </div>
-                <div class="mb-3">
-                    <div class="col-5">
-                        @Html.EditorFor(model => model.CreateTime, new { htmlAttributes = new { @class = "form-control", @Value = DateTime.Now, @hidden = "true" } })
-                        @Html.ValidationMessageFor(model => model.CreateTime, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-actions no-color row p-3">
-                    <input type="submit" value="儲存" class="btn btn-primary col-5" />
-                    <a href="@Url.Action("Home", "Teacher")" class="btn btn-secondary col-5 ms-auto">取消</a>
-                </div>
+        <div class="mb-3 mt-2">
+            @Html.LabelFor(model => model.CName, htmlAttributes: new { @class = "control-label col-md-2 mb-1" })
+            <div class="col">
+                @Html.EditorFor(model => model.CName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CName, "", new { @class = "text-danger" })
             </div>
+        </div>
+
+        @* 以下為使用有套用bootstrap樣式的select ... option 的下拉選單 *@
+        <div class="form-group mt-3">
+            @* 這邊的Name要跟 CourseCreateViewModel中的欄位名稱對應，不然後端Controller會吃不到這個欄位 *@
+            @* 基本上所有的表單輸入欄位的name屬性只要有跟任何ViewModel中的欄位名稱有對應到就可以把value指定到ViewModel的欄位中 *@
+            <select class="form-select" name="TestType">
+                <option selected>請選擇操作實驗組別</option>
+                <option value="0">控制組</option>
+                <option value="1">實驗組一：同儕互評</option>
+                <option value="2">實驗組二：自我調節</option>
+                <option value="3">實驗組三：互動式同儕互評</option>
+                <option value="4">實驗組四：社會共享調節</option>
+                <option value="3">實驗組五：互動式同儕互評&社會共享調節</option>
+            </select>
+            @Html.ValidationMessageFor(model => model.TestType, "", new { @class = "text-danger" })
+        </div>
+        <!--<div class="form-actions no-color row p-3">
+            <input type="submit" value="送出" class="btn btn-primary col-5" />
+            <a href="@Url.Action("Home", "Teacher")" class="btn btn-secondary col-5 ms-auto">取消</a>
+        </div>-->
+
+        @* 新版 *@
+        <!--<div class="dropdown mb-3">
+            <button class="btn btn-secondary dropdown-toggle w-100" type="button" id="dropdownMenuButton"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                請選擇操作實驗組別
+            </button>
+            <ul class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
+                <li><a class="dropdown-item" href="#">實驗組一：同儕互評</a></li>
+                <li><a class="dropdown-item" href="#">實驗組二：自我調節</a></li>
+                <li><a class="dropdown-item" href="#">實驗組三：互動式同儕互評</a></li>
+                <li><a class="dropdown-item" href="#">實驗組四：社會共享調節</a></li>
+                <li><a class="dropdown-item" href="#">實驗組五：互動式同儕互評&社會共享調節</a></li>
+            </ul>
+        </div>-->
+        <div class="mb-3">
+            <div class="col-5">
+                @Html.EditorFor(model => model.CreateTime, new { htmlAttributes = new { @class = "form-control", @Value = DateTime.Now, @hidden = "true" } })
+                @Html.ValidationMessageFor(model => model.CreateTime, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-actions no-color row p-3">
+            <input type="submit" value="儲存" class="btn btn-primary col-5" />
+            <a href="@Url.Action("Home", "Teacher")" class="btn btn-secondary col-5 ms-auto">取消</a>
+        </div>
+    </div>
         }
     </div>
 </div>

@@ -4,50 +4,51 @@
     ViewBag.Title = "Delete";
 }
 
-<div class="article">
-    <h4>確認要刪除此課程嗎?</h4>
-    <div>
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.teacher.TName)
-            </dt>
+<div class="container">
+    <div class="card m-3 p-4">
+        <h4>確認要刪除此課程嗎?</h4>
+        <div>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.teacher.TName)
+                </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.teacher.TName)
-            </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.teacher.TName)
+                </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.CName)
-            </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.CName)
+                </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.CName)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.IsAddMetacognition)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.IsAddMetacognition)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.IsAddPeerAssessmemt)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.IsAddPeerAssessmemt)
-            </dd>
-        </dl>
+                <dd>
+                    @Html.DisplayFor(model => model.CName)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.IsAddMetacognition)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.IsAddMetacognition)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.IsAddPeerAssessmemt)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.IsAddPeerAssessmemt)
+                </dd>
+            </dl>
 
-        @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
 
-            <div class="form-actions no-color">
-                <input type="submit" value="刪除" class="btn btn-primary" /> 
-                <input type="button" value="取消" class="btn btn-secondary" onclick="location.href='@Url.Action("Home", "Teacher", new { cid = Model.CID})'" />
-            </div>
+                <div class="form-actions no-color">
+                    <input type="submit" value="刪除" class="btn btn-primary" />
+                    <input type="button" value="取消" class="btn btn-secondary" onclick="location.href='@Url.Action("Home", "Teacher", new { cid = Model.CID})'" />
+                </div>
 
-        }
+            }
+        </div>
     </div>
-
 </div>
