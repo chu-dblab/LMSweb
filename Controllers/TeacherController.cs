@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using LMSweb.Models;
 using LMSweb.ViewModel;
 using System.Security.Claims;
+using DocumentFormat.OpenXml.Presentation;
 
 namespace LMSweb.Controllers
 {
@@ -67,26 +68,37 @@ namespace LMSweb.Controllers
         {
             if (cid == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Home");
             }
-            Course course = db.Courses.Find(cid);
-            if (course == null)
-            {
-                return HttpNotFound();
-            }
-
+            var course = db.Courses.Where(c => c.CID == cid)
+                .Select(x => new CourseEditViewModel
+                {
+                    CourseName = x.CName,
+                    TestType = x.TestType
+                })
+                .FirstOrDefault();
             return View(course);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CourseEdit([Bind(Include = "CID,TID,CourseName, IsAddMetacognition, IsAddPeerAssessmemt")] Course course)
+        public ActionResult CourseEdit(string cid, CourseEditViewModel course)
         {
+            var originalCourse = db.Courses.Find(cid);
             if (ModelState.IsValid)
             {
-                db.Entry(course).State = EntityState.Modified;
+                Course newCourse = new Course
+                {
+                    CID = originalCourse.CID,
+                    TID = originalCourse.TID,
+                    CName = course.CourseName,
+                    TestType = course.TestType,
+                    IsAddMetacognition = originalCourse.IsAddMetacognition,
+                    IsAddPeerAssessmemt = originalCourse.IsAddPeerAssessmemt,
+                    CreateTime = originalCourse.CreateTime
+                };
+                db.Entry(originalCourse).CurrentValues.SetValues(newCourse);
                 db.SaveChanges();
-
                 return RedirectToAction("Home");
             }
             return View(course);

@@ -15,21 +15,6 @@ namespace LMSweb.Models
         private LMSmodel db = new LMSmodel();
         public ActionResult Index(string cid)
         {
-            /* 盈琪寫的Code
-             MissionViewModel model = new MissionViewModel();
-
-            if (cid == null)
-            {
-                model.missions = db.Missions.Where(m => m.CourseID == cid);
-                return View(model);
-            }
-            var course = db.Courses.Single(c => c.CourseID == cid);
-            model.missions = db.Missions.Where(m => m.CourseID == cid);
-            model.CourseID = course.CourseID;
-            model.CourseName = course.CourseName;
-
-            return View(model);*/
-
             if (cid == null)
             {
                 return RedirectToAction("TeacherHomePage", "Teacher");
@@ -55,35 +40,6 @@ namespace LMSweb.Models
 
         public ActionResult Details(string mid,string cid)
         {
-            /*
-                先註解起來(盈琪他們寫的Code)
-                if (mid == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-                Mission mission = db.Missions.Find(mid);
-                if (mission == null)
-                {
-                    return HttpNotFound();
-                }
-
-                var model = new MissionViewModel();
-                var mname = db.Missions.Find(mid).MName;
-                var course = db.Courses.Find(cid);
-                var kps = mission.relatedKP.Split(',');
-                model.KContents = new List<string>();
-                for (int i = 0; i < kps.Length - 1; i++)
-                {
-                    model.KContents.Add(db.KnowledgePoints.Find(int.Parse(kps[i])).KContent);
-                }
-                model.CourseID = cid;
-                model.mis = mission;
-                model.MID = mid;
-                model.course = course;
-                model.CourseName = course.CourseName;
-                model.MName = mname;
-            */
-
             var data = db.Missions.Where(m => m.CID == cid && m.MID == mid)
                 .Select(m => new MissionDetailViewModel { 
                 MissionID = m.MID,
@@ -110,28 +66,9 @@ namespace LMSweb.Models
             return View(data);
         }
 
-        /*      
-        public JsonResult GetKnowledgeJSON(string cid, IEnumerable<int> SelectKnowledgeList = null)
-        {
-            return Json(new { Data = new MultiSelectList(db.KnowledgePoints.Where(kp => kp.CourseID == cid), "KID", "KContent", SelectKnowledgeList) }, JsonRequestBehavior.AllowGet);
-        }
-
-        public IEnumerable<SelectListItem> GetKnowledge(string cid, IEnumerable<int> SelectKnowledgeList = null)
-        {
-            return new MultiSelectList(db.KnowledgePoints.Where(kp => kp.CourseID == cid), "KID", "KContent", SelectKnowledgeList);
-        }
-        */
-
         [HttpGet]
         public ActionResult Create(string cid)
-        {
-            /*var model = new MissionCreateViewModel();
-            var cname = db.Courses.Find(cid).CourseName;
-            model.KnowledgeList = GetKnowledge(cid);
-            model.CourseID = cid;
-            model.CourseName = cname;
-
-            return View(model);*/
+        { 
             var course = db.Courses.Find(cid);
 
             var createModel = new MissionCreateViewModel
@@ -146,31 +83,6 @@ namespace LMSweb.Models
         [ValidateAntiForgeryToken]
         public ActionResult Create(MissionCreateViewModel model)
         {
-
-            /*if (ModelState.IsValid)
-            {
-                var kps = db.KnowledgePoints.Where(x => model.SelectKnowledgeList.ToList().Contains(x.KID)).ToList();
-                string kp_str = "";
-                foreach (var kp in kps)
-                {
-                    kp_str += kp.KID.ToString() + ",";
-                }
-                model.mission.relatedKP = kp_str;
-                model.mission.CID = model.CourseID;
-
-                db.Missions.Add(model.mission);
-                db.SaveChanges();
-                
-                return RedirectToAction("Index", new { cid = model.CourseID });
-            }
-            var vmodel = new MissionCreateViewModel();
-            var cname = db.Courses.Find(model.CourseID).CName;
-            vmodel.KnowledgeList = GetKnowledge(model.CourseID);
-            vmodel.CourseID = model.CourseID;
-            model.CourseName = cname;
-
-            return View(vmodel);*/
-
             if(ModelState.IsValid)
             {
                 var missionData = new Mission
@@ -192,23 +104,6 @@ namespace LMSweb.Models
         [HttpGet]
         public ActionResult Edit(string mid, string cid)
         {
-            /*if (mid == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Mission mission = db.Missions.Find(mid);
-            if (mission == null)
-            {
-                return HttpNotFound();
-            }
-            var vmodel = new MissionCreateViewModel();
-            var cname = db.Courses.Find(cid).CName;
-            vmodel.mission = mission;
-            vmodel.KnowledgeList = GetKnowledge(cid, db.KnowledgePoints.Where(kp => kp.CID == mission.CID).Select(kp => kp.KID));
-            vmodel.CourseID = cid;
-            vmodel.CourseName = cname;
-
-            return View(vmodel);*/
             var missionData = (from mission in db.Missions
                               from course in db.Courses
                               where mission.CID == course.CID && mission.MID == mid && mission.CID == cid
@@ -228,28 +123,6 @@ namespace LMSweb.Models
         [ValidateAntiForgeryToken]
         public ActionResult Edit(MissionCreateViewModel model)
         {
-            /*var mission = model.mission;
-            if (ModelState.IsValid)
-            {
-                db.Entry(mission).State = EntityState.Modified;
-                db.SaveChanges();
-
-                var kps = db.KnowledgePoints.Where(x => model.SelectKnowledgeList.ToList().Contains(x.KID)).ToList();
-                string kp_str = "";
-                foreach (var kp in kps)
-                {
-                    kp_str += kp.KID.ToString() + ",";
-                }
-                model.mission.relatedKP = kp_str;
-                mission.CID = model.CourseID;
-
-                db.SaveChanges();
-
-                return RedirectToAction("Index", new { cid = model.CourseID});
-            }
-            model.CourseID = mission.CID;
-            return View(model);*/
-
             if(ModelState.IsValid)
             {
                 var original = db.Missions
