@@ -1,6 +1,7 @@
 ﻿@model LMSweb.ViewModel.MissionDetailViewModel
 @{
     ViewBag.Title = "Details";
+    int No = 0;
 }
 
 @section NavPills {
@@ -62,25 +63,85 @@
         <div class="col card me-2 p-3 bg-white h-100 ">
             <div class="shadow-sm">
                 <h3 class="text-center">任務進度</h3>
-                @*@switch (Model)
-                {
-                    case 0: break;
-                    case 1: break;
-                    case 2: break;
-                    case 3: break;
-                    case 4: break;
-                    case 5: break;
-                }*@
 
                 <div id="stepper4" class="bs-stepper vertical h-100">
                     <div class="bs-stepper-header w-100" role="tablist">
 
                         @*
-                        0 == 還沒做
-                        1 == 正在做
-                        2 == 已經做完
+                            0 == 還沒做
+                            1 == 正在做
+                            2 == 已經做完
                         *@
-                        @*@int k = "2210000"*@ 
+                        @*@int k = "2210000"*@
+
+                        @*@switch (i)
+                        {
+                            case 0:
+                                <div class="@GetChartDisplayClass("2")" data-target="#test-vl-1">
+                                    <button type="button" class="step-trigger" role="tab" id="stepper4trigger1" aria-controls="test-vl-1">
+                                        <span class="bs-stepper-circle">1</span>
+                                        <span class="bs-stepper-label">目標設置</span>
+                                    </button>
+                                </div>
+                                <div class="bs-stepper-line"></div>
+                                goto case 1;
+                            case 1:
+                                <div class="@GetChartDisplayClass("2")" data-target="#test-vl-2">
+                                    <button type="button" class="step-trigger" role="tab" id="stepper4trigger2" aria-controls="test-vl-2">
+                                        <span class="bs-stepper-circle">2</span>
+                                        <span class="bs-stepper-label">合作討論</span>
+                                    </button>
+                                </div>
+                                <div class="bs-stepper-line"></div>
+                                goto case 2;
+                            case 2:
+                                <div class="@GetChartDisplayClass("1")" data-target="#test-vl-3">
+                                    <button type="button" class="step-trigger" role="tab" id="stepper4trigger3" aria-controls="test-vl-3">
+                                        <span class="bs-stepper-circle">3</span>
+                                        <span class="bs-stepper-label">畫流程圖</span>
+                                    </button>
+                                </div>
+                                <div class="bs-stepper-line"></div>
+                                goto case 3;
+                            case 3:
+                                <div class="@GetChartDisplayClass("0")" data-target="#test-vl-3">
+                                    <button type="button" class="step-trigger" role="tab" id="stepper4trigger3" aria-controls="test-vl-4">
+                                        <span class="bs-stepper-circle">4</span>
+                                        <span class="bs-stepper-label">寫程式碼</span>
+                                    </button>
+                                </div>
+                                <div class="bs-stepper-line"></div>
+                                goto case 4;
+                            case 4:
+                                <div class="@GetChartDisplayClass("0")" data-target="#test-vl-3">
+                                    <button type="button" class="step-trigger" role="tab" id="stepper4trigger3" aria-controls="test-vl-5">
+                                        <span class="bs-stepper-circle">5</span>
+                                        <span class="bs-stepper-label">同儕互評</span>
+                                    </button>
+                                </div>
+                                <div class="bs-stepper-line"></div>
+                                goto case 5;
+                            case 5:
+                                <div class="@GetChartDisplayClass("0")" data-target="#test-vl-3">
+                                    <button type="button" class="step-trigger" role="tab" id="stepper4trigger3" aria-controls="test-vl-6">
+                                        <span class="bs-stepper-circle">6</span>
+                                        <span class="bs-stepper-label">評價回饋</span>
+                                    </button>
+                                </div>
+                                <div class="bs-stepper-line"></div>
+                                goto case 6;
+                            case 6:
+                                <div class="@GetChartDisplayClass("0")" data-target="#test-vl-3">
+                                    <button type="button" class="step-trigger" role="tab" id="stepper4trigger3" aria-controls="test-vl-7">
+                                        <span class="bs-stepper-circle">7</span>
+                                        <span class="bs-stepper-label">團隊反思</span>
+                                    </button>
+                                </div>
+                                goto default;
+                            default:
+                                break;
+                        }*@
+
                         <div class="@GetChartDisplayClass("2")" data-target="#test-vl-1">
                             <button type="button" class="step-trigger" role="tab" id="stepper4trigger1" aria-controls="test-vl-1">
                                 <span class="bs-stepper-circle">1</span>
@@ -99,7 +160,7 @@
                             <button type="button" class="step-trigger" role="tab" id="stepper4trigger3" aria-controls="test-vl-3">
                                 <span class="bs-stepper-circle">3</span>
                                 <span class="bs-stepper-label">畫流程圖</span>
-                            </button> 
+                            </button>
                         </div>
                         <div class="bs-stepper-line"></div>
                         <div class="@GetChartDisplayClass("0")" data-target="#test-vl-3">
@@ -131,6 +192,8 @@
                         </div>
                     </div>
                 </div>
+
+
 
             </div>
         </div>
@@ -232,7 +295,7 @@
                 <button type="button" class="btn btn-success" id="is_AddMeta">後設認知狀態 : 開啟</button>
             }
             else   //false
-            {
+                        {
                 <button type="button" class="btn btn-secondary" id="is_AddMeta">後設認知狀態 : 關閉</button>
             }
         </div>*@
