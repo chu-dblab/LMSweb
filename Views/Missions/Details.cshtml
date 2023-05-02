@@ -77,13 +77,13 @@
             </div>*@
     </div>
 
-    <div class="row m-3">
-        <div class="col card me-2 p-3 bg-white h-100 ">
+    <div class="row m-3" style="min-height: 80vh">
+        <div class="col card me-2 p-3 bg-white">
             <div class="shadow-sm">
-                <h3 class="text-center">任務進度</h3>
+                <h3 class="text-center mt-2 pt-1">任務進度</h3>
 
-                <div id="stepper4" class="bs-stepper vertical h-100">
-                    <div class="bs-stepper-header w-100" role="tablist">
+                <div id="stepper4" class="bs-stepper vertical">
+                    <div class="bs-stepper-header w-100 pb-3" role="tablist">
 
                         @switch (Model.TestType)
                         {
@@ -303,13 +303,13 @@
                 </div>
             </div>
         </div>
-        <div class="col-10 card p-3 bg-white ">
-            <div class="mx-3">
+        <div class="col-10 card p-3 bg-white">
+            <div class="mx-3 mt-2">
                 <div class="row mb-3">
-                    <div class="col">
-                        <h3>@Model.Name</h3>
+                    <div class="col my-auto">
+                        <h3 class="h-auto">@Model.Name</h3>
                     </div>
-                    <div class="col d-flex justify-content-end me-2">
+                    <div class="col d-flex justify-content-end me-2 pb-2">
                         <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Edit", "Missions", new {  mid = Model.MissionID, cid = Model.CourseID})'">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
                                 <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
