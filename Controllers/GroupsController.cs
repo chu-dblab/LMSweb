@@ -24,7 +24,7 @@ namespace LMSweb.Controllers
         public ActionResult Index(string mid, string cid)
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            var TID = claims.Claims.Where(x => x.Type == "TID").SingleOrDefault().Value;
+            var TID = claims.Claims.Where(x => x.Type == "UID").FirstOrDefault().Value;
             var gmodel = new GroupViewModel();
             gmodel.MID = mid;
             var mis = db.Missions.Find(mid);

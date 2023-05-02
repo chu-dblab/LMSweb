@@ -156,7 +156,7 @@ namespace LMSweb.Controllers
             db.EvalutionResponse.RemoveRange(eresponse);
             db.SaveChanges();
 
-            return RedirectToAction("Home", "Teacher", null);
+            return RedirectToAction("Home", "Teacher");
         }
 
         protected override void Dispose(bool disposing)

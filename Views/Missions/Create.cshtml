@@ -73,8 +73,6 @@
 
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-                <input type="hidden" name="CID" value="@Model.CourseID" />
-
                 <div class="mb-3 my-1">
                     @Html.LabelFor(model => model.Name, new { @class = "form-label ms-2 fs-5 my-1" })
                     <div class="row mx-1">

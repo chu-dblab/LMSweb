@@ -15,7 +15,7 @@ namespace LMSweb.Models
         private LMSmodel db = new LMSmodel();
         public ActionResult Index(string cid)
         {
-            if (cid == null)
+            if (cid is null)
             {
                 return RedirectToAction("Home", "Teacher");
             }
@@ -40,31 +40,35 @@ namespace LMSweb.Models
 
         public ActionResult Details(string mid,string cid)
         {
-            var data = db.Missions
-                .Where(m => m.CID == cid && m.MID == mid)
-                .Select(m => new MissionDetailViewModel { 
-                    MissionID = m.MID,
-                    CourseID = m.CID,
-                    CourseName = m.Course.CName,
-                    TestType = m.Course.TestType,
-                    Name = m.MName,
-                    Content = m.MDetail,
-                    StartDate = m.Start,
-                    EndDate = m.End,
-                    CurrentAction = m.CurrentAction,
-                    IsAssess = m.IsAssess,
-                    IsCoding = m.IsCoding,
-                    IsDiscuss = m.IsDiscuss,
-                    IsDrawing = m.IsDrawing,
-                    IsGoalSetting = m.IsGoalSetting,
-                    IsGReflect = m.IsGReflect,
-                    IsReflect = m.IsReflect,
-                    Is_Journey = m.Is_Journey,
-                    IsAddMetacognition = m.Course.IsAddMetacognition,
-                    IsAddPeerAssessmemt = m.Course.IsAddPeerAssessmemt
-                })
-                .FirstOrDefault();           
-           
+            var data = (from m in db.Missions
+                       from c in db.Courses
+                       where m.CID == c.CID && m.MID == mid && c.CID == cid
+                       select new MissionDetailViewModel
+                       {
+                           MissionID = m.MID,
+                           CourseID = m.CID,
+                           CourseName = c.CName,
+                           TestType = c.TestType,
+                           Name = m.MName,
+                           Content = m.MDetail,
+                           StartDate = m.Start,
+                           EndDate = m.End,
+                           CurrentAction = m.CurrentAction,
+                           IsAssess = m.IsAssess,
+                           IsCoding = m.IsCoding,
+                           IsDiscuss = m.IsDiscuss,
+                           IsDrawing = m.IsDrawing,
+                           IsGoalSetting = m.IsGoalSetting,
+                           IsGReflect = m.IsGReflect,
+                           IsReflect = m.IsReflect,
+                           Is_Journey = m.Is_Journey,
+                           IsAddMetacognition = c.IsAddMetacognition,
+                           IsAddPeerAssessmemt = c.IsAddPeerAssessmemt
+                       }).FirstOrDefault();
+            if(data.CurrentAction is null)
+            {
+                data.CurrentAction = DefaultCurrentStatus(data.TestType);
+            }
             return View(data);
         }
 
@@ -83,14 +87,14 @@ namespace LMSweb.Models
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(MissionCreateViewModel model)
+        public ActionResult Create(string cid,MissionCreateViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var test_type = db.Courses.Where(x => x.CID == model.CourseID).Select(x => x.TestType).FirstOrDefault();
+                var test_type = db.Courses.Where(x => x.CID == cid).Select(x => x.TestType).FirstOrDefault();
                 var missionData = new Mission
                 {
-                    CID = model.CourseID,
+                    CID = cid,
                     MID = $"M{DateTime.Now.ToString("yyMMddHHmmss")}",
                     MName = model.Name,
                     MDetail = model.Contents,
@@ -98,6 +102,7 @@ namespace LMSweb.Models
                     End = model.EndDate.Replace("T", " "),
                     CurrentAction = DefaultCurrentStatus(test_type)
                 };
+                model.CourseID = cid;
                 db.Missions.Add(missionData);
                 db.SaveChanges();
                 return RedirectToAction("Index", new { cid = model.CourseID });
@@ -132,7 +137,7 @@ namespace LMSweb.Models
                                   Name = mission.MName,
                                   Contents = mission.MDetail,
                                   StartDate = mission.Start,
-                                  EndDate = mission.End
+                                  EndDate = mission.End                                  
                               })
                               .FirstOrDefault();
             return View(missionData);
@@ -146,7 +151,12 @@ namespace LMSweb.Models
                 var original = db.Missions
                     .Where(m=>m.CID == cid && m.MID == mid)
                     .FirstOrDefault();
+                
                 var test_type = db.Courses.Where(x => x.CID == cid).Select(x => x.TestType).FirstOrDefault();
+                if (original.CurrentAction is null)
+                {
+                    original.CurrentAction = DefaultCurrentStatus(test_type);
+                }
                 var newMission = new Mission
                 {
                     CID = cid,
@@ -155,11 +165,11 @@ namespace LMSweb.Models
                     MDetail = model.Contents,
                     Start = model.StartDate.Replace("T", " "),
                     End = model.EndDate.Replace("T", " "),
-                    CurrentAction = DefaultCurrentStatus(test_type)
+                    CurrentAction = original.CurrentAction
                 };
                 db.Entry(original).CurrentValues.SetValues(newMission);
                 db.SaveChanges();
-                return RedirectToAction("Index", new { cid = model.CourseID });
+                return RedirectToAction("Index", new { cid = newMission.CID });
             }
             return View(model);
         }
@@ -216,14 +226,7 @@ namespace LMSweb.Models
             db.SaveChanges();
             return RedirectToAction("Index", new { cid });
         }
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        
         public ActionResult SelectMissions(string cid, string missionCourse)
         {
             MissionViewModel model = new MissionViewModel();
@@ -237,20 +240,6 @@ namespace LMSweb.Models
 
         public ActionResult AddMissions(string mid, string cid)
         {
-            /*Mission mission = db.Missions.Find(mid);  //old
-            var model = new MissionCreateViewModel();   //new
-            model.mission = new Mission();
-            model.mission.MID = mission.MID;
-            model.mission.Start = mission.Start;
-            model.mission.End = mission.End;
-            model.mission.MName = mission.MName;
-            model.mission.MDetail = mission.MDetail;
-            model.KnowledgeList = GetKnowledge(cid);
-            model.mission.CID = cid;
-            model.CourseID = cid;
-            model.CourseName = mission.Course.CName;
-           
-            return View(model);*/
             var missionData = (from mission in db.Missions
                               from course in db.Courses
                               where mission.CID == course.CID && mission.MID == mid && course.CID == cid
@@ -265,6 +254,15 @@ namespace LMSweb.Models
                                   EndDate = mission.End
                               }).FirstOrDefault();
             return View(missionData);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
         }
 
         [HttpPost]
@@ -309,6 +307,5 @@ namespace LMSweb.Models
 
             return Json(new { Status = HttpStatusCode.OK , type = type, sw = sw});
         }
-        //public ActionResult 
     }
 }

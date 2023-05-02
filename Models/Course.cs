@@ -40,7 +40,7 @@ namespace LMSweb.Models
 
         [Required]
         public string TID { get; set; }
-        public virtual Teacher teacher { get; set; }
+        public virtual Teacher Teacher { get; set; }
 
         public virtual ICollection<Mission> Missions { get; set; }
         public virtual ICollection<Student> Students { get; set; }
