@@ -4,12 +4,6 @@
     ViewBag.Title = "Create";
 }
 
-@*@section header {
-    @Html.Partial("../Shared/Header/HeaderNavbar")
-}*@
-
-
-
 <div class="container ms-auto">
     <div class="card col-4 mx-auto bg-white my-5 p-3">
         <h4 class="align-self-center">新增課程</h4>
@@ -40,7 +34,7 @@
                 <option value="2">實驗組二：自我調節</option> 
                 <option value="3">實驗組三：互動式同儕互評</option> 
                 <option value="4">實驗組四：社會共享調節</option> 
-                <option value="3">實驗組五：互動式同儕互評&社會共享調節</option> 
+                <option value="5">實驗組五：互動式同儕互評&社會共享調節</option> 
             </select> 
             @Html.ValidationMessageFor(model => model.TestType, "", new { @class = "text-danger" }) 
         </div>

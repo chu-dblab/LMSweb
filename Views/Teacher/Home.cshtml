@@ -6,11 +6,26 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@*@section header {
-        @Html.Partial("../Shared/Header/HeaderNavbar")
-    }*@
+@functions {
+    string GetTypeString(int input)
+    {
+        //if (input == 0) return "控制組";
+        //else if (input == 1) return "實驗組一：同儕互評";
+        //else if (input == 2) return "實驗組二：自我調節";
+        //else if (input == 3) return "實驗組三：互動式同儕互評";
+        //else if (input == 4) return "實驗組四：社會共享調節";
+        //else if (input == 5) return "實驗組五：互動式同儕互評 & 社會共享調節";
+        //else return "組別Type錯誤";
 
-
+        if (input == 0) return "控制組";
+        else if (input == 1) return "實驗組一";
+        else if (input == 2) return "實驗組二";
+        else if (input == 3) return "實驗組三";
+        else if (input == 4) return "實驗組四";
+        else if (input == 5) return "實驗組五";
+        else return "組別Type錯誤";
+    }
+}
 <div class="container">
 
     @*<div class="card row flex-wrap d-flex m-3">
@@ -41,9 +56,8 @@
                                 </p>
                             </div>
 
-                            @*<p>實驗組五：互動式同儕互評&社會共享調節</p>*@
                             <p class="h6">ID : @Html.DisplayFor(modelItem => item.CourseID)</p>
-
+                            <p class="h6"> @GetTypeString(item.TestType)</p>
 
                             <hr />
                             @Html.ActionLink("進入課程", "Index", "Missions", new { cid = item.CourseID }, new { @class = "btn btn-primary" })
@@ -60,4 +74,5 @@
         </div>
     </div>
 </div>
+
 
