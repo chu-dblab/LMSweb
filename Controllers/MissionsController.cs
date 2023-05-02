@@ -40,28 +40,29 @@ namespace LMSweb.Models
 
         public ActionResult Details(string mid,string cid)
         {
-            var data = db.Missions.Where(m => m.CID == cid && m.MID == mid)
+            var data = db.Missions
+                .Where(m => m.CID == cid && m.MID == mid)
                 .Select(m => new MissionDetailViewModel { 
-                MissionID = m.MID,
-                CourseID = m.CID,
-                CourseName = m.Course.CName,
-                Name = m.MName,
-                Content = m.MDetail,
-                StartDate = m.Start,
-                EndDate = m.End,
-                IsAssess = m.IsAssess,
-                IsCoding = m.IsCoding,
-                IsDiscuss = m.IsDiscuss,
-                IsDrawing = m.IsDrawing,
-                IsGoalSetting = m.IsGoalSetting,
-                IsGReflect = m.IsGReflect,
-                IsReflect = m.IsReflect,
-                Is_Journey = m.Is_Journey,
-                IsAddMetacognition = m.Course.IsAddMetacognition,
-                IsAddPeerAssessmemt = m.Course.IsAddPeerAssessmemt
-            }).FirstOrDefault();
-
-            
+                    MissionID = m.MID,
+                    CourseID = m.CID,
+                    CourseName = m.Course.CName,
+                    TestType = m.Course.TestType,
+                    Name = m.MName,
+                    Content = m.MDetail,
+                    StartDate = m.Start,
+                    EndDate = m.End,
+                    IsAssess = m.IsAssess,
+                    IsCoding = m.IsCoding,
+                    IsDiscuss = m.IsDiscuss,
+                    IsDrawing = m.IsDrawing,
+                    IsGoalSetting = m.IsGoalSetting,
+                    IsGReflect = m.IsGReflect,
+                    IsReflect = m.IsReflect,
+                    Is_Journey = m.Is_Journey,
+                    IsAddMetacognition = m.Course.IsAddMetacognition,
+                    IsAddPeerAssessmemt = m.Course.IsAddPeerAssessmemt
+                })
+                .FirstOrDefault();           
            
             return View(data);
         }

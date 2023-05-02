@@ -12,6 +12,7 @@ namespace LMSweb.ViewModel
         public string CourseID { get; set; }
         public string MissionID { get; set; }
         public string CourseName { get; set; }
+        public int TestType { get; set; }
         [Display(Name = "任務名稱")]
         public string Name { get; set; }
         [Display(Name = "任務內容")]
