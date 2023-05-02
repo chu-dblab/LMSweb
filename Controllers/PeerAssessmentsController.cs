@@ -24,7 +24,7 @@ namespace LMSweb.Controllers
             var claimData = claims.Claims.Where(x => x.Type == "SID").ToList();
             var sid = claimData[0].Value;
             var stu = db.Students.Where(s => s.SID == sid);
-            var stuG = db.Students.Find(sid).group;
+            var stuG = db.Students.Find(sid).Group;
             var sname = db.Students.Find(sid).SName;
             var mis = db.Missions.Find(mid);
             var cname = db.Courses.Find(cid).CName;
@@ -172,8 +172,8 @@ namespace LMSweb.Controllers
             
            
             var stu = db.Students.Where(s => s.SID == sid);
-            var stuC = db.Students.Find(sid).course;
-            var stuG = db.Students.Find(sid).group;
+            var stuC = db.Students.Find(sid).Course;
+            var stuG = db.Students.Find(sid).Group;
             var misChat = db.Missions.Find(mid).IsDiscuss;
 
             gmodel.Courses = db.Courses.Where(c => c.CID == stuC.CID).ToList();

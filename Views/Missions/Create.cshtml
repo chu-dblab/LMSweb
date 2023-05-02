@@ -72,10 +72,8 @@
                 <h4 class="fs-3 text-center my-1">新增任務</h4>
 
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                @Html.HiddenFor(model => model.MID, new { @class = "form-control", @Value = $"M{DateTime.Now.ToString("yyMMddHHmmss")}" })
-                @Html.HiddenFor(model => model.CourseID, new { @class = "form-control", @Value = $"{Model.CourseID}" })
-                @Html.ValidationMessageFor(model => model.MID, "", new { @class = "text-danger" })
 
+                <input type="hidden" name="CID" value="@Model.CourseID" />
 
                 <div class="mb-3 my-1">
                     @Html.LabelFor(model => model.Name, new { @class = "form-label ms-2 fs-5 my-1" })

@@ -35,9 +35,10 @@ namespace LMSweb.Models
         [Required]
         [Display(Name = "課程編號")]
         public string CID { get; set; }
-
-        public virtual Group group{ get; set; }
-        public virtual Course course { get; set; }
+        [Required]
+        public int GID { get; set; }
+        public virtual Group Group{ get; set; }
+        public virtual Course Course { get; set; }
         public virtual ICollection<StudentMission> StudentMissions { get; set; }
         public virtual ICollection<LearningBehavior> LearningBehaviors { get; set; }
         public virtual ICollection<Response> Responses { get; set; }

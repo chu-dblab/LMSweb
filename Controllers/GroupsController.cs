@@ -36,7 +36,7 @@ namespace LMSweb.Controllers
             gmodel.CID = cid;
             gmodel.CName = mis.Course.CName;
             gmodel.MName = mname;
-            var stu = db.Students.Where(s => s.group.CID == cid).ToList();
+            var stu = db.Students.Where(s => s.Group.CID == cid).ToList();
             gmodel.IsUploadDraw = db.StudentDraws.Where(sd => sd.MID == mid).ToList();
             gmodel.IsUploadCode = db.StudentCodes.Where(sc => sc.MID == mid).ToList();
             gmodel.GroupER = db.GroupERs.Where(sg => sg.MID == mid && sg.EvaluatorSID == TID).ToList();

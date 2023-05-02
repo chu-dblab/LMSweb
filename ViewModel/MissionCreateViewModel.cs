@@ -9,7 +9,6 @@ namespace LMSweb.ViewModel
 {
     public class MissionCreateViewModel
     {
-        [Required]
         public string CourseID { get; set; }
         public string CourseName { get; set; }
 

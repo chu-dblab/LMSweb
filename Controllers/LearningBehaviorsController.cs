@@ -24,7 +24,7 @@ namespace LMSweb.Controllers
             var claimData = claims.Claims.Where(x => x.Type == "SID").ToList();
             var sid = claimData[0].Value;
             var stu = db.Students.Where(s => s.SID == sid);
-            var stuG = db.Students.Find(sid).group;
+            var stuG = db.Students.Find(sid).Group;
             var sname = db.Students.Find(sid).SName;
             var gqid = 1002.ToString();
             var gid = stuG.GID.ToString();
@@ -76,7 +76,7 @@ namespace LMSweb.Controllers
             var claimData = claims.Claims.Where(x => x.Type == "SID").ToList();
             var sid = claimData[0].Value;
             var stu = db.Students.Where(s => s.SID == sid);
-            var stuG = db.Students.Find(sid).group;
+            var stuG = db.Students.Find(sid).Group;
             var sname = db.Students.Find(sid).SName;
             var gqid = 1002.ToString();
             
@@ -95,7 +95,7 @@ namespace LMSweb.Controllers
             vm.GPeerER = db.EvalutionResponse.Where(p => p.CID == cid && p.SID != p.EvaluatorSID  && p.MID == mid).ToList();
             vm.SelfER = db.EvalutionResponse.Where(p => p.CID == cid && p.SID == sid && p.EvaluatorSID == sid && p.MID == mid).ToList();
             vm.GSelfER = db.EvalutionResponse.Where(p => p.CID == cid && p.SID == p.EvaluatorSID && p.MID == mid).ToList();
-            vm.student = db.Students.Where(g => g.group.GID == gid).ToList();
+            vm.student = db.Students.Where(g => g.Group.GID == gid).ToList();
             //小組成果 教師
             vm.CID = cid;
             double TeacherCor = 0;
@@ -535,7 +535,7 @@ namespace LMSweb.Controllers
                         vm.GPeerER = db.EvalutionResponse.Where(p => p.CID == cid && p.SID != p.EvaluatorSID).ToList();
                         vm.SelfER = db.EvalutionResponse.Where(p => p.CID == cid && p.SID == p.EvaluatorSID).ToList();
                         vm.GSelfER = db.EvalutionResponse.Where(p => p.CID == cid && p.SID == p.EvaluatorSID).ToList();
-                        vm.student = db.Students.Where(g => g.group.GID == gid).ToList();
+                        vm.student = db.Students.Where(g => g.Group.GID == gid).ToList();
 
                         //小組成果 教師
                         var i = db.GroupERs.Where(c => (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.GID == gid).ToList().Count();
@@ -638,7 +638,7 @@ namespace LMSweb.Controllers
                         vm.GPeerER = db.EvalutionResponse.Where(p => p.CID == cid && p.SID != p.EvaluatorSID).ToList();
                         vm.SelfER = db.EvalutionResponse.Where(p => p.CID == cid && p.SID == sid && p.EvaluatorSID == sid ).ToList();
                         vm.GSelfER = db.EvalutionResponse.Where(p => p.CID == cid && p.SID == p.EvaluatorSID).ToList();
-                        vm.student = db.Students.Where(g => g.group.GID == gid).ToList();
+                        vm.student = db.Students.Where(g => g.Group.GID == gid).ToList();
 
                         //小組成果 教師
                         var i = db.GroupERs.Where(c => (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.GID == gid).ToList().Count();
@@ -754,7 +754,7 @@ namespace LMSweb.Controllers
                         vm.GPeerER = db.EvalutionResponse.Where(p => p.CID == cid && p.SID != p.EvaluatorSID && p.MID == mid).ToList();
                         vm.SelfER = db.EvalutionResponse.Where(p => p.CID == cid && p.SID == p.EvaluatorSID && p.MID == mid).ToList();
                         vm.GSelfER = db.EvalutionResponse.Where(p => p.CID == cid && p.SID == p.EvaluatorSID && p.MID == mid).ToList();
-                        vm.student = db.Students.Where(g => g.group.GID == gid).ToList();
+                        vm.student = db.Students.Where(g => g.Group.GID == gid).ToList();
 
                         //小組成果 教師
                         var i = db.GroupERs.Where(c => (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.GID == gid && c.MID == mid).ToList().Count();
@@ -857,7 +857,7 @@ namespace LMSweb.Controllers
                         vm.GPeerER = db.EvalutionResponse.Where(p => p.CID == cid && p.SID != p.EvaluatorSID && p.MID == mid).ToList();
                         vm.SelfER = db.EvalutionResponse.Where(p => p.CID == cid && p.SID == sid && p.EvaluatorSID == sid && p.MID == mid).ToList();
                         vm.GSelfER = db.EvalutionResponse.Where(p => p.CID == cid && p.SID == p.EvaluatorSID && p.MID == mid).ToList();
-                        vm.student = db.Students.Where(g => g.group.GID == gid).ToList();
+                        vm.student = db.Students.Where(g => g.Group.GID == gid).ToList();
 
                         //小組成果 教師
                         var i = db.GroupERs.Where(c => c.EvaluatorSID == "T004" && c.GID == gid && c.MID == mid).ToList().Count();
@@ -1099,7 +1099,7 @@ namespace LMSweb.Controllers
             var GID = gid.ToString();
             using (LMSmodel db = new LMSmodel())
             {
-                var query = db.Students.Where(x => x.group.GID == gid).OrderBy(x => x.SName);
+                var query = db.Students.Where(x => x.Group.GID == gid).OrderBy(x => x.SName);
                 return query.ToList();
             }
         }

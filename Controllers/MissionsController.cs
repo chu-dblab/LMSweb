@@ -5,9 +5,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
-using System.Web.WebPages;
 using LMSweb.ViewModel;
-using Microsoft.Ajax.Utilities;
 
 namespace LMSweb.Models
 {
@@ -19,7 +17,7 @@ namespace LMSweb.Models
         {
             if (cid == null)
             {
-                return RedirectToAction("TeacherHomePage", "Teacher");
+                return RedirectToAction("Home", "Teacher");
             }
             var mission_datas = db.Missions.Where(c => c.CID == cid).Select(m => new MissionData()
             {
@@ -87,22 +85,37 @@ namespace LMSweb.Models
         [ValidateAntiForgeryToken]
         public ActionResult Create(MissionCreateViewModel model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
+                var test_type = db.Courses.Where(x => x.CID == model.CourseID).Select(x => x.TestType).FirstOrDefault();
                 var missionData = new Mission
                 {
                     CID = model.CourseID,
-                    MID = model.MID,
+                    MID = $"M{DateTime.Now.ToString("yyMMddHHmmss")}",
                     MName = model.Name,
                     MDetail = model.Contents,
-                    Start = model.StartDate.Replace("T"," "),
-                    End = model.EndDate.Replace("T", " ")
+                    Start = model.StartDate.Replace("T", " "),
+                    End = model.EndDate.Replace("T", " "),
+                    CurrentAction = DefaultCurrentStatus(test_type)
                 };
                 db.Missions.Add(missionData);
                 db.SaveChanges();
                 return RedirectToAction("Index", new { cid = model.CourseID });
             }
             return View(model);
+        }
+
+        [NonAction]
+        private string DefaultCurrentStatus(int type)
+        {
+            var table = new Dictionary<int, string>();
+            table[0] = "000";
+            table[1] = "0000";
+            table[2] = "00000";
+            table[3] = "00000";
+            table[4] = "00000";
+            table[5] = "0000000";
+            return table[type];
         }
 
         [HttpGet]
@@ -120,26 +133,29 @@ namespace LMSweb.Models
                                   Contents = mission.MDetail,
                                   StartDate = mission.Start,
                                   EndDate = mission.End
-                              }).FirstOrDefault();
+                              })
+                              .FirstOrDefault();
             return View(missionData);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(MissionCreateViewModel model)
+        public ActionResult Edit(string mid, string cid, MissionCreateViewModel model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 var original = db.Missions
-                    .Where(m=>m.CID == model.CourseID && m.MID == model.MID)
+                    .Where(m=>m.CID == cid && m.MID == mid)
                     .FirstOrDefault();
+                var test_type = db.Courses.Where(x => x.CID == cid).Select(x => x.TestType).FirstOrDefault();
                 var newMission = new Mission
                 {
-                    CID = model.CourseID,
-                    MID = model.MID,
+                    CID = cid,
+                    MID = mid,
                     MName = model.Name,
                     MDetail = model.Contents,
                     Start = model.StartDate.Replace("T", " "),
                     End = model.EndDate.Replace("T", " "),
+                    CurrentAction = DefaultCurrentStatus(test_type)
                 };
                 db.Entry(original).CurrentValues.SetValues(newMission);
                 db.SaveChanges();

@@ -232,7 +232,7 @@ namespace LMSweb.Controllers
         }
         private List<SelectListItem> GetStudent(string cid, IEnumerable<int> SelectStudentList = null)
         {
-            return new MultiSelectList(db.Students.Where(x => x.@group == null && x.CID == cid), "SID", "SName", SelectStudentList).ToList();
+            return new MultiSelectList(db.Students.Where(x => x.Group == null && x.CID == cid), "SID", "SName", SelectStudentList).ToList();
         }
 
         // GET: StudentGroup
@@ -240,7 +240,7 @@ namespace LMSweb.Controllers
         {            
             var vmodel = new GroupCreateViewModel();
             vmodel.StudentList = GetStudent(cid);
-            vmodel.students = db.Students.Where(x => x.@group != null && x.CID == cid).ToList();
+            vmodel.students = db.Students.Where(x => x.Group != null && x.CID == cid).ToList();
             vmodel.CID = cid;
             
             var course = db.Courses.Where(c => c.CID == cid).Single();
@@ -312,7 +312,7 @@ namespace LMSweb.Controllers
         public ActionResult GroupN(int n, string cid)
         {
             
-            var stus = GetRandomElements(db.Students.Where(x => x.@group == null && cid == x.CID).ToList());
+            var stus = GetRandomElements(db.Students.Where(x => x.Group == null && cid == x.CID).ToList());
             List<Group> groups = new List<Group>();
             var left_s = stus.Count % n;
             
@@ -380,9 +380,9 @@ namespace LMSweb.Controllers
                 return HttpNotFound();
             }
 
-            Group group = student.group;
+            Group group = student.Group;
             group.Students.Remove(student);
-            student.group = null;
+            student.Group = null;
 
             db.SaveChanges();
 

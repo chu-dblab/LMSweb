@@ -21,55 +21,31 @@ namespace LMSweb.Controllers
     {
         private LMSmodel db = new LMSmodel();
 
-        [AllowAnonymous]
-        public ActionResult Login()
-        {
-            return View(new LoginViewModel());
-        }
-
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginViewModel login)
-        {
-            var result = db.Students.Where(x => x.SID == login.ID && x.SPassword == login.Password).FirstOrDefault(); //驗證
-            if (result != null) //資料庫有資料(這個人)
-            {
-                ClaimsIdentity identity = new ClaimsIdentity(new[] {
-                    //加入使用者的相關資訊
-                    new Claim(ClaimTypes.Role, "Student"),
-                    new Claim(ClaimTypes.Name, result.SName),
-                    new Claim("SID",result.SID)
-                }, "Student");
-
-                Request.GetOwinContext().Authentication.SignIn(identity); //授權(登入)
-
-                return RedirectToAction("StudentHomePage", "Student");
-            }
-            else
-            {
-                ModelState.AddModelError("", "輸入的帳密可能有誤或是沒有註冊");
-
-                return View("Login");
-            }
-        }
-
-        public ActionResult Logout()
-        {
-            Request.GetOwinContext().Authentication.SignOut();
-
-            return RedirectToAction("Index", "Home");
-        }
-
         [HttpGet]
         [Authorize(Roles = "Student")]
         public ActionResult Home()
         {
             StudentHomePageViewModel vmodel = new StudentHomePageViewModel();
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            var claimData = claims.Claims.Where(x => x.Type == "UID").ToList();   //抓出當初記載Claims陣列中的SID
-            var sid = claimData[0].Value; //取值(因為只有一筆)
-            var stuG = db.Students.Find(sid).group;
+            var claimData = claims.Claims.Where(x => x.Type == "UID").FirstOrDefault();   //抓出當初記載Claims陣列中的SID
+            var sid = claimData.Value; //取值(因為只有一筆)
+
+            var data = from c in db.Courses
+                       from s in db.Students
+                       from g in db.Groups
+                       from t in db.Teachers
+                       where s.CID == c.CID && c.TID == t.TID && s.GID == g.GID&& s.SID == sid
+                       select new StudentHomeViewModel
+                       {
+                           CourseID = c.CID,
+                           CourseName = c.CName,
+                           TeacherName = t.TName,
+                           GroupName = g.GName
+                       };
+            return View();
+                      
+
+            /*var stuG = db.Students.Find(sid).group;
             var studentCourse = db.Students.Where(s => s.SID == sid);
             var stuCourse = db.Students.Find(sid);
             var cid = stuCourse.CID;
@@ -94,7 +70,7 @@ namespace LMSweb.Controllers
                 vmodel.GName = stuG.GName;
 
                 return View(vmodel);
-            }
+            }*/
         }
 
         [HttpGet]
@@ -209,7 +185,7 @@ namespace LMSweb.Controllers
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
             var claimData = claims.Claims.Where(x => x.Type == "SID").ToList();   //抓出當初記載Claims陣列中的SID
             var sid = claimData[0].Value;
-            var group = db.Students.Find(sid).group;
+            var group = db.Students.Find(sid).Group;
             var gid = group.GID;
             var cname = db.Courses.Find(cid).CName;
             var mname = db.Missions.Find(mid).MName;
@@ -256,7 +232,7 @@ namespace LMSweb.Controllers
             var claimData = claims.Claims.Where(x => x.Type == "SID").ToList();   //抓出當初記載Claims陣列中的SID
             var sid = claimData[0].Value;
             var stu = db.Students.Where(s => s.SID == sid);
-            var stuG = db.Students.Find(sid).group;
+            var stuG = db.Students.Find(sid).Group;
             var gid = stuG.GID;
             var gname = stuG.GName;
             var cname = db.Courses.Find(cid).CName;
@@ -314,7 +290,7 @@ namespace LMSweb.Controllers
             var claimData = claims.Claims.Where(x => x.Type == "SID").ToList(); //抓出當初記載Claims陣列中的SID
             var sid = claimData[0].Value;
             var stu = db.Students.Where(s => s.SID == sid);
-            var stuG = db.Students.Find(sid).group;
+            var stuG = db.Students.Find(sid).Group;
             var gid = stuG.GID;
             var gname = stuG.GName;
             var cname = db.Courses.Find(cid).CName;
@@ -349,7 +325,7 @@ namespace LMSweb.Controllers
             var claimData = claims.Claims.Where(x => x.Type == "SID").ToList();   //抓出當初記載Claims陣列中的SID
             var sid = claimData[0].Value;
             var stu = db.Students.Where(s => s.SID == sid);
-            var stuG = db.Students.Find(sid).group;
+            var stuG = db.Students.Find(sid).Group;
             var gid = stuG.GID;
             var gname = stuG.GName;
             var cname = db.Courses.Find(cid).CName;
@@ -408,7 +384,7 @@ namespace LMSweb.Controllers
             var claimData = claims.Claims.Where(x => x.Type == "SID").ToList();
             var sid = claimData[0].Value;
             var stu = db.Students.Where(s => s.SID == sid);
-            var stuG = db.Students.Find(sid).group;
+            var stuG = db.Students.Find(sid).Group;
             var mission = db.Missions.Find(mid);
 
             model.CID = cid;

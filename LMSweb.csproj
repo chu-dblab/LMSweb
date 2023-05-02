@@ -476,6 +476,10 @@
     <Compile Include="Migrations\202304231634214_add_columns_mission_and_course.designer.cs">
       <DependentUpon>202304231634214_add_columns_mission_and_course.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202305010138152_alter_col_student_gid.cs" />
+    <Compile Include="Migrations\202305010138152_alter_col_student_gid.designer.cs">
+      <DependentUpon>202305010138152_alter_col_student_gid.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\Course.cs" />
@@ -526,6 +530,7 @@
     <Compile Include="ViewModel\ReflectionViewModel.cs" />
     <Compile Include="ViewModel\StudentCodingViewModel.cs" />
     <Compile Include="ViewModel\StudentHomePageViewModel.cs" />
+    <Compile Include="ViewModel\StudentHomeViewModel.cs" />
     <Compile Include="ViewModel\StudentReflectionEditViewModel.cs" />
     <Compile Include="ViewModel\StudentSurveyViewModel.cs" />
     <Compile Include="ViewModel\StudentViewModel.cs" />
@@ -2095,6 +2100,9 @@
     <EmbeddedResource Include="Migrations\202304231634214_add_columns_mission_and_course.resx">
       <DependentUpon>202304231634214_add_columns_mission_and_course.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202305010138152_alter_col_student_gid.resx">
+      <DependentUpon>202305010138152_alter_col_student_gid.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -2156,7 +2164,9 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>56564</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:56564</IISUrl>
+          <IISUrl>https://localhost:44301</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>https://localhost:44301</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
