@@ -1,6 +1,7 @@
 ﻿@model LMSweb.ViewModel.MissionDetailViewModel
 @{
     ViewBag.Title = "Details";
+    int k = 0;
 }
 
 @section NavPills {
@@ -21,17 +22,33 @@
 }
 
 @functions {
-    string GetChartDisplayClass(string input)
+    string GetChartDisplayClass(char input)
     {
 
         //0 == 還沒做
         //1 == 正在做
         //2 == 已經做完
 
-        if (input == "0") return "step align-self-center opacity-50";
-        else if (input == "1") return "step align-self-center active";
-        else if (input == "2") return "step align-self-center";
-        else return"step align-self-center";
+        if (input == '0') return "step align-self-center opacity-50";
+        else if (input == '1') return "step align-self-center active";
+        else if (input == '2') return "step align-self-center";
+        else return "step align-self-center";
+    }
+
+    string GetTypeString(int input)
+    {
+        if (input == 0) return "控制組";
+        else if (input == 1) return "實驗組一：同儕互評";
+        else if (input == 2) return "實驗組二：自我調節";
+        else if (input == 3) return "實驗組三：互動式同儕互評";
+        else if (input == 4) return "實驗組四：社會共享調節";
+        else if (input == 5) return "實驗組五：互動式同儕互評 & 社會共享調節";
+        else return "組別Type錯誤";
+    }
+
+    string GetKString(int k)
+    {
+        return $"{k}";
     }
 
     string GetChartStepDisplay(string step, string type)
@@ -39,16 +56,18 @@
         return "";
     }
 
-    string GetChartDisplay(string mode ,string typeCode)
+    string GetChartDisplay(string mode, string typeCode)
     {
         return "";
     }
 }
 
+
 <div class="container">
 
     <div class="card m-3 p-3">
         <h1 class="w-auto m-2 fs-2">@Model.CourseName</h1>
+        @*<p>@Model.CurrentAction</p>*@
         @*<div class="row m-2">
                 <h1 class="w-auto fs-2">@Model.CourseName</h1>
                 <ol class="breadcrumb bg-white ms-2">
@@ -65,212 +84,214 @@
 
                 <div id="stepper4" class="bs-stepper vertical h-100">
                     <div class="bs-stepper-header w-100" role="tablist">
+
                         @switch (Model.TestType)
                         {
                             case 0:
-                                <div class="@GetChartDisplayClass("2")" data-target="#test-vl-2">
+                                <div class="@GetChartDisplayClass(Model.CurrentAction[k++])" data-target="#test-vl-2">
                                     <button type="button" class="step-trigger" role="tab" id="stepper4trigger2" aria-controls="test-vl-2">
-                                        <span class="bs-stepper-circle">1</span>
+                                        <span class="bs-stepper-circle">@GetKString(k)</span>
                                         <span class="bs-stepper-label">合作討論</span>
                                     </button>
                                 </div>
                                 <div class="bs-stepper-line"></div>
-                                <div class="@GetChartDisplayClass("1")" data-target="#test-vl-3">
+                                <div class="@GetChartDisplayClass(Model.CurrentAction[k++])" data-target="#test-vl-3">
                                     <button type="button" class="step-trigger" role="tab" id="stepper4trigger3" aria-controls="test-vl-3">
-                                        <span class="bs-stepper-circle">2</span>
+                                        <span class="bs-stepper-circle">@GetKString(k)</span>
                                         <span class="bs-stepper-label">畫流程圖</span>
                                     </button>
                                 </div>
                                 <div class="bs-stepper-line"></div>
-                                <div class="@GetChartDisplayClass("0")" data-target="#test-vl-3">
+                                <div class="@GetChartDisplayClass(Model.CurrentAction[k++])" data-target="#test-vl-3">
                                     <button type="button" class="step-trigger" role="tab" id="stepper4trigger3" aria-controls="test-vl-4">
-                                        <span class="bs-stepper-circle">3</span>
+                                        <span class="bs-stepper-circle">@GetKString(k)</span>
                                         <span class="bs-stepper-label">寫程式碼</span>
                                     </button>
                                 </div>
                                 break;
                             case 1:
-                                <div class="@GetChartDisplayClass("2")" data-target="#test-vl-2">
+                                <div class="@GetChartDisplayClass(Model.CurrentAction[k++])" data-target="#test-vl-2">
                                     <button type="button" class="step-trigger" role="tab" id="stepper4trigger2" aria-controls="test-vl-2">
-                                        <span class="bs-stepper-circle">1</span>
+                                        <span class="bs-stepper-circle">@GetKString(k)</span>
                                         <span class="bs-stepper-label">合作討論</span>
                                     </button>
                                 </div>
                                 <div class="bs-stepper-line"></div>
-                                <div class="@GetChartDisplayClass("1")" data-target="#test-vl-3">
+                                <div class="@GetChartDisplayClass(Model.CurrentAction[k++])" data-target="#test-vl-3">
                                     <button type="button" class="step-trigger" role="tab" id="stepper4trigger3" aria-controls="test-vl-3">
-                                        <span class="bs-stepper-circle">2</span>
+                                        <span class="bs-stepper-circle">@GetKString(k)</span>
                                         <span class="bs-stepper-label">畫流程圖</span>
                                     </button>
                                 </div>
                                 <div class="bs-stepper-line"></div>
-                                <div class="@GetChartDisplayClass("0")" data-target="#test-vl-3">
+                                <div class="@GetChartDisplayClass(Model.CurrentAction[k++])" data-target="#test-vl-3">
                                     <button type="button" class="step-trigger" role="tab" id="stepper4trigger3" aria-controls="test-vl-4">
-                                        <span class="bs-stepper-circle">3</span>
+                                        <span class="bs-stepper-circle">@GetKString(k)</span>
                                         <span class="bs-stepper-label">寫程式碼</span>
                                     </button>
                                 </div>
                                 <div class="bs-stepper-line"></div>
-                                <div class="@GetChartDisplayClass("0")" data-target="#test-vl-3">
+                                <div class="@GetChartDisplayClass(Model.CurrentAction[k++])" data-target="#test-vl-3">
                                     <button type="button" class="step-trigger" role="tab" id="stepper4trigger3" aria-controls="test-vl-5">
-                                        <span class="bs-stepper-circle">4</span>
+                                        <span class="bs-stepper-circle">@GetKString(k)</span>
                                         <span class="bs-stepper-label">同儕互評</span>
                                     </button>
                                 </div>
                                 break;
                             case 2:
-                                <div class="@GetChartDisplayClass("2")" data-target="#test-vl-1">
+                                <div class="@GetChartDisplayClass(Model.CurrentAction[k++])" data-target="#test-vl-1">
                                     <button type="button" class="step-trigger" role="tab" id="stepper4trigger1" aria-controls="test-vl-1">
-                                        <span class="bs-stepper-circle">1</span>
+                                        <span class="bs-stepper-circle">@GetKString(k)</span>
                                         <span class="bs-stepper-label">目標設置</span>
                                     </button>
                                 </div>
                                 <div class="bs-stepper-line"></div>
-                                <div class="@GetChartDisplayClass("2")" data-target="#test-vl-2">
+                                <div class="@GetChartDisplayClass(Model.CurrentAction[k++])" data-target="#test-vl-2">
                                     <button type="button" class="step-trigger" role="tab" id="stepper4trigger2" aria-controls="test-vl-2">
-                                        <span class="bs-stepper-circle">2</span>
+                                        <span class="bs-stepper-circle">@GetKString(k)</span>
                                         <span class="bs-stepper-label">合作討論</span>
                                     </button>
                                 </div>
                                 <div class="bs-stepper-line"></div>
-                                <div class="@GetChartDisplayClass("1")" data-target="#test-vl-3">
+                                <div class="@GetChartDisplayClass(Model.CurrentAction[k++])" data-target="#test-vl-3">
                                     <button type="button" class="step-trigger" role="tab" id="stepper4trigger3" aria-controls="test-vl-3">
-                                        <span class="bs-stepper-circle">3</span>
+                                        <span class="bs-stepper-circle">@GetKString(k)</span>
                                         <span class="bs-stepper-label">畫流程圖</span>
                                     </button>
                                 </div>
                                 <div class="bs-stepper-line"></div>
-                                <div class="@GetChartDisplayClass("0")" data-target="#test-vl-3">
+                                <div class="@GetChartDisplayClass(Model.CurrentAction[k++])" data-target="#test-vl-3">
                                     <button type="button" class="step-trigger" role="tab" id="stepper4trigger3" aria-controls="test-vl-4">
-                                        <span class="bs-stepper-circle">4</span>
+                                        <span class="bs-stepper-circle">@GetKString(k)</span>
                                         <span class="bs-stepper-label">寫程式碼</span>
                                     </button>
                                 </div>
                                 <div class="bs-stepper-line"></div>
-                                <div class="@GetChartDisplayClass("0")" data-target="#test-vl-3">
+                                <div class="@GetChartDisplayClass(Model.CurrentAction[k++])" data-target="#test-vl-3">
                                     <button type="button" class="step-trigger" role="tab" id="stepper4trigger3" aria-controls="test-vl-7">
-                                        <span class="bs-stepper-circle">5</span>
+                                        <span class="bs-stepper-circle">@GetKString(k)</span>
                                         <span class="bs-stepper-label">自我反思</span>
                                     </button>
                                 </div>
                                 break;
                             case 3:
-                                <div class="@GetChartDisplayClass("2")" data-target="#test-vl-2">
+                                <div class="@GetChartDisplayClass(Model.CurrentAction[k++])" data-target="#test-vl-2">
                                     <button type="button" class="step-trigger" role="tab" id="stepper4trigger2" aria-controls="test-vl-2">
-                                        <span class="bs-stepper-circle">1</span>
+                                        <span class="bs-stepper-circle">@GetKString(k)</span>
                                         <span class="bs-stepper-label">合作討論</span>
                                     </button>
                                 </div>
                                 <div class="bs-stepper-line"></div>
-                                <div class="@GetChartDisplayClass("1")" data-target="#test-vl-3">
+                                <div class="@GetChartDisplayClass(Model.CurrentAction[k++])" data-target="#test-vl-3">
                                     <button type="button" class="step-trigger" role="tab" id="stepper4trigger3" aria-controls="test-vl-3">
-                                        <span class="bs-stepper-circle">2</span>
+                                        <span class="bs-stepper-circle">@GetKString(k)</span>
                                         <span class="bs-stepper-label">畫流程圖</span>
                                     </button>
                                 </div>
                                 <div class="bs-stepper-line"></div>
-                                <div class="@GetChartDisplayClass("0")" data-target="#test-vl-3">
+                                <div class="@GetChartDisplayClass(Model.CurrentAction[k++])" data-target="#test-vl-3">
                                     <button type="button" class="step-trigger" role="tab" id="stepper4trigger3" aria-controls="test-vl-4">
-                                        <span class="bs-stepper-circle">3</span>
+                                        <span class="bs-stepper-circle">@GetKString(k)</span>
                                         <span class="bs-stepper-label">寫程式碼</span>
                                     </button>
                                 </div>
                                 <div class="bs-stepper-line"></div>
-                                <div class="@GetChartDisplayClass("0")" data-target="#test-vl-3">
+                                <div class="@GetChartDisplayClass(Model.CurrentAction[k++])" data-target="#test-vl-3">
                                     <button type="button" class="step-trigger" role="tab" id="stepper4trigger3" aria-controls="test-vl-5">
-                                        <span class="bs-stepper-circle">4</span>
+                                        <span class="bs-stepper-circle">@GetKString(k)</span>
                                         <span class="bs-stepper-label">同儕互評</span>
                                     </button>
                                 </div>
                                 <div class="bs-stepper-line"></div>
-                                <div class="@GetChartDisplayClass("0")" data-target="#test-vl-3">
+                                <div class="@GetChartDisplayClass(Model.CurrentAction[k++])" data-target="#test-vl-3">
                                     <button type="button" class="step-trigger" role="tab" id="stepper4trigger3" aria-controls="test-vl-6">
-                                        <span class="bs-stepper-circle">5</span>
+                                        <span class="bs-stepper-circle">@GetKString(k)</span>
                                         <span class="bs-stepper-label">評價回饋</span>
                                     </button>
                                 </div>
                                 break;
                             case 4:
-                                <div class="@GetChartDisplayClass("2")" data-target="#test-vl-1">
+                                <div class="@GetChartDisplayClass(Model.CurrentAction[k++])" data-target="#test-vl-1">
                                     <button type="button" class="step-trigger" role="tab" id="stepper4trigger1" aria-controls="test-vl-1">
-                                        <span class="bs-stepper-circle">1</span>
+                                        <span class="bs-stepper-circle">@GetKString(k)</span>
                                         <span class="bs-stepper-label">目標設置</span>
                                     </button>
                                 </div>
                                 <div class="bs-stepper-line"></div>
-                                <div class="@GetChartDisplayClass("2")" data-target="#test-vl-2">
+                                <div class="@GetChartDisplayClass(Model.CurrentAction[k++])" data-target="#test-vl-2">
                                     <button type="button" class="step-trigger" role="tab" id="stepper4trigger2" aria-controls="test-vl-2">
-                                        <span class="bs-stepper-circle">2</span>
+                                        <span class="bs-stepper-circle">@GetKString(k)</span>
                                         <span class="bs-stepper-label">合作討論</span>
                                     </button>
                                 </div>
                                 <div class="bs-stepper-line"></div>
-                                <div class="@GetChartDisplayClass("1")" data-target="#test-vl-3">
+                                <div class="@GetChartDisplayClass(Model.CurrentAction[k++])" data-target="#test-vl-3">
                                     <button type="button" class="step-trigger" role="tab" id="stepper4trigger3" aria-controls="test-vl-3">
-                                        <span class="bs-stepper-circle">3</span>
+                                        <span class="bs-stepper-circle">@GetKString(k)</span>
                                         <span class="bs-stepper-label">畫流程圖</span>
                                     </button>
                                 </div>
                                 <div class="bs-stepper-line"></div>
-                                <div class="@GetChartDisplayClass("0")" data-target="#test-vl-3">
+                                <div class="@GetChartDisplayClass(Model.CurrentAction[k++])" data-target="#test-vl-3">
                                     <button type="button" class="step-trigger" role="tab" id="stepper4trigger3" aria-controls="test-vl-4">
-                                        <span class="bs-stepper-circle">4</span>
+                                        <span class="bs-stepper-circle">@GetKString(k)</span>
                                         <span class="bs-stepper-label">寫程式碼</span>
                                     </button>
                                 </div>
-                                <div class="@GetChartDisplayClass("0")" data-target="#test-vl-3">
+                                <div class="bs-stepper-line"></div>
+                                <div class="@GetChartDisplayClass(Model.CurrentAction[k++])" data-target="#test-vl-3">
                                     <button type="button" class="step-trigger" role="tab" id="stepper4trigger3" aria-controls="test-vl-7">
-                                        <span class="bs-stepper-circle">5</span>
+                                        <span class="bs-stepper-circle">@GetKString(k)</span>
                                         <span class="bs-stepper-label">團隊反思</span>
                                     </button>
                                 </div>
                                 break;
                             case 5:
-                                <div class="@GetChartDisplayClass("2")" data-target="#test-vl-1">
+                                <div class="@GetChartDisplayClass(Model.CurrentAction[k++])" data-target="#test-vl-1">
                                     <button type="button" class="step-trigger" role="tab" id="stepper4trigger1" aria-controls="test-vl-1">
-                                        <span class="bs-stepper-circle">1</span>
+                                        <span class="bs-stepper-circle">@GetKString(k)</span>
                                         <span class="bs-stepper-label">目標設置</span>
                                     </button>
                                 </div>
                                 <div class="bs-stepper-line"></div>
-                                <div class="@GetChartDisplayClass("2")" data-target="#test-vl-2">
+                                <div class="@GetChartDisplayClass(Model.CurrentAction[k++])" data-target="#test-vl-2">
                                     <button type="button" class="step-trigger" role="tab" id="stepper4trigger2" aria-controls="test-vl-2">
-                                        <span class="bs-stepper-circle">2</span>
+                                        <span class="bs-stepper-circle">@GetKString(k)</span>
                                         <span class="bs-stepper-label">合作討論</span>
                                     </button>
                                 </div>
                                 <div class="bs-stepper-line"></div>
-                                <div class="@GetChartDisplayClass("1")" data-target="#test-vl-3">
+                                <div class="@GetChartDisplayClass(Model.CurrentAction[k++])" data-target="#test-vl-3">
                                     <button type="button" class="step-trigger" role="tab" id="stepper4trigger3" aria-controls="test-vl-3">
-                                        <span class="bs-stepper-circle">3</span>
+                                        <span class="bs-stepper-circle">@GetKString(k)</span>
                                         <span class="bs-stepper-label">畫流程圖</span>
                                     </button>
                                 </div>
                                 <div class="bs-stepper-line"></div>
-                                <div class="@GetChartDisplayClass("0")" data-target="#test-vl-3">
+                                <div class="@GetChartDisplayClass(Model.CurrentAction[k++])" data-target="#test-vl-3">
                                     <button type="button" class="step-trigger" role="tab" id="stepper4trigger3" aria-controls="test-vl-4">
-                                        <span class="bs-stepper-circle">4</span>
+                                        <span class="bs-stepper-circle">@GetKString(k)</span>
                                         <span class="bs-stepper-label">寫程式碼</span>
                                     </button>
                                 </div>
                                 <div class="bs-stepper-line"></div>
-                                <div class="@GetChartDisplayClass("0")" data-target="#test-vl-3">
+                                <div class="@GetChartDisplayClass(Model.CurrentAction[k++])" data-target="#test-vl-3">
                                     <button type="button" class="step-trigger" role="tab" id="stepper4trigger3" aria-controls="test-vl-5">
-                                        <span class="bs-stepper-circle">5</span>
+                                        <span class="bs-stepper-circle">@GetKString(k)</span>
                                         <span class="bs-stepper-label">同儕互評</span>
                                     </button>
                                 </div>
                                 <div class="bs-stepper-line"></div>
-                                <div class="@GetChartDisplayClass("0")" data-target="#test-vl-3">
+                                <div class="@GetChartDisplayClass(Model.CurrentAction[k++])" data-target="#test-vl-3">
                                     <button type="button" class="step-trigger" role="tab" id="stepper4trigger3" aria-controls="test-vl-6">
-                                        <span class="bs-stepper-circle">6</span>
+                                        <span class="bs-stepper-circle">@GetKString(k)</span>
                                         <span class="bs-stepper-label">評價回饋</span>
                                     </button>
                                 </div>
                                 <div class="bs-stepper-line"></div>
-                                <div class="@GetChartDisplayClass("0")" data-target="#test-vl-3">
+                                <div class="@GetChartDisplayClass(Model.CurrentAction[k++])" data-target="#test-vl-3">
                                     <button type="button" class="step-trigger" role="tab" id="stepper4trigger3" aria-controls="test-vl-7">
-                                        <span class="bs-stepper-circle">7</span>
+                                        <span class="bs-stepper-circle">@GetKString(k)</span>
                                         <span class="bs-stepper-label">團隊反思</span>
                                     </button>
                                 </div>
@@ -278,60 +299,8 @@
                             default:
                                 break;
                         }
-
-                        @*<div class="@GetChartDisplayClass("2")" data-target="#test-vl-1">
-                            <button type="button" class="step-trigger" role="tab" id="stepper4trigger1" aria-controls="test-vl-1">
-                                <span class="bs-stepper-circle">1</span>
-                                <span class="bs-stepper-label">目標設置</span>
-                            </button>
-                        </div>
-                        <div class="bs-stepper-line"></div>
-                        <div class="@GetChartDisplayClass("2")" data-target="#test-vl-2">
-                            <button type="button" class="step-trigger" role="tab" id="stepper4trigger2" aria-controls="test-vl-2">
-                                <span class="bs-stepper-circle">2</span>
-                                <span class="bs-stepper-label">合作討論</span>
-                            </button>
-                        </div>
-                        <div class="bs-stepper-line"></div>
-                        <div class="@GetChartDisplayClass("1")" data-target="#test-vl-3">
-                            <button type="button" class="step-trigger" role="tab" id="stepper4trigger3" aria-controls="test-vl-3">
-                                <span class="bs-stepper-circle">3</span>
-                                <span class="bs-stepper-label">畫流程圖</span>
-                            </button>
-                        </div>
-                        <div class="bs-stepper-line"></div>
-                        <div class="@GetChartDisplayClass("0")" data-target="#test-vl-3">
-                            <button type="button" class="step-trigger" role="tab" id="stepper4trigger3" aria-controls="test-vl-4">
-                                <span class="bs-stepper-circle">4</span>
-                                <span class="bs-stepper-label">寫程式碼</span>
-                            </button>
-                        </div>
-                        <div class="bs-stepper-line"></div>
-                        <div class="@GetChartDisplayClass("0")" data-target="#test-vl-3">
-                            <button type="button" class="step-trigger" role="tab" id="stepper4trigger3" aria-controls="test-vl-5">
-                                <span class="bs-stepper-circle">5</span>
-                                <span class="bs-stepper-label">同儕互評</span>
-                            </button>
-                        </div>
-                        <div class="bs-stepper-line"></div>
-                        <div class="@GetChartDisplayClass("0")" data-target="#test-vl-3">
-                            <button type="button" class="step-trigger" role="tab" id="stepper4trigger3" aria-controls="test-vl-6">
-                                <span class="bs-stepper-circle">6</span>
-                                <span class="bs-stepper-label">評價回饋</span>
-                            </button>
-                        </div>
-                        <div class="bs-stepper-line"></div>
-                        <div class="@GetChartDisplayClass("0")" data-target="#test-vl-3">
-                            <button type="button" class="step-trigger" role="tab" id="stepper4trigger3" aria-controls="test-vl-7">
-                                <span class="bs-stepper-circle">7</span>
-                                <span class="bs-stepper-label">團隊反思</span>
-                            </button>
-                        </div>*@
                     </div>
                 </div>
-
-
-
             </div>
         </div>
         <div class="col-10 card p-3 bg-white ">
@@ -389,489 +358,7 @@
                         </button>
                     </div>
                 </div>
-
-                
-                @*<div class="w-100 fs-5 mx-2">
-            <table class="table table-bordered table-secondary">
-                <tbody>
-                    <tr>
-                        <th class="text-center">
-                            @Html.DisplayNameFor(model => model.Content)
-                        </th>
-                        <td>
-                            @Html.DisplayFor(model => model.Content, new { })
-                        </td>
-                    </tr>
-                    <tr>
-                        <th class="text-center">
-                            @Html.DisplayNameFor(model => model.StartDate)
-                        </th>
-                        <td>
-                            @Html.DisplayFor(model => model.StartDate)
-                        </td>
-                    </tr>
-                    <tr>
-                        <th class="text-center">
-                            @Html.DisplayNameFor(model => model.EndDate)
-                        </th>
-                        <td>
-                            @Html.DisplayFor(model => model.EndDate)
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>*@
-                <br />
-
-
-
-                @*<div class="mb-3">
-            後設認知開啟/關閉 :
-            @if (Model.mis.AddMetacognition)  //true
-                {
-                <button type="button" class="btn btn-success" id="is_AddMeta">後設認知狀態 : 開啟</button>
-            }
-            else   //false
-                        {
-                <button type="button" class="btn btn-secondary" id="is_AddMeta">後設認知狀態 : 關閉</button>
-            }
-        </div>*@
-                <!--<div class="mb-3">
-    題目設置 :
-    <button type="button" class="btn btn-outline-dark" id="question" onclick="location.href='@Url.Action("Index","Questions",new { mid = Model.MissionID, cid=Model.CourseID })'">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-card-list" viewBox="0 0 16 16">
-            <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
-            <path d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-1-5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zM4 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm0 2.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z" />
-        </svg>
-        後設認知題目
-    </button>-->
-                @*<button type="button" class="btn btn-outline-dark" onclick="location.href='@Url.Action("PersonalAbility","Questions",new { mid = Model.MID, cid=Model.CID })'">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-card-list" viewBox="0 0 16 16">
-                <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
-                <path d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-1-5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zM4 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm0 2.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z" />
-            </svg>
-            自評互評題目
-        </button>*@
-                <!--</div>-->
-                @*<div class="mb-3">
-            功能開啟/關閉 :
-        </div>
-        <div class="mb-3">
-            @if (Model.IsAddMetacognition)
-            {
-                if (Model.IsGoalSetting)
-                {
-                    <button type="button" class="btn btn-success" id="is_Goalsetting">目標設置開啟</button>
-                }
-                else
-                {
-                    <button type="button" class="btn btn-secondary" id="is_Goalsetting">目標設置關閉</button>
-                }
-            }
-            else
-            {
-                <button type="button" class="btn btn-secondary" id="is_Goalsetting" hidden>目標設置關閉</button>
-            }
-
-            @if (Model.IsDiscuss)
-            {
-                <button type="button" class="btn btn-success" id="is_Discuss">討論區開啟</button>
-            }
-            else
-            {
-                <button type="button" class="btn btn-secondary" id="is_Discuss">討論區關閉</button>
-            }
-            @if (Model.IsDrawing)
-            {
-                <button type="button" class="btn btn-success" id="is_Drawing">流程圖開啟</button>
-            }
-            else
-            {
-                <button type="button" class="btn btn-secondary" id="is_Drawing">流程圖關閉</button>
-            }
-            @if (Model.IsCoding)
-            {
-                <button type="button" class="btn btn-success" id="is_Coding">程式碼開啟</button>
-            }
-            else
-            {
-                <button type="button" class="btn btn-secondary" id="is_Coding">程式碼關閉</button>
-            }
-            @if (Model.IsAddPeerAssessmemt)
-            {
-                if (Model.IsAssess)
-                {
-                    <button type="button" class="btn btn-success" id="is_Assess">自評與互評開啟</button>
-                }
-                else
-                {
-                    <button type="button" class="btn btn-secondary" id="is_Assess">自評與互評關閉</button>
-                }
-
-                if (Model.IsGReflect)
-                {
-                    <button type="button" class="btn btn-success" id="is_GReflect">組間互評開啟</button>
-                }
-                else
-                {
-                    <button type="button" class="btn btn-secondary" id="is_GReflect">組間互評關閉</button>
-                }
-            }
-            else
-            {
-                <button type="button" class="btn btn-secondary" hidden id="is_Assess">自評與互評關閉</button>
-                <button type="button" class="btn btn-secondary" hidden id="is_GReflect">組間互評關閉</button>
-
-            }
-
-            @if (Model.IsAddMetacognition)
-            {
-                if (Model.IsReflect)
-                {
-                    <button type="button" class="btn btn-success" id="is_Reflect">自我反思開啟</button>
-                }
-                else
-                {
-                    <button type="button" class="btn btn-secondary" id="is_Reflect">自我反思關閉</button>
-                }
-            }
-            else
-            {
-                <button type="button" class="btn btn-secondary" id="is_Reflect" hidden>自我反思</button>
-            }
-
-            @if (Model.Is_Journey)
-            {
-                if (Model.IsAddPeerAssessmemt)
-                {
-                    <button type="button" class="btn btn-success" id="is_ejourney">學習表現(互評版)開啟</button>
-                }
-                else
-                {
-                    <button type="button" class="btn btn-success" id="is_journey">學習表現開啟</button>
-                }
-            }
-            else
-            {
-                if (Model.IsAddPeerAssessmemt)
-                {
-                    <button type="button" class="btn btn-secondary" id="is_ejourney">學習表現(互評版)關閉</button>
-                }
-                else
-                {
-                    <button type="button" class="btn btn-secondary" id="is_journey">學習表現關閉</button>
-                }
-            }
-        </div>*@
             </div>
         </div>
-
     </div>
-
 </div>
-
-@section Scripts
-{
-    <script>
-        $("#is_Drawing").click(function () {
-            var data = {};
-            data['mid'] = '@Model.MissionID';
-            data['cid'] = '@Model.CourseID';
-            data['type'] = "is_Drawing";
-            data['sw'] = $("#is_Drawing").text().trim() == "流程圖關閉" ? true  : false;
-            //console.log(data);
-            $.ajax({
-                url: '@Url.Action("SwitchDrawing")',
-                type: 'post',
-                dataType: 'json',
-                data: data,
-                success: function (response_data) {
-                    // ... do something with the data...
-                    console.log(response_data);
-                    if (response_data['Status'] == 200) {
-                        $("#is_Drawing").removeClass();
-
-                        if (response_data['sw'] == false) {
-                            $("#is_Drawing").text("流程圖關閉");
-                            $("#is_Drawing").addClass("btn btn-secondary");
-
-                        } else {
-                            $("#is_Drawing").text("流程圖開啟");
-                            $("#is_Drawing").addClass("btn btn-success");
-                        }
-                    }
-                }
-            });
-        });
-        $("#is_Coding").click(function () {
-            var data = {};
-            data['mid'] = '@Model.MissionID';
-            data['cid'] = '@Model.CourseID';
-            data['type'] = "is_Coding";
-            data['sw'] = $("#is_Coding").text().trim() == "程式碼關閉" ? true : false;
-            //console.log(data);
-            $.ajax({
-                url: '@Url.Action("SwitchDrawing")',
-                type: 'post',
-                dataType: 'json',
-                data: data,
-                success: function (response_data) {
-                    // ... do something with the data...
-                    console.log(response_data);
-                    if (response_data['Status'] == 200) {
-                        $("#is_Coding").removeClass();
-
-                        if (response_data['sw'] == false) {
-                            $("#is_Coding").text("程式碼關閉");
-                            $("#is_Coding").addClass("btn btn-secondary");
-                        } else {
-                            $("#is_Coding").text("程式碼開啟");
-                            $("#is_Coding").addClass("btn btn-success");
-                        }
-                    }
-                }
-            });
-        });
-        $("#is_Discuss").click(function () {
-            var data = {};
-            data['mid'] = '@Model.MissionID';
-            data['cid'] = '@Model.CourseID';
-            data['type'] = "is_Discuss";
-            data['sw'] = $("#is_Discuss").text().trim() == "討論區關閉" ? true : false;
-            //console.log(data);
-            $.ajax({
-                url: '@Url.Action("SwitchDrawing")',
-                type: 'post',
-                dataType: 'json',
-                data: data,
-                success: function (response_data) {
-                    // ... do something with the data...
-                    console.log(response_data);
-                    if (response_data['Status'] == 200) {
-                        $("#is_Discuss").removeClass();
-
-                        if (response_data['sw'] == false) {
-                            $("#is_Discuss").text("討論區關閉");
-                            $("#is_Discuss").addClass("btn btn-secondary");
-                        } else {
-                            $("#is_Discuss").text("討論區開啟");   //狀態為開啟
-                            $("#is_Discuss").addClass("btn btn-success");
-                        }
-                    }
-                }
-            });
-        });
-        $("#is_Assess").click(function () {
-            var data = {};
-            data['mid'] = '@Model.MissionID';
-            data['cid'] = '@Model.CourseID';
-            data['type'] = "is_Assess";
-            data['sw'] = $("#is_Assess").text().trim() == "自評與互評關閉" ? true : false;
-            //console.log(data);
-            $.ajax({
-                url: '@Url.Action("SwitchDrawing")',
-                type: 'post',
-                dataType: 'json',
-                data: data,
-                success: function (response_data) {
-                    // ... do something with the data...
-                    console.log(response_data);
-                    if (response_data['Status'] == 200) {
-                        $("#is_Assess").removeClass();
-
-                        if (response_data['sw'] == false) {
-                            $("#is_Assess").text("自評與互評關閉");
-                            $("#is_Assess").addClass("btn btn-secondary");
-                        } else {
-                            $("#is_Assess").text("自評與互評開啟");   //狀態為開啟
-                            $("#is_Assess").addClass("btn btn-success");
-                        }
-                    }
-                }
-            });
-        });
-        $("#is_Goalsetting").click(function () {
-            var data = {};
-            data['mid'] = '@Model.MissionID';
-            data['cid'] = '@Model.CourseID';
-            data['type'] = "is_Goalsetting";
-            data['sw'] = $("#is_Goalsetting").text().trim() == "目標設置關閉" ? true : false;
-            //console.log(data);
-            $.ajax({
-                url: '@Url.Action("SwitchDrawing")',
-                type: 'post',
-                dataType: 'json',
-                data: data,
-                success: function (response_data) {
-                    // ... do something with the data...
-                    console.log(response_data);
-                    if (response_data['Status'] == 200) {
-                        $("#is_Goalsetting").removeClass();
-
-                        if (response_data['sw'] == false) {
-                            $("#is_Goalsetting").text("目標設置關閉");
-                            $("#is_Goalsetting").addClass("btn btn-secondary");
-                        } else {
-                            $("#is_Goalsetting").text("目標設置開啟");   //狀態為開啟
-                            $("#is_Goalsetting").addClass("btn btn-success");
-                        }
-                    }
-                }
-            });
-        });
-        $("#is_Reflect").click(function () {
-            var data = {};
-            data['mid'] = '@Model.MissionID';
-            data['cid'] = '@Model.CourseID';
-            data['type'] = "is_Reflect";
-            data['sw'] = $("#is_Reflect").text().trim() == "自我反思關閉" ? true : false;
-            //console.log(data);
-            $.ajax({
-                url: '@Url.Action("SwitchDrawing")',
-                type: 'post',
-                dataType: 'json',
-                data: data,
-                success: function (response_data) {
-                    // ... do something with the data...
-                    console.log(response_data);
-                    if (response_data['Status'] == 200) {
-                        $("#is_Reflect").removeClass();
-
-                        if (response_data['sw'] == false) {
-                            $("#is_Reflect").text("自我反思關閉");
-                            $("#is_Reflect").addClass("btn btn-secondary");
-                        } else {
-                            $("#is_Reflect").text("自我反思開啟");   //狀態為開啟
-                            $("#is_Reflect").addClass("btn btn-success");
-                        }
-                    }
-                }
-            });
-        });
-        $("#is_GReflect").click(function () {
-            var data = {};
-            data['mid'] = '@Model.MissionID';
-            data['cid'] = '@Model.CourseID';
-            data['type'] = "is_GReflect";
-            data['sw'] = $("#is_GReflect").text().trim() == "組間互評關閉" ? true : false;
-            //console.log(data);
-            $.ajax({
-                url: '@Url.Action("SwitchDrawing")',
-                type: 'post',
-                dataType: 'json',
-                data: data,
-                success: function (response_data) {
-                    // ... do something with the data...
-                    console.log(response_data);
-                    if (response_data['Status'] == 200) {
-                        $("#is_GReflect").removeClass();
-
-                        if (response_data['sw'] == false) {
-                            $("#is_GReflect").text("組間互評關閉");
-                            $("#is_GReflect").addClass("btn btn-secondary");
-                        } else {
-                            $("#is_GReflect").text("組間互評開啟");   //狀態為開啟
-                            $("#is_GReflect").addClass("btn btn-success");
-                        }
-                    }
-                }
-            });
-        });
-        $("#is_ejourney").click(function () {
-            var data = {};
-            data['mid'] = '@Model.MissionID';
-            data['cid'] = '@Model.CourseID';
-            data['type'] = "is_Journey";
-            data['sw'] = $("#is_ejourney").text().trim() == "學習表現(互評版)關閉" ? true : false;
-            //console.log(data);
-            $.ajax({
-                url: '@Url.Action("SwitchDrawing")',
-                type: 'post',
-                dataType: 'json',
-                data: data,
-                success: function (response_data) {
-                    // ... do something with the data...
-                    console.log(response_data);
-                    if (response_data['Status'] == 200) {
-                        $("#is_ejourney").removeClass();
-
-                        if (response_data['sw'] == false) {
-                            $("#is_ejourney").text("學習表現(互評版)關閉");
-                            $("#is_ejourney").addClass("btn btn-secondary");
-                        } else {
-                            $("#is_ejourney").text("學習表現(互評版)開啟");   //狀態為開啟
-                            $("#is_ejourney").addClass("btn btn-success");
-                        }
-                    }
-                }
-            });
-        });
-        $("#is_journey").click(function () {
-            var data = {};
-            data['mid'] = '@Model.MissionID';
-            data['cid'] = '@Model.CourseID';
-            data['type'] = "is_Journey";
-            data['sw'] = $("#is_journey").text().trim() == "學習表現關閉" ? true : false;
-            //console.log(data);
-            $.ajax({
-                url: '@Url.Action("SwitchDrawing")',
-                type: 'post',
-                dataType: 'json',
-                data: data,
-                success: function (response_data) {
-                    // ... do something with the data...
-                    console.log(response_data);
-                    if (response_data['Status'] == 200) {
-                        $("#is_journey").removeClass();
-
-                        if (response_data['sw'] == false) {
-                            $("#is_journey").text("學習表現關閉");
-                            $("#is_journey").addClass("btn btn-secondary");
-                        } else {
-                            $("#is_journey").text("學習表現開啟");   //狀態為開啟
-                            $("#is_journey").addClass("btn btn-success");
-                        }
-                    }
-                }
-            });
-        });
-        @*$("#is_AddMeta").click(function () {
-            var data = {};
-            data['mid'] = '@Model.MID';
-            data['cid'] = '@Model.CID';
-            data['type'] = "is_AddMeta";
-            data['sw'] = $("#is_AddMeta").text().trim() == "後設認知" ? true : false;
-            //console.log(data);
-            $.ajax({
-                url: '@Url.Action("SwitchDrawing")',
-                type: 'post',
-                dataType: 'json',
-                data: data,
-                success: function (response_data) {
-                    // ... do something with the data...
-                    console.log(response_data);
-                    if (response_data['Status'] == 200) {
-                        $("#is_AddMeta").removeClass();
-
-                        if (response_data['sw'] == false) {
-                            $("#is_AddMeta").text("後設認知狀態 : 關閉");
-                            $("#is_AddMeta").addClass("btn btn-secondary");
-                            $("#question").attr('hidden', true);
-                            $("#is_Goalsetting").attr('hidden', true);
-                            $("#is_Reflect").attr('hidden', true);
-                        } else {
-                            $("#is_AddMeta").text("後設認知狀態 : 開啟");   //狀態為開啟
-                            $("#is_AddMeta").addClass("btn btn-success");
-                            $("#question").attr('hidden', false);
-                            $("#is_Goalsetting").attr('hidden', false);
-                            $("#is_Reflect").attr('hidden', false);
-                        }
-                    }
-                }
-            });
-        });*@
-
-    </script>
-}
-
-
