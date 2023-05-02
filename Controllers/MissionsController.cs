@@ -51,6 +51,7 @@ namespace LMSweb.Models
                     Content = m.MDetail,
                     StartDate = m.Start,
                     EndDate = m.End,
+                    CurrentAction = m.CurrentAction,
                     IsAssess = m.IsAssess,
                     IsCoding = m.IsCoding,
                     IsDiscuss = m.IsDiscuss,
