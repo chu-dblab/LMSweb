@@ -1,187 +1,131 @@
 ﻿@model LMSweb.ViewModel.MissionViewModel
 @{
     ViewBag.Title = "StudentMissionDetail";
-    Layout = "~/Views/Shared/_StudentLayout.cshtml";
 }
-<style>
-    table {
-        border-collapse: collapse;
-        /*margin: 10px auto;*/
-    }
-
-        table tr {
-            border-bottom: solid 2px #F0F0F2;
-        }
-
-    th {
-        background-color: cadetblue;
-        color: #F0F0F2;
-        text-align: center;
-        padding: 10px 0;
-        
-    }
-
-    td {
-        padding: 10px 10px;
-    }
-
-    .MissionDetailArticle {
-        position: relative;
-        display: block;
-        box-sizing: border-box;
-        width: 100%;
-        max-width: 1200px;
-        margin: 20px auto 20px;
-        padding: 30px 70px 50px 70px;
-        border-radius: 5px;
-        background: #F0F0F2;
-        border: 1px solid #dee2e6;
-        border-color: #cdcdcd;
-    }
-
-    .message-btn {
-        position: fixed;
-        width: 100px;
-        height: 100px;
-        right: 50px;
-        bottom: 50px;
-    }
-</style>
-<div class="cardArticle">
-    <h4>@Model.CName</h4>
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="@Url.Action("StudentMission","Student",new { CID = Model.CID})">任務列表</a></li>
-            <li class="breadcrumb-item active" aria-current="page">@Model.MName</li>
-        </ol>
-    </nav>
-</div>
-<div class="MissionDetailArticle">
-    <div class="mb-4">
-        <h5>@Model.MName</h5>
-        @if (DateTime.Compare(DateTime.Parse(Model.mis.End), DateTime.Now) <= 0)
-        {
-            <p class="text-danger">任務已到期，如需補交作業請通知指導老師!</p>
-        }
-        <hr />
-        <div>
-            @if (Model.course.IsAddMetacognition)
-            {
-                if (Model.mis.IsGoalSetting)
-                {
-                    @Html.ActionLink("目標設置", "StudentGoalSetting", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-outline-primary", @id = "goal_btn" })
-                    <i class="bi bi-arrow-right"></i>
-                }
-            }
 
 
-            @if (Model.mis.IsDrawing)
-            {
-                @Html.ActionLink("流程圖", "StudentDrawing", "Student", new { mid = Model.MID, cid = Model.CID }, new { @class = "btn btn-outline-primary", @id = "drawing_btn" })
-                <i class="bi bi-arrow-right"></i>
+@section NavPills {
+    <ul class="nav nav-pills me-auto ms-3">
+        <li class="nav-item">
+            <a class="text-white nav-link" aria-current="page" href="@Url.Action("StudentMission","Student",new { CID = Model.CID})">任務列表</a>
+        </li>
+    </ul>
+}
 
-            }
+<div class="container">
 
-            @if (Model.mis.IsCoding)
-            {
-                @Html.ActionLink("程式碼", "StudentCoding", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-outline-primary", @id = "coding_btn" })
-                <i class="bi bi-arrow-right"></i>
-            }
-            @if (Model.course.IsAddPeerAssessmemt)
-            {
-                if (Model.mis.IsAssess)
-                {
-                    @Html.ActionLink("自評與互評", "Index", "PeerAssessments", new { SID = Model.SID, MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-outline-primary", @id = "assess_btn" })
-                    <i class="bi bi-arrow-right"></i>
-                }
-                if (Model.mis.IsGReflect)
-                {
-                    @Html.ActionLink("組間互評", "GroupEvalution", "PeerAssessments", new { GID = Model.GID, SID = Model.SID, MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-outline-primary", @id = "gassess_btn" })
-                    <i class="bi bi-arrow-right"></i>
-                }
-            }
-            @if (Model.course.IsAddMetacognition)
-            {
-                if (Model.mis.IsReflect)
-                {
-                    @Html.ActionLink("自我反思", "StudentReflection", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-outline-primary", @id = "reflec_btn" })
-                }
-            }
+    @AllHelper.CouresTitleForStudentView(Model.CName, Model.MName)
 
-            @if (Model.mis.Is_Journey)
-            {
-                if (Model.course.IsAddPeerAssessmemt)
-                {
-                    @Html.ActionLink("學習表現(互評版)", "StudentEvalutionJourney", "LearningBehaviors", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-outline-primary", @id = "ejourney_btn" })
-                }
-                else
-                {
-                    @Html.ActionLink("學習表現", "StudentJourney", "LearningBehaviors", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-outline-primary", @id = "journey_btn" })
-                }
-            }
+    <div class="card m-3 p-4">
 
+        <div class="row gx-2 gy-3">
+            @MissionsHelper.GetDetailDataListGroupTemplate(
+                Html.DisplayNameFor(model => model.mis.MName),
+                Html.DisplayFor(model => model.mis.MName), 100)
 
+            @MissionsHelper.GetDetailDataListGroupTemplate(
+                Html.DisplayNameFor(model => model.mis.MDetail),
+                Html.DisplayFor(model => model.mis.MDetail), 300)
 
+            @MissionsHelper.GetDetailDataListGroupTemplate(
+                Html.DisplayNameFor(model => model.mis.Start),
+                Html.DisplayFor(model => model.mis.Start))
+
+            @MissionsHelper.GetDetailDataListGroupTemplate(
+                Html.DisplayNameFor(model => model.mis.End),
+                Html.DisplayFor(model => model.mis.End))
         </div>
 
-    </div>
-    <table>
-        <tr>
-            <th class="col-6">
-                @Html.DisplayNameFor(model => model.mis.MName)
-            </th>
-            <td>
-                @Html.DisplayFor(model => model.mis.MName)
-            </td>
-        </tr>
-        <tr>
-            <th class="col-6">
-                @Html.DisplayNameFor(model => model.mis.MDetail)
-            </th>
-            <td>
-                @Html.DisplayFor(model => model.mis.MDetail)
-            </td>
-        </tr>
-        <tr>
-            <th class="col-6">
-                @Html.DisplayNameFor(model => model.mis.Start)
-            </th>
-            <td>
-                @Html.DisplayFor(model => model.mis.Start)
-            </td>
-        </tr>
-        <tr>
-            <th class="col-6">
-                @Html.DisplayNameFor(model => model.mis.End)
-            </th>
-            <td>
-                @Html.DisplayFor(model => model.mis.End)
-            </td>
-        </tr>
-
-        @*<tr>
-            <th class="col-6">
-                @Html.DisplayNameFor(model => model.mis.relatedKP)
-            </th>
-            <td>
-                @foreach (var kp in Model.KContents)
+        <div class="mb-4">
+            @if (DateTime.Compare(DateTime.Parse(Model.mis.End), DateTime.Now) <= 0)
+            {
+                <p class="text-danger">任務已到期，如需補交作業請通知指導老師!</p>
+            }
+            <div>
+                @if (Model.course.IsAddMetacognition)
                 {
-                    @kp
-                    <br>
+                    if (Model.mis.IsGoalSetting)
+                    {
+                        @Html.ActionLink("目標設置", "StudentGoalSetting", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-outline-primary", @id = "goal_btn" })
+                        <i class="bi bi-arrow-right"></i>
+                    }
                 }
-            </td>
-        </tr>*@
-    </table>
+
+
+                @if (Model.mis.IsDrawing)
+                {
+                    @Html.ActionLink("流程圖", "StudentDrawing", "Student", new { mid = Model.MID, cid = Model.CID }, new { @class = "btn btn-outline-primary", @id = "drawing_btn" })
+                    <i class="bi bi-arrow-right"></i>
+
+                }
+
+                @if (Model.mis.IsCoding)
+                {
+                    @Html.ActionLink("程式碼", "StudentCoding", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-outline-primary", @id = "coding_btn" })
+                    <i class="bi bi-arrow-right"></i>
+                }
+                @if (Model.course.IsAddPeerAssessmemt)
+                {
+                    if (Model.mis.IsAssess)
+                    {
+                        @Html.ActionLink("自評與互評", "Index", "PeerAssessments", new { SID = Model.SID, MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-outline-primary", @id = "assess_btn" })
+                        <i class="bi bi-arrow-right"></i>
+                    }
+                    if (Model.mis.IsGReflect)
+                    {
+                        @Html.ActionLink("組間互評", "GroupEvalution", "PeerAssessments", new { GID = Model.GID, SID = Model.SID, MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-outline-primary", @id = "gassess_btn" })
+                        <i class="bi bi-arrow-right"></i>
+                    }
+                }
+                @if (Model.course.IsAddMetacognition)
+                {
+                    if (Model.mis.IsReflect)
+                    {
+                        @Html.ActionLink("自我反思", "StudentReflection", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-outline-primary", @id = "reflec_btn" })
+                    }
+                }
+
+                @if (Model.mis.Is_Journey)
+                {
+                    if (Model.course.IsAddPeerAssessmemt)
+                    {
+                        @Html.ActionLink("學習表現(互評版)", "StudentEvalutionJourney", "LearningBehaviors", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-outline-primary", @id = "ejourney_btn" })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("學習表現", "StudentJourney", "LearningBehaviors", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-outline-primary", @id = "journey_btn" })
+                    }
+                }
+            </div>
+        </div>
+    </div>
 </div>
 
-<!-- 懸浮聊天室 -->
-<body>
-   @if (Model.mis.IsDiscuss)
-    {
+@*@if (!Model.mis.IsDiscuss)
+{
     <button type="button" class="btn btn-primary rounded-circle message-btn" data-bs-toggle="offcanvas"
             data-bs-target="#messageBox" aria-controls="messageBox">
         討論區
     </button>
+}
+<div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="messageBox" aria-labelledby="messageBoxLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="messageBoxLabel">聊天室</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <iframe src="@Url.Action("Chat","Student",new { MID = @Model.MID, CID = @Model.CID})" width="365" height="830" frameborder="0" scrolling="no"></iframe>
+    </div>
+</div>*@
+
+<!-- 懸浮聊天室 -->
+<body>
+    @if (!Model.mis.IsDiscuss)
+    {
+        <button type="button" class="btn btn-primary rounded-circle message-btn" data-bs-toggle="offcanvas"
+                data-bs-target="#messageBox" aria-controls="messageBox">
+            討論區
+        </button>
     }
     <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="messageBox" aria-labelledby="messageBoxLabel">
         <div class="offcanvas-header">

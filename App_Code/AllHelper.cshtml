@@ -1,0 +1,28 @@
+﻿@* 老師介面個介面課程名稱 *@
+@helper CouresTitleForTeacherView(string CourseName, int TestType)
+{
+    <div class="card m-3 p-3">
+        <h1 class="w-auto m-2 fs-2">@CourseName</h1>
+        <h3 class="w-auto m-2 fs-4">@MissionsHelper.GetTypeString(Convert.ToInt32(TestType))</h3>
+    </div>
+}
+
+@helper CouresTitleForTeacherView(string CourseName)
+{
+    <div class="card m-3 p-3">
+        <h1 class="w-auto m-2 fs-2">@CourseName</h1>
+    </div>
+}
+
+@helper CouresTitleForStudentView(string CourseName)
+{
+    @AllHelper.CouresTitleForTeacherView(CourseName)
+}
+
+@helper CouresTitleForStudentView(string CourseName, string MissionsName)
+{
+    <div class="card m-3 p-3">
+        <h1 class="w-auto m-2 fs-2">@CourseName</h1>
+        <h3 class="w-auto m-2 fs-4">@MissionsName</h3>
+    </div>
+}

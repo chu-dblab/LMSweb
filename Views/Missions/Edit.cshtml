@@ -21,48 +21,10 @@
     </ul>
 }
 
-@*@section header {
-        @Html.Partial("../Shared/Header/HeaderNavbar")
-    }*@
-
-
-@*<nav class="navbar navbar-expand-lg navbar-light navBG" style="border-radius: 0 0 5px 5px;">
-        <div class="container">
-            <div class="collapse navbar-collapse">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item ">
-                        <a class="nav-link text-light active" href="@Url.Action("Home","Teacher")">
-                            <i class="bi bi-house-door"></i>
-                            回課程首頁
-                        </a>
-                    </li>
-                    <li class="nav-item ">
-                        <a class="nav-link text-light" href="@Url.Action("Index", "Missions", new { CID = Model.CourseID})">任務管理</a>
-                    </li>
-                    <li class="nav-item ">
-                        <a class="nav-link text-light active" aria-current="page" href="@Url.Action("StudentManagement", "Course", new { CID = Model.CourseID})">學生名單</a>
-                    </li>
-                    <li class="nav-item ">
-                        <a class="nav-link text-light " href="@Url.Action("TeacherJourney","LearningBehaviors", new { CID = Model.CourseID})">學習表現</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light " href="@Url.Action("TeacherEvalutionJourney","LearningBehaviors",new {CID = Model.CourseID})">學習表現(互評版)</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>*@
-
 <div class="container">
-    <div class="card m-3 p-3">
-        <div class="row m-2">
-            <h1 class="w-auto fs-2 my-auto">@Model.CourseName</h1>
-            <ol class="breadcrumb bg-white m-3">
-                <li class="breadcrumb-item"><a href="@Url.Action("Index", "Missions", new { CID = Model.CourseID})">任務列表</a></li>
-                <li class="breadcrumb-item active" aria-current="page">編輯任務</li>
-            </ol>
-        </div>
-    </div>
+
+    @AllHelper.CouresTitleForTeacherView(Model.CourseName)
+    
     <div class="card m-3 p-4">
         @using (Html.BeginForm())
         {
@@ -73,7 +35,7 @@
 
                 @* 任務ID 隱藏式 *@
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-               
+
                 @* 任務名稱 *@
                 <div class="mb-3 my-1">
                     @Html.LabelFor(model => model.Name, new { @class = "form-label ms-2 fs-5 my-1" })

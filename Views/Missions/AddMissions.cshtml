@@ -20,50 +20,11 @@
     </ul>
 }
 
-@*@section header {
-        @Html.Partial("../Shared/Header/HeaderNavbar")
-    }*@
-
-@*<nav class="navbar navbar-expand-lg navbar-light navBG" style="border-radius: 0 0 5px 5px;">
-        <div class="container">
-            <div class="collapse navbar-collapse">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item ">
-                        <a class="nav-link text-light active" href="@Url.Action("Home","Teacher")">
-                            <i class="bi bi-house-door"></i>
-                            回課程首頁
-                        </a>
-                    </li>
-                    <li class="nav-item ">
-                        <a class="nav-link text-light" href="@Url.Action("Index", "Missions", new { CID = Model.CourseID})">任務管理</a>
-                    </li>
-                    <li class="nav-item ">
-                        <a class="nav-link text-light active" aria-current="page" href="@Url.Action("StudentManagement", "Course", new { CID = Model.CourseID})">學生名單</a>
-                    </li>
-                    <li class="nav-item ">
-                        <a class="nav-link text-light " href="@Url.Action("TeacherJourney","LearningBehaviors", new { CID = Model.CourseID})">學習表現</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light " href="@Url.Action("TeacherEvalutionJourney","LearningBehaviors",new {CID = Model.CourseID})">學習表現(互評版)</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>*@
 
 <div class="container">
 
-    @* 關閉麵包屑功能 *@
-    <div class="card m-3 p-4">
-        <h1 class="w-auto fs-2 my-auto">@Model.CourseName</h1>
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="@Url.Action("Index", "Missions", new { CID = Model.CourseID})">任務列表</a></li>
-                <li class="breadcrumb-item"><a href="@Url.Action("SelectMissions", "Missions", new { CID = Model.CourseID})">複製任務</a></li>
-                <li class="breadcrumb-item active" aria-current="page">複製任務內容</li>
-            </ol>
-        </nav>
-    </div>
+    @AllHelper.CouresTitleForTeacherView(Model.CourseName)
+
     <div class="card m-3 p-4">
         <h4 class="fs-3 text-center my-1">複製任務</h4>
         @using (Html.BeginForm("Create", "Missions"))

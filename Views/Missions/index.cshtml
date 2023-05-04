@@ -1,5 +1,12 @@
 ﻿@model LMSweb.ViewModel.MissionIndexViewModel
 
+@{
+    ViewBag.Title = "Index";
+
+    // 編號變數
+    int k = 1;
+}
+
 @section NavPills {
     <ul class="nav nav-pills me-auto ms-3">
         <li class="nav-item">
@@ -18,17 +25,15 @@
 }
 
 <div class="container">
-    <div class="card m-3 p-4">
-        <h1 class="w-auto m-2 fs-2">@Model.CourseName</h1>
-        <h3 class="w-auto m-2 fs-4">@MissionsHelper.GetTypeString(Model.TestType)</h3>
-    </div>
 
+    @AllHelper.CouresTitleForTeacherView(Model.CourseName, Model.TestType)
+    
     <div class="card m-3 p-4">
         <div class="row mb-3">
             <div class="col">
                 <h3>任務列表</h3>
             </div>
-             
+
             <div class="col d-flex justify-content-end me-2">
                 <a href="@Url.Action("Create", "Missions", new { CID = Model.CourseID})" class="btn btn-primary w-auto mx-2 my-auto">
                     <i class="bi bi-plus-lg"></i>
@@ -41,7 +46,7 @@
                 </a>
             </div>
         </div>
-        @if (Model.Missions.Count == 0)
+        @if (Model.Missions.Count() == 0)
         {
             <div class="my-5">
                 <p class="alert alert-info">目前還沒有新增任務哦~</p>
@@ -69,7 +74,9 @@
                     @foreach (var item in Model.Missions)
                     {
                         <tr class="row bg-white mx-1">
-                            <td class="col-1 align-self-center py-3"></td>
+                            <td class="col-1 align-self-center py-3">
+                                <span class='ms-2'>@(k++)</span>
+                            </td>
                             <td class="col-3 align-self-center py-3">
                                 @Html.DisplayFor(modelItem => item.Name)
                             </td>
@@ -97,14 +104,3 @@
         }
     </div>
 </div>
-
-@section endJS{
-    <script language="javascript" type="text/javascript">
-        window.onload = function () {
-            var tableLine = document.getElementById("number");
-            for (var i = 0; i < tableLine.rows.length; i++) {
-                tableLine.rows[i].cells[0].innerHTML = "<span class='ms-2'></span>" + (i + 1);
-            }
-        }
-    </script>
-}

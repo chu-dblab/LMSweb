@@ -758,6 +758,7 @@
     <Content Include="Content\bootstrap-fileinput\scss\themes\explorer-fa4\theme.scss" />
     <Content Include="Content\bootstrap-fileinput\scss\fileinput.scss" />
     <Content Include="Content\bootstrap-fileinput\scss\fileinput-rtl.scss" />
+    <Content Include="App_Code\AllHelper.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Scripts\bootstrap-multiselect.js" />
     <Content Include="Scripts\bootstrap-multiselect.min.js" />

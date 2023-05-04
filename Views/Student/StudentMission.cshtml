@@ -1,6 +1,8 @@
 ﻿@model LMSweb.ViewModel.MissionViewModel
 @{
     ViewBag.Title = "StudentMission";
+    
+    int k = 1;
 }
 
 @section NavPills {
@@ -11,47 +13,84 @@
     </ul>
 }
 <div class="container">
+    
+    @AllHelper.CouresTitleForStudentView(Model.CName)
+
     <div class="card m-3 p-4">
-        <h4>@Model.CName</h4>
-        @*<nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item active">任務列表</li>
-                </ol>
-            </nav>*@
-    </div>
-    <div class="card m-3 p-4">
-        <h5>任務列表</h5>
-        @if (Model.missions == null || Model.missions.Count() == 0)
+        <div class="row mb-3">
+            <div class="col">
+                <h3>任務列表</h3>
+            </div>
+
+            @*<div class="col d-flex justify-content-end me-2">
+                <a href="@Url.Action("Create", "Missions", new { CID = Model.CourseID})" class="btn btn-primary w-auto mx-2 my-auto">
+                    <i class="bi bi-plus-lg"></i>
+                    新增任務
+                </a>
+
+                <a href="@Url.Action("SelectMissions", "Missions", new { CID = Model.CourseID })" class="btn btn-primary w-auto my-auto">
+                    <i class="bi bi-files"></i>
+                    複製任務
+                </a>
+            </div>*@
+        </div>
+
+       
+        @if (Model.missions.Count() == 0)
         {
-            <p>目前還沒有任務哦~</p>
+            <div class="my-5">
+                <p class="alert alert-info">目前還沒有新增任務哦~</p>
+            </div>
         }
         else
         {
-            <div class="row">
-                @foreach (var item in Model.missions)
-                {
-                    <div class="card col-3 m-3 p-4" style="min-height: 100px">
-                        <h5 class="card-title">@item.MName</h5>
-                        <p class="card-text overflow-hidden" style="height: 100px">@item.MDetail</p>
-                        <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("StudentMissionDetail","Student", new {sid = Model.SID, mid = item.MID, cid = item.CID, gid = Model.GID})'">
-                            進入任務<i class="bi bi-arrow-right"></i>
-                        </button>
-                    </div>
-                }
-            </div>
+            <table class="table table-striped">
+                <thead>
+                    <tr class="row mx-1">
+                        <th class="col-1">編號</th>
+                        <th class="col-3">
+                            @Html.DisplayNameFor(model => model.missions.First().MName)
+                        </th>
+                        <th class="col">
+                            @Html.DisplayNameFor(model => model.missions.First().Start)
+                        </th>
+                        <th class="col">
+                            @Html.DisplayNameFor(model => model.missions.First().End)
+                        </th>
+                        <th class="col"></th>
+                    </tr>
+                </thead>
+                <tbody id="number">
+                    @foreach (var item in Model.missions)
+                    {
+                        <tr class="row bg-white mx-1">
+                            <td class="col-1 align-self-center py-3">
+                                <span class='ms-2'>@(k++)</span>
+                            </td>
+                            <td class="col-3 align-self-center py-3">
+                                @Html.DisplayFor(modelItem => item.MName)
+                            </td>
+                            <td class="startTime col align-self-center py-3">
+                                @Html.DisplayFor(modelItem => item.Start)
+                            </td>
+                            <td class="endTime col align-self-center py-3">
+                                @Html.DisplayFor(modelItem => item.End)
+                            </td>
+                            <td class="d-grid d-flex justify-content-end col">
+                                <a href="@Url.Action("StudentMissionDetail","Student", new { mid=item.MID, cid = Model.CID})" class="btn btn-primary my-auto">
+                                    進入任務
+                                </a>
+                                @*<a href="@Url.Action("Edit", "Missions", new {  mid = item.MID, cid = Model.CID})" class="btn btn-link">
+                                    <i class="bi bi-pencil-fill"></i>
+                                </a>
+                                <a href="@Url.Action("Delete", "Missions",new { mid=item.MID, cid=Model.CID})" class="btn btn-link">
+                                    <i class="bi bi-trash-fill"></i>
+                                </a>*@
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         }
     </div>
-
 </div>
-@section scripts
-{
-    <script>
-        window.onload = function () {
-            var tableLine = document.getElementById("number");
-            for (var i = 0; i < tableLine.rows.length; i++) {
-                tableLine.rows[i].cells[0].innerHTML = (i + 1);
-            }
-        }
-    </script>
-
-}
