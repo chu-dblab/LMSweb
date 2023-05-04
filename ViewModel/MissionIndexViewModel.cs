@@ -10,6 +10,7 @@ namespace LMSweb.ViewModel
     {
         public string CourseID { get; set; }
         public string CourseName { get; set; }
+        public int TestType { get; set; }
         public List<MissionData> Missions { get; set; }
     }
 

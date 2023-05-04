@@ -32,6 +32,7 @@ namespace LMSweb.Models
             {
                 CourseID = course_data.CID,
                 CourseName = course_data.CName,
+                TestType = course_data.TestType,
                 Missions = mission_datas
             };
 
