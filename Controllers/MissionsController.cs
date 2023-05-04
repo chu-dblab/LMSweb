@@ -115,12 +115,12 @@ namespace LMSweb.Models
         private string DefaultCurrentStatus(int type)
         {
             var table = new Dictionary<int, string>();
-            table[0] = "000";
+            table[0] = "00";
             table[1] = "0000";
-            table[2] = "00000";
-            table[3] = "00000";
-            table[4] = "00000";
-            table[5] = "0000000";
+            table[2] = "000";
+            table[3] = "0000";
+            table[4] = "0000";
+            table[5] = "000000";
             return table[type];
         }
 
