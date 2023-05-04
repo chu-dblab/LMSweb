@@ -4,10 +4,6 @@
     ViewBag.Title = "Edit";
 }
 
-@*@section header {
-        @Html.Partial("../Shared/Header/HeaderNavbar")
-    }*@
-
 <div class="container ms-auto">
     <div class="card col-4 mx-auto bg-white my-5 p-3">
         <h4 class="align-self-center">修改課程</h4>
@@ -18,9 +14,6 @@
 
             <div class="form-horizontal">
                 @Html.ValidationSummary(true, "", new { @class = "text-danger", sortOrder = ViewBag.DateSortParm })
-                @*@Html.HiddenFor(model => model.CID, new { @class = "form-control", @Value = "C" + DateTime.Now.ToString("yyMMddHHmmss") })
-                @Html.ValidationMessageFor(model => model.CID, "", new { @class = "text-danger" })*@
-
 
                 <div class="mb-3 mt-2">
                     @Html.LabelFor(model => model.CourseName, htmlAttributes: new { @class = "control-label mb-1" })
@@ -37,15 +30,15 @@
                     <select class="form-select" name="TestType">
                         <option selected>請選擇操作實驗組別</option>
                         <option value="0">控制組</option>
-                        <option value="1">實驗組一：同儕互評</option>
-                        <option value="2">實驗組二：自我調節</option>
-                        <option value="3">實驗組三：互動式同儕互評</option>
-                        <option value="4">實驗組四：社會共享調節</option>
-                        <option value="3">實驗組五：互動式同儕互評&社會共享調節</option>
+                        <option value="1">實驗組一：自我調節</option>
+                        <option value="2">實驗組二：同儕互評</option>
+                        <option value="3">實驗組三：社會共享調節</option>
+                        <option value="4">實驗組四：互動式同儕互評</option>
+                        <option value="5">實驗組五：社會共享調節&互動式同儕互評</option>
                     </select>
                     @Html.ValidationMessageFor(model => model.TestType, "", new { @class = "text-danger" })
                 </div>
-                
+
                 <div class="form-actions no-color row p-3">
                     <input type="submit" value="儲存" class="btn btn-primary col-5" />
                     <a href="@Url.Action("Home", "Teacher")" class="btn btn-secondary col-5 ms-auto">取消</a>

@@ -227,6 +227,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="ChatHub.cs" />
     <Compile Include="CodeServiceHub.cs" />
+    <Compile Include="Controllers\ChartController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\apiController\DiscussApiController.cs" />
     <Compile Include="Controllers\GroupsController.cs" />
@@ -1902,6 +1903,8 @@
     <Content Include="Views\Missions\GuideMod\_ExperimentalGroupThreeLayout.cshtml" />
     <Content Include="Views\Missions\GuideMod\_ExperimentalGroupFourLayout.cshtml" />
     <Content Include="Views\Missions\GuideMod\_ExperimentalGroupFiveLayout.cshtml" />
+    <Content Include="Views\Chart\_ChartStackedBar.cshtml" />
+    <Content Include="App_Code\MissionsHelper.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2164,7 +2167,7 @@
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>https://localhost:44301</IISUrl>
           <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
-          <IISAppRootUrl>http://localhost:56564/</IISAppRootUrl>
+          <IISAppRootUrl>https://localhost:44301</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

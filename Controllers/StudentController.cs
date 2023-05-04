@@ -30,28 +30,28 @@ namespace LMSweb.Controllers
             var claimData = claims.Claims.Where(x => x.Type == "UID").FirstOrDefault();   //抓出當初記載Claims陣列中的SID
             var sid = claimData.Value; //取值(因為只有一筆)
 
-            var data = from c in db.Courses
-                       from s in db.Students
-                       from g in db.Groups
-                       from t in db.Teachers
-                       where s.CID == c.CID && c.TID == t.TID && s.GID == g.GID&& s.SID == sid
-                       select new StudentHomeViewModel
-                       {
-                           CourseID = c.CID,
-                           CourseName = c.CName,
-                           TeacherName = t.TName,
-                           GroupName = g.GName
-                       };
-            return View();
-                      
+            //var data = from c in db.Courses
+            //           from s in db.Students
+            //           from g in db.Groups
+            //           from t in db.Teachers
+            //           where s.CID == c.CID && c.TID == t.TID && s.GID == g.GID&& s.SID == sid
+            //           select new StudentHomeViewModel
+            //           {
+            //               CourseID = c.CID,
+            //               CourseName = c.CName,
+            //               TeacherName = t.TName,
+            //               GroupName = g.GName
+            //           };
+            //return View();
 
-            /*var stuG = db.Students.Find(sid).group;
+
+            var stuG = db.Students.Find(sid).Group;
             var studentCourse = db.Students.Where(s => s.SID == sid);
             var stuCourse = db.Students.Find(sid);
             var cid = stuCourse.CID;
             var course = db.Courses.Find(cid);
             var cname = course.CName;
-            var tname = course.teacher.TName;
+            var tname = course.Teacher.TName;
 
             vmodel.CID = cid;
             vmodel.CName = cname;
@@ -70,7 +70,7 @@ namespace LMSweb.Controllers
                 vmodel.GName = stuG.GName;
 
                 return View(vmodel);
-            }*/
+            }
         }
 
         [HttpGet]
@@ -381,7 +381,7 @@ namespace LMSweb.Controllers
         {
             MissionViewModel model = new MissionViewModel();
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity;
-            var claimData = claims.Claims.Where(x => x.Type == "SID").ToList();
+            var claimData = claims.Claims.Where(x => x.Type == "UID").ToList();
             var sid = claimData[0].Value;
             var stu = db.Students.Where(s => s.SID == sid);
             var stuG = db.Students.Find(sid).Group;

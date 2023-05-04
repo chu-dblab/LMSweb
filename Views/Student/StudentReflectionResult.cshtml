@@ -3,15 +3,20 @@
     ViewBag.Title = "StudentReflectionResult";
     Layout = "~/Views/Shared/_StudentLayout.cshtml";
 }
-<style>
-    .message-btn {
-        position: fixed;
-        width: 100px;
-        height: 100px;
-        right: 50px;
-        bottom: 50px;
+
+@section topCSS {
+    <style>
+        .message-btn {
+            position: fixed;
+            width: 100px;
+            height: 100px;
+            right: 50px;
+            bottom: 50px;
+        }
+    </style>
     }
-</style>
+
+
 <div class="cardArticle">
     <h4>@Model.CName</h4>
     <nav aria-label="breadcrumb">

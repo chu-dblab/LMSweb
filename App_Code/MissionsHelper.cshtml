@@ -1,0 +1,45 @@
+﻿@functions {
+    string GetChartDisplayClass(char input)
+    {
+
+        //0 == 還沒做
+        //1 == 正在做
+        //2 == 已經做完
+
+        if (input == '0') return "step align-self-center opacity-50";
+        else if (input == '1') return "step align-self-center active";
+        else if (input == '2') return "step align-self-center";
+        else return "step align-self-center";
+    }
+}
+@helper GetTypeString(int input)
+{
+    string str = "";
+    if (input == 0) { str = "控制組"; }
+    else if (input == 1) { str = "實驗組一：自我調節"; }
+    else if (input == 2) { str = "實驗組二：同儕互評"; }
+    else if (input == 3) { str = "實驗組三：社會共享調節"; }
+    else if (input == 4) { str = "實驗組四：互動式同儕互評"; }
+    else if (input == 5) { str = "實驗組五：社會共享調節 & 互動式同儕互評"; }
+    else { str = "組別Type錯誤"; }
+
+    @str
+}
+
+@helper GetTaskGuideStapString(string StapName, string CurrentAction, int k)
+{
+    string[] str =
+    {
+        "step align-self-center opacity-50",
+        "step align-self-center active",
+        "step align-self-center"
+    };
+    
+    // -48 是因為 char 轉 int 的關係
+    <div class="@str[Convert.ToInt32(CurrentAction[k])-48]" data-target="#test-vl-3">
+        <button type="button" class="step-trigger" role="tab" id="stepper4trigger3" aria-controls="test-vl-3">
+            <span class="bs-stepper-circle">@(k + 1)</span>
+            <span class="bs-stepper-label">@StapName</span>
+        </button>
+    </div>
+}

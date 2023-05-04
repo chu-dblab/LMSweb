@@ -1,90 +1,47 @@
 ﻿@model LMSweb.ViewModel.MissionViewModel
 @{
     ViewBag.Title = "StudentMission";
-    Layout = "~/Views/Shared/_StudentLayout.cshtml";
 }
-<div class="cardArticle">
-    <h4>@Model.CName</h4>
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item active">任務列表</li>
 
-        </ol>
-    </nav>
-</div>
-<div class="article">
-    <h5>任務列表</h5>
-    @if (Model.missions == null || Model.missions.Count() == 0)
-    {
-        <p>目前還沒有任務哦~</p>
-    }
-    else
-    {
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.missions.First().MName)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.missions.First().MDetail)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.missions.First().Start)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.missions.First().End)
-                    </th>
-
-
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody id="number">
+@section NavPills {
+    <ul class="nav nav-pills me-auto ms-3">
+        <li class="nav-item">
+            <a class="text-white nav-link" aria-current="page" href="@Url.Action("StudentMission","Student",new { CID = Model.CID})">任務列表</a>
+        </li>
+    </ul>
+}
+<div class="container">
+    <div class="card m-3 p-4">
+        <h4>@Model.CName</h4>
+        @*<nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item active">任務列表</li>
+                </ol>
+            </nav>*@
+    </div>
+    <div class="card m-3 p-4">
+        <h5>任務列表</h5>
+        @if (Model.missions == null || Model.missions.Count() == 0)
+        {
+            <p>目前還沒有任務哦~</p>
+        }
+        else
+        {
+            <div class="row">
                 @foreach (var item in Model.missions)
                 {
-                    <tr>
-                        <td>
-
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.MName)
-                        </td>
-                        <td class="col-4">
-                            @Html.DisplayFor(modelItem => item.MDetail)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Start)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.End)
-                        </td>
-                        <td class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            @*@if (DateTime.Compare(DateTime.Parse(item.End), DateTime.Now) > 0)
-                            {
-                                <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("StudentMissionDetail","Student", new {sid = Model.SID, mid = item.MID, cid = item.CID, gid = Model.GID})'">
-                                    進入任務<i class="bi bi-arrow-right"></i>
-                                </button>
-                            }
-                            else
-                            {
-                                <button type="button" class="btn btn-secondary" disabled="disabled" onclick="location.href='@Url.Action("StudentMissionDetail","Student", new {sid = Model.SID, mid = item.MID, cid = item.CID, gid = Model.GID})'">
-                                    任務已到期
-                                </button>
-                            }*@
-                            <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("StudentMissionDetail","Student", new {sid = Model.SID, mid = item.MID, cid = item.CID, gid = Model.GID})'">
-                                進入任務<i class="bi bi-arrow-right"></i>
-                            </button>
-                        </td>
-                    </tr>
+                    <div class="card col-3 m-3 p-4" style="min-height: 100px">
+                        <h5 class="card-title">@item.MName</h5>
+                        <p class="card-text overflow-hidden" style="height: 100px">@item.MDetail</p>
+                        <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("StudentMissionDetail","Student", new {sid = Model.SID, mid = item.MID, cid = item.CID, gid = Model.GID})'">
+                            進入任務<i class="bi bi-arrow-right"></i>
+                        </button>
+                    </div>
                 }
-            </tbody>
+            </div>
+        }
+    </div>
 
-            
-
-        </table>
-    }
 </div>
 @section scripts
 {

@@ -30,11 +30,11 @@
             <select class="form-select" name="TestType"> 
                 <option selected>請選擇操作實驗組別</option> 
                 <option value="0">控制組</option>
-                <option value="1">實驗組一：同儕互評</option> 
-                <option value="2">實驗組二：自我調節</option> 
-                <option value="3">實驗組三：互動式同儕互評</option> 
-                <option value="4">實驗組四：社會共享調節</option> 
-                <option value="5">實驗組五：互動式同儕互評&社會共享調節</option> 
+                <option value="1">實驗組一：自我調節</option> 
+                <option value="2">實驗組二：同儕互評</option> 
+                <option value="3">實驗組三：社會共享調節</option> 
+                <option value="4">實驗組四：互動式同儕互評</option> 
+                <option value="5">實驗組五：社會共享調節&互動式同儕互評</option> 
             </select> 
             @Html.ValidationMessageFor(model => model.TestType, "", new { @class = "text-danger" }) 
         </div>
