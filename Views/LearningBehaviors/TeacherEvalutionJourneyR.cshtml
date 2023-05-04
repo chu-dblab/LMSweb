@@ -990,9 +990,11 @@
     </div>
 </div>
 
-<!-- mid -->
-<!-- 自我評價 -->
-<script>
+@section scripts
+{
+    <!-- mid -->
+    <!-- 自我評價 -->
+    <script>
     //var jsMonth = @@Html.Raw(ViewBag.JsonMonth);
     var ctx = document.getElementById("midRadar");
     var chart = new Chart(ctx, {
@@ -1042,9 +1044,9 @@
             }
         }
     });
-</script>
-<!-- 總攬 -->
-<script>
+    </script>
+    <!-- 總攬 -->
+    <script>
     var ctx = document.getElementById("midbar");
     var chart = new Chart(ctx, {
         type: "bar",
@@ -1091,9 +1093,9 @@
             }
         }
     });
-</script>
-<!-- 同儕互評 -->
-<script>
+    </script>
+    <!-- 同儕互評 -->
+    <script>
     //var jsMonth = @@Html.Raw(ViewBag.JsonMonth);
     var ctx = document.getElementById("midpeerRadar");
     var chart = new Chart(ctx, {
@@ -1140,9 +1142,9 @@
             }
         }
     });
-</script>
-<!-- 小組成果 -->
-<script>
+    </script>
+    <!-- 小組成果 -->
+    <script>
     var ctx = document.getElementById("midgroupbar");
     var chart = new Chart(ctx, {
         type: "bar",
@@ -1186,11 +1188,11 @@
             }
         }
     });
-</script>
+    </script>
 
-<!-- gid -->
-<!-- 自我評價 -->
-<script>
+    <!-- gid -->
+    <!-- 自我評價 -->
+    <script>
     //var jsMonth = @@Html.Raw(ViewBag.JsonMonth);
     var ctx = document.getElementById("gidRadar");
     var chart = new Chart(ctx, {
@@ -1254,9 +1256,9 @@
             }
         }
     });
-</script>
-<!-- 總攬 -->
-<script>
+    </script>
+    <!-- 總攬 -->
+    <script>
     var ctx = document.getElementById("gidbar");
     var chart = new Chart(ctx, {
         type: "bar",
@@ -1312,9 +1314,9 @@
             }
         }
     });
-</script>
-<!-- 同儕互評 -->
-<script>
+    </script>
+    <!-- 同儕互評 -->
+    <script>
     //var jsMonth = @@Html.Raw(ViewBag.JsonMonth);
     var ctx = document.getElementById("gidpeerRadar");
     var chart = new Chart(ctx, {
@@ -1375,9 +1377,9 @@
             }
         }
     });
-</script>
-<!-- 小組成果 -->
-<script>
+    </script>
+    <!-- 小組成果 -->
+    <script>
     var ctx = document.getElementById("gidgroupbar");
     var chart = new Chart(ctx, {
         type: "bar",
@@ -1429,11 +1431,11 @@
             }
         }
     });
-</script>
+    </script>
 
-<!-- midgidsid -->
-<!-- 自我評價 -->
-<script>
+    <!-- midgidsid -->
+    <!-- 自我評價 -->
+    <script>
     //var jsMonth = @@Html.Raw(ViewBag.JsonMonth);
     var ctx = document.getElementById("Radar");
     var chart = new Chart(ctx, {
@@ -1510,9 +1512,9 @@
             }
         }
     });
-</script>
-<!-- 總攬 -->
-<script>
+    </script>
+    <!-- 總攬 -->
+    <script>
     var ctx = document.getElementById("bar");
     var chart = new Chart(ctx, {
         type: "bar",
@@ -1576,9 +1578,9 @@
             }
         }
     });
-</script>
-<!-- 同儕互評 -->
-<script>
+    </script>
+    <!-- 同儕互評 -->
+    <script>
     //var jsMonth = @@Html.Raw(ViewBag.JsonMonth);
     var ctx = document.getElementById("peerRadar");
     var chart = new Chart(ctx, {
@@ -1652,9 +1654,9 @@
             }
         }
     });
-</script>
-<!-- 小組成果 -->
-<script>
+    </script>
+    <!-- 小組成果 -->
+    <script>
     var ctx = document.getElementById("groupbar");
     var chart = new Chart(ctx, {
         type: "bar",
@@ -1706,10 +1708,9 @@
             }
         }
     });
-</script>
+    </script>
 
-@section scripts
-{
+
     <script type="text/javascript" language="javascript">
         var cid = '@Model.CID';
         $('#Groups option:selected').val("0");

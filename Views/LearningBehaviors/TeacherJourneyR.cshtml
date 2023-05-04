@@ -16,7 +16,7 @@
         <div class="col-12">
             <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
             <p>
-                @Html.DropDownListFor(m => Model.missions, new SelectList(Model.missions, "MID", "MName", Model.MID), "請選擇任務", new { id = "Missions"})
+                @Html.DropDownListFor(m => Model.missions, new SelectList(Model.missions, "MID", "MName", Model.MID), "請選擇任務", new { id = "Missions" })
             </p>
         </div>
         <div class="col-12">
@@ -48,7 +48,7 @@
         {
             <strong>組別: 全組別</strong><br />
         }
-        
+
     </div>
     <div class="tab-content" id="nav-tabContent">
 
@@ -258,9 +258,7 @@
             });
         });
         function Send() {
-            //location.href = "/LearningBehaviors/TeacherJourneyR?cid=" + cid + "&mid=" + selectedMID + "&gid=" + selectedGID;
-            location.href = "/LMSweb/LearningBehaviors/TeacherJourneyR?cid=" + cid + "&mid=" + selectedMID + "&gid=" + selectedGID;
-
+            location.href = "@Url.Action("TeacherJourneyR", "LearningBehaviors", new { cid = Model.CID})" + "&mid=" + selectedMID + "&gid=" + selectedGID;
         }
     </script>
 }
