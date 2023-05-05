@@ -21,7 +21,7 @@ namespace LMSweb.Controllers
         public ActionResult Index(string mid, string cid)
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; 
-            var claimData = claims.Claims.Where(x => x.Type == "SID").ToList();
+            var claimData = claims.Claims.Where(x => x.Type == "UID").ToList();
             var sid = claimData[0].Value;
             var stu = db.Students.Where(s => s.SID == sid);
             var stuG = db.Students.Find(sid).Group;
@@ -167,7 +167,7 @@ namespace LMSweb.Controllers
             var mis = db.Missions.Find(mid);
 
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            var claimData = claims.Claims.Where(x => x.Type == "SID").ToList();   //抓出當初記載Claims陣列中的SID
+            var claimData = claims.Claims.Where(x => x.Type == "UID").ToList();   //抓出當初記載Claims陣列中的SID
             var sid = claimData[0].Value;
             
            

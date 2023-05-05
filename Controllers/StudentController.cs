@@ -183,7 +183,7 @@ namespace LMSweb.Controllers
         {
             StudentCodingViewModel model = new StudentCodingViewModel();
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            var claimData = claims.Claims.Where(x => x.Type == "SID").ToList();   //抓出當初記載Claims陣列中的SID
+            var claimData = claims.Claims.Where(x => x.Type == "UID").ToList();   //抓出當初記載Claims陣列中的SID
             var sid = claimData[0].Value;
             var group = db.Students.Find(sid).Group;
             var gid = group.GID;
@@ -229,7 +229,7 @@ namespace LMSweb.Controllers
         {
             StudentCodingViewModel model = new StudentCodingViewModel();
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            var claimData = claims.Claims.Where(x => x.Type == "SID").ToList();   //抓出當初記載Claims陣列中的SID
+            var claimData = claims.Claims.Where(x => x.Type == "UID").ToList();   //抓出當初記載Claims陣列中的SID
             var sid = claimData[0].Value;
             var stu = db.Students.Where(s => s.SID == sid);
             var stuG = db.Students.Find(sid).Group;
@@ -287,7 +287,7 @@ namespace LMSweb.Controllers
         {
             DrawingViewModel model = new DrawingViewModel();
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            var claimData = claims.Claims.Where(x => x.Type == "SID").ToList(); //抓出當初記載Claims陣列中的SID
+            var claimData = claims.Claims.Where(x => x.Type == "UID").ToList(); //抓出當初記載Claims陣列中的SID
             var sid = claimData[0].Value;
             var stu = db.Students.Where(s => s.SID == sid);
             var stuG = db.Students.Find(sid).Group;
@@ -322,7 +322,7 @@ namespace LMSweb.Controllers
         {
             DrawingViewModel model = new DrawingViewModel();
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            var claimData = claims.Claims.Where(x => x.Type == "SID").ToList();   //抓出當初記載Claims陣列中的SID
+            var claimData = claims.Claims.Where(x => x.Type == "UID").ToList();   //抓出當初記載Claims陣列中的SID
             var sid = claimData[0].Value;
             var stu = db.Students.Where(s => s.SID == sid);
             var stuG = db.Students.Find(sid).Group;
@@ -419,7 +419,7 @@ namespace LMSweb.Controllers
         public ActionResult StudentGoalSetting(string mid, string cid)    //學生任務內容裡面的目標設置btn的Action
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity;
-            var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
+            var SID = claims.Claims.Where(x => x.Type == "UID").SingleOrDefault().Value;
             var response = db.Responses.Where(r => r.SID == SID && r.MID == mid);
             var qids = response.Select(r => r.DQID ).ToList();
             var questions = db.DefaultQuestions.Where(q => qids.Contains(q.DQID) && q.Class == "目標設置").ToList();
@@ -451,7 +451,7 @@ namespace LMSweb.Controllers
         public ActionResult StudentGoalSetting([System.Web.Http.FromBody] GoalSettingViewModel goalSetting)  //填表單送出的Post
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
+            var SID = claims.Claims.Where(x => x.Type == "UID").SingleOrDefault().Value;
             
             foreach (var qr in goalSetting.QRs)
             {
@@ -493,7 +493,7 @@ namespace LMSweb.Controllers
         public ActionResult StudentReflection(string mid, string cid)
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
+            var SID = claims.Claims.Where(x => x.Type == "UID").SingleOrDefault().Value;
             var response = db.Responses.Where(r => r.SID == SID && r.MID == mid);
             var qids = response.Select(r => r.DQID).ToList();
             var questions = db.DefaultQuestions.Where(q => qids.Contains(q.DQID) && q.Class == "自我反思").ToList();
@@ -522,7 +522,7 @@ namespace LMSweb.Controllers
         public ActionResult StudentReflection([System.Web.Http.FromBody] GoalSettingViewModel goalSetting)
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
+            var SID = claims.Claims.Where(x => x.Type == "UID").SingleOrDefault().Value;
 
             foreach (var qr in goalSetting.QRs)
             {
@@ -559,7 +559,7 @@ namespace LMSweb.Controllers
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
             StudentReflectionEditViewModel reflectionEditViewModel = new StudentReflectionEditViewModel();
-            var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
+            var SID = claims.Claims.Where(x => x.Type == "UID").SingleOrDefault().Value;
             var response = db.Responses.Where(r => r.SID == SID && r.MID == mid);
             var qids = response.Select(r => r.DQID).ToList();
             var questions = db.DefaultQuestions.Where(q => qids.Contains(q.DQID) && q.Class == "自我反思").ToList();
@@ -583,7 +583,7 @@ namespace LMSweb.Controllers
         public ActionResult StudentReflectionEdit([System.Web.Http.FromBody] StudentReflectionEditViewModel reflectionEditViewModel, string cid, string mid)
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
+            var SID = claims.Claims.Where(x => x.Type == "UID").SingleOrDefault().Value;
             var MID = mid;
             var CID = cid;
             foreach (var qr in reflectionEditViewModel.QRs)
@@ -614,7 +614,7 @@ namespace LMSweb.Controllers
         public ActionResult StudentSelfEvalution(string sid, string mid, string cid)//學生任務內容裡面的目標設置btn的Action
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
+            var SID = claims.Claims.Where(x => x.Type == "UID").SingleOrDefault().Value;
             var sname = db.Students.Find(sid).SName;
             var evalution = db.EvalutionResponse.Where(r => r.SID == SID && r.EvaluatorSID == SID && r.MID == mid);
             var qids = evalution.Select(r => r.DQID).ToList();
@@ -647,7 +647,7 @@ namespace LMSweb.Controllers
         public ActionResult StudentSelfEvalution([System.Web.Http.FromBody] EvalutionViewModel evalution, string mid, string cid)  //填表單送出的Post
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
+            var SID = claims.Claims.Where(x => x.Type == "UID").SingleOrDefault().Value;
 
             foreach (var qr in evalution.ERs)
             {
@@ -671,7 +671,7 @@ namespace LMSweb.Controllers
         public ActionResult StudentSelfER(EvalutionViewModel evalution, string sid, string cid, string mid)  ///學生已填過目標設置
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
+            var SID = claims.Claims.Where(x => x.Type == "UID").SingleOrDefault().Value;
             var sname = db.Students.Find(sid).SName;
             var cname = db.Courses.Find(cid).CName;
             var mname = db.Missions.Find(mid).MName;
@@ -693,7 +693,7 @@ namespace LMSweb.Controllers
         {
             EvalutionViewModel SelfEVM = new EvalutionViewModel();
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
+            var SID = claims.Claims.Where(x => x.Type == "UID").SingleOrDefault().Value;
             var sname = db.Students.Find(sid).SName;
             var evalution = db.EvalutionResponse.Where(r => r.SID == SID && r.EvaluatorSID == SID && r.MID == mid);
             var qids = evalution.Select(r => r.DQID).ToList();
@@ -721,7 +721,7 @@ namespace LMSweb.Controllers
         {
 
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
+            var SID = claims.Claims.Where(x => x.Type == "UID").SingleOrDefault().Value;
             var MID = mid;
             var CID = cid;
             foreach (var qr in groupVM.ERs)
@@ -753,7 +753,7 @@ namespace LMSweb.Controllers
         public ActionResult StudentPeerEvalution(string sid, string mid, string cid, string gid)
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
+            var SID = claims.Claims.Where(x => x.Type == "UID").SingleOrDefault().Value;
             var sname = db.Students.Find(sid).SName;
             var evalution = db.EvalutionResponse.Where(r => r.SID == sid && r.EvaluatorSID == SID && r.MID == mid);
             var qids = evalution.Select(r => r.DQID).ToList();
@@ -786,7 +786,7 @@ namespace LMSweb.Controllers
         public ActionResult StudentPeerEvalution([System.Web.Http.FromBody] EvalutionViewModel evalution, string mid, string cid)  //填表單送出的Post
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            var evaSID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
+            var evaSID = claims.Claims.Where(x => x.Type == "UID").SingleOrDefault().Value;
             var sid = evalution.SID;
             foreach (var qr in evalution.ERs)
             {
@@ -830,7 +830,7 @@ namespace LMSweb.Controllers
         {
             EvalutionViewModel PeerEVM = new EvalutionViewModel();
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
+            var SID = claims.Claims.Where(x => x.Type == "UID").SingleOrDefault().Value;
             var sname = db.Students.Find(sid).SName;
             var evalution = db.EvalutionResponse.Where(r => r.SID == sid && r.EvaluatorSID == SID && r.MID == mid);
             var qids = evalution.Select(r => r.DQID).ToList();
@@ -857,7 +857,7 @@ namespace LMSweb.Controllers
         public ActionResult StudentPeerEdit([System.Web.Http.FromBody] EvalutionViewModel groupVM, string cid, string mid, string evasid)
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            var evaSID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
+            var evaSID = claims.Claims.Where(x => x.Type == "UID").SingleOrDefault().Value;
             var sid = groupVM.SID;
             var MID = mid;
             var CID = cid;
@@ -891,7 +891,7 @@ namespace LMSweb.Controllers
         {
             EvalutionViewModel GroupEVM = new EvalutionViewModel();
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
+            var SID = claims.Claims.Where(x => x.Type == "UID").SingleOrDefault().Value;
             var evalution = db.GroupERs.Where(r => r.GID == gid && r.EvaluatorSID == SID && r.MID == mid);
             var qids = evalution.Select(r => r.GQID).ToList();
             var questions = db.GroupOptions.Where(q => qids.Contains(q.GQID)).ToList();
@@ -951,7 +951,7 @@ namespace LMSweb.Controllers
         public ActionResult StudentGroupEvalution([System.Web.Http.FromBody] EvalutionViewModel evalution, string mid,string cid,int gid)  //填表單送出的Post
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
+            var SID = claims.Claims.Where(x => x.Type == "UID").SingleOrDefault().Value;
             foreach (var qr in evalution.GRs)
             {
                 var response = new GroupER();
@@ -972,7 +972,7 @@ namespace LMSweb.Controllers
         public ActionResult StudentGroupER(string cid, string mid, int gid)  ///學生已填過組間評價
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
+            var SID = claims.Claims.Where(x => x.Type == "UID").SingleOrDefault().Value;
             var cname = db.Courses.Find(cid).CName;
             var mname = db.Missions.Find(mid).MName;
             var gname = db.Groups.Find(gid).GName;
@@ -1024,7 +1024,7 @@ namespace LMSweb.Controllers
         {
             EvalutionViewModel GroupEVM = new EvalutionViewModel();
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
+            var SID = claims.Claims.Where(x => x.Type == "UID").SingleOrDefault().Value;
             var evalution = db.GroupERs.Where(r => r.GID == gid && r.EvaluatorSID == SID && r.MID == mid);
             var qids = evalution.Select(r => r.GQID).ToList();
             var questions = db.GroupOptions.Where(q => qids.Contains(q.GQID)).ToList();
@@ -1069,7 +1069,7 @@ namespace LMSweb.Controllers
         {
 
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
+            var SID = claims.Claims.Where(x => x.Type == "UID").SingleOrDefault().Value;
             var MID = mid;
             var CID = cid;
             foreach (var qr in groupVM.GRs)

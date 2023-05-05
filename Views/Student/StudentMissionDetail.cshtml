@@ -21,7 +21,7 @@
         <div class="row gx-2 gy-3">
             @MissionsHelper.GetDetailDataListGroupTemplate(
                 Html.DisplayNameFor(model => model.mis.MName),
-                Html.DisplayFor(model => model.mis.MName), 100)
+                Html.DisplayFor(model => model.mis.MName))
 
             @MissionsHelper.GetDetailDataListGroupTemplate(
                 Html.DisplayNameFor(model => model.mis.MDetail),
@@ -101,7 +101,7 @@
     </div>
 </div>
 
-@if (!Model.mis.IsDiscuss)
+@*@if (!Model.mis.IsDiscuss)
 {
     <button type="button" class="btn btn-primary rounded-circle message-btn" data-bs-toggle="offcanvas"
             data-bs-target="#messageBox" aria-controls="messageBox">
@@ -116,7 +116,7 @@
     <div class="offcanvas-body">
         <iframe src="@Url.Action("Chat","Student",new { MID = @Model.MID, CID = @Model.CID})" width="365" height="830" frameborder="0" scrolling="no"></iframe>
     </div>
-</div>
+</div>*@
 
 <!-- 懸浮聊天室 -->
 <!--<body>

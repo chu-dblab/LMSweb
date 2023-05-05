@@ -21,7 +21,7 @@ namespace LMSweb.Controllers
         public ActionResult StudentJourney(string cid, string mid)//學生普通版學習表現
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity;
-            var claimData = claims.Claims.Where(x => x.Type == "SID").ToList();
+            var claimData = claims.Claims.Where(x => x.Type == "UID").ToList();
             var sid = claimData[0].Value;
             var stu = db.Students.Where(s => s.SID == sid);
             var stuG = db.Students.Find(sid).Group;
@@ -73,7 +73,7 @@ namespace LMSweb.Controllers
         public ActionResult StudentEvalutionJourney(string cid, string mid)//學生互評版學習表現
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity;
-            var claimData = claims.Claims.Where(x => x.Type == "SID").ToList();
+            var claimData = claims.Claims.Where(x => x.Type == "UID").ToList();
             var sid = claimData[0].Value;
             var stu = db.Students.Where(s => s.SID == sid);
             var stuG = db.Students.Find(sid).Group;
