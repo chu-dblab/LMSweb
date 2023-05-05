@@ -21,56 +21,42 @@ namespace LMSweb.Controllers
     {
         private LMSmodel db = new LMSmodel();
 
-        [HttpGet]
-        [Authorize(Roles = "Student")]
         public ActionResult Home()
         {
-            StudentHomePageViewModel vmodel = new StudentHomePageViewModel();
+            
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
             var claimData = claims.Claims.Where(x => x.Type == "UID").FirstOrDefault();   //抓出當初記載Claims陣列中的SID
             var sid = claimData.Value; //取值(因為只有一筆)
 
-            //var data = from c in db.Courses
-            //           from s in db.Students
-            //           from g in db.Groups
-            //           from t in db.Teachers
-            //           where s.CID == c.CID && c.TID == t.TID && s.GID == g.GID&& s.SID == sid
-            //           select new StudentHomeViewModel
-            //           {
-            //               CourseID = c.CID,
-            //               CourseName = c.CName,
-            //               TeacherName = t.TName,
-            //               GroupName = g.GName
-            //           };
-            //return View();
+            var gid = (from s in db.Students
+                       where s.SID == sid
+                       select s.GID).FirstOrDefault();
 
+            var results = (from c in db.Courses
+                       from s in db.Students
+                       from g in db.Groups
+                       from t in db.Teachers
+                       where s.CID == c.CID && c.TID == t.TID && s.GID == g.GID && s.GID == gid
+                       select new
+                       {
+                           c.CID, c.CName, t.TName, g.GName, s.SName
+                       }).ToList();
+            var data = results
+                .Select(x => new StudentHomeViewModel
+                {
+                    CourseID = x.CID,
+                    CourseName = x.CName,
+                    TeacherName = x.TName,
+                    GroupName = x.GName,
+                    GroupMembers = new List<string>()
+                }).FirstOrDefault();
 
-            var stuG = db.Students.Find(sid).Group;
-            var studentCourse = db.Students.Where(s => s.SID == sid);
-            var stuCourse = db.Students.Find(sid);
-            var cid = stuCourse.CID;
-            var course = db.Courses.Find(cid);
-            var cname = course.CName;
-            var tname = course.Teacher.TName;
-
-            vmodel.CID = cid;
-            vmodel.CName = cname;
-            vmodel.TName = tname;
-            if (stuG == null)
+            foreach (var item in results)
             {
-                vmodel.Enter = false;
-                ModelState.AddModelError("", "目前還沒有分組，請告知授課老師");
-
-                return View(vmodel);
+                data.GroupMembers.Add(item.SName);
             }
-            else
-            {
-                vmodel.Enter = true;
-                vmodel.Groups = db.Groups.Where(g => g.GID == stuG.GID).ToList();
-                vmodel.GName = stuG.GName;
 
-                return View(vmodel);
-            }
+            return View(data);
         }
 
         [HttpGet]

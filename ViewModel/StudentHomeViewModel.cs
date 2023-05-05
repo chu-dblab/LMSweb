@@ -11,6 +11,6 @@ namespace LMSweb.ViewModel
         public string CourseName { get; set; }
         public string TeacherName { get; set; }
         public string GroupName { get; set; }
-        public List<string> GroupMember { get; set; }
+        public List<string> GroupMembers { get; set; }
     }
 }
