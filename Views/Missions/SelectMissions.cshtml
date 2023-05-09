@@ -1,4 +1,4 @@
-﻿@model  LMSweb.ViewModel.MissionViewModel
+﻿@model  LMSweb.ViewModel.SelectMissionViewModel
 @{
     ViewBag.Title = "SelectMission";
 
@@ -9,23 +9,23 @@
 @section NavPills {
     <ul class="nav nav-pills me-auto ms-3">
         <li class="nav-item">
-            <a class="text-white nav-link active" aria-current="page" href="@Url.Action("Index", "Missions", new { CID = Model.CID})">任務管理</a>
+            <a class="text-white nav-link active" aria-current="page" href="@Url.Action("Index", "Missions", new { CID = Model.CourseID})">任務管理</a>
         </li>
         <li class="nav-item">
-            <a class="text-white nav-link" aria-current="page" href="@Url.Action("StudentManagement", "Course", new { CID = Model.CID})">學生名單</a>
+            <a class="text-white nav-link" aria-current="page" href="@Url.Action("StudentManagement", "Course", new { CID = Model.CourseID})">學生名單</a>
         </li>
         <li class="nav-item">
-            <a class="text-white nav-link" href="@Url.Action("TeacherJourney","LearningBehaviors", new { CID = Model.CID})">學習表現</a>
+            <a class="text-white nav-link" href="@Url.Action("TeacherJourney","LearningBehaviors", new { CID = Model.CourseID})">學習表現</a>
         </li>
         <li class="nav-item">
-            <a class="text-white nav-link" href="@Url.Action("TeacherEvalutionJourney","LearningBehaviors",new {CID = Model.CID})">學習表現(互評版)</a>
+            <a class="text-white nav-link" href="@Url.Action("TeacherEvalutionJourney","LearningBehaviors",new {CID = Model.CourseID})">學習表現(互評版)</a>
         </li>
     </ul>
 }
 
 <div class="container">
 
-    @AllHelper.CouresTitleForTeacherView(Model.CName)
+    @AllHelper.CouresTitleForTeacherView(Model.CourseName, Model.TestType)
     
     <div class="card m-3 p-4">
         <h4><b>複製任務</b></h4>
@@ -38,48 +38,42 @@
                         編號
                     </th>
                     <th class="col">
-                        @Html.DisplayNameFor(model => model.missions.First().Course.CName)
-                    </th>
-                    <th class="col">
-                        @Html.DisplayNameFor(model => model.missions.First().MName)
+                        @Html.DisplayNameFor(model => model.Missions[0].Name)
                     </th>
                     <th class="col-3">
-                        @Html.DisplayNameFor(model => model.missions.First().MDetail)
+                        @Html.DisplayNameFor(model => model.Missions[0].TaskDetail)
                     </th>
                     <th class="col">
-                        @Html.DisplayNameFor(model => model.missions.First().Start)
+                        @Html.DisplayNameFor(model => model.Missions[0].StartDate)
                     </th>
                     <th class="col">
-                        @Html.DisplayNameFor(model => model.missions.First().End)
+                        @Html.DisplayNameFor(model => model.Missions[0].EndDate)
                     </th>
                     <th class="col"></th>
                 </tr>
             </thead>
             <tbody id="number">
-                @foreach (var item in Model.missions)
+                @foreach (var item in Model.Missions)
                 {
                     <tr class="row w-100">
                         <td class="pt-3 col-1">
                             @(k++)
                         </td>
                         <td class="pt-3 col">
-                            @Html.DisplayFor(modelItem => item.Course.CName)
-                        </td>
-                        <td class="pt-3 col">
-                            @Html.DisplayFor(modelItem => item.MName)
+                            @Html.DisplayFor(modelItem => item.Name)
                         </td>
                         <td class="pt-3 col-3">
-                            @Html.DisplayFor(modelItem => item.MDetail)
+                            @Html.DisplayFor(modelItem => item.TaskDetail)
                         </td>
                         <td class="pt-3 col">
-                            @Html.DisplayFor(modelItem => item.Start)
+                            @Html.DisplayFor(modelItem => item.StartDate)
                         </td>
                         <td class="pt-3 col">
-                            @Html.DisplayFor(modelItem => item.End)
+                            @Html.DisplayFor(modelItem => item.EndDate)
 
                         </td>
                         <td class="pt-2 col">
-                            <a href="@Url.Action("AddMissions", "Missions", new { mid = item.MID, cid = Model.CID})" class="btn btn-primary w-auto mx-2">
+                            <a href="@Url.Action("AddMissions", "Missions", new { mid = item.TaskID, cid = Model.CourseID})" class="btn btn-primary w-auto mx-2">
                                 <i class="bi bi-plus-lg"></i>
                                 複製此任務
                             </a>
