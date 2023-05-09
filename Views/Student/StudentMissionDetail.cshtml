@@ -3,25 +3,22 @@
     ViewBag.Title = "StudentMissionDetail";
 }
 
-
 @section NavPills {
     <ul class="nav nav-pills me-auto ms-3">
-        <li class="nav-item">
-            <a class="text-white nav-link" aria-current="page" href="@Url.Action("StudentMission","Student",new { CID = Model.CID})">任務列表</a>
-        </li>
+        @AllHelper.SetUnActiveNavData(Url.Action("StudentMission", "Student", new { CID = Model.CID }), "任務列表")
     </ul>
 }
 
 <div class="container">
 
-    @AllHelper.CouresTitleForStudentView(Model.CName, Model.MName)
+    @AllHelper.CouresTitleForStudentView(Model.MName, Model.CName)
 
     <div class="card m-3 p-4">
 
         <div class="row gx-2 gy-3">
-            @MissionsHelper.GetDetailDataListGroupTemplate(
+            @*@MissionsHelper.GetDetailDataListGroupTemplate(
                 Html.DisplayNameFor(model => model.mis.MName),
-                Html.DisplayFor(model => model.mis.MName))
+                Html.DisplayFor(model => model.mis.MName))*@
 
             @MissionsHelper.GetDetailDataListGroupTemplate(
                 Html.DisplayNameFor(model => model.mis.MDetail),

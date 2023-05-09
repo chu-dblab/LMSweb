@@ -78,8 +78,7 @@ namespace LMSweb.Controllers
             var stu = db.Students.Where(s => s.SID == sid);
             var stuG = db.Students.Find(sid).Group;
             var sname = db.Students.Find(sid).SName;
-            var gqid = 1002.ToString();
-            
+            var gqid = 1002.ToString();        
 
             vm.Groups = db.Groups.Where(g => g.CID == cid).ToList();
             vm.SID = sid;

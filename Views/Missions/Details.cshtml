@@ -7,18 +7,10 @@
 
 @section NavPills {
     <ul class="nav nav-pills me-auto ms-3">
-        <li class="nav-item">
-            <a class="text-white nav-link active" aria-current="page" href="@Url.Action("Index", "Missions", new { CID = Model.CourseID})">任務管理</a>
-        </li>
-        <li class="nav-item">
-            <a class="text-white nav-link" aria-current="page" href="@Url.Action("StudentManagement", "Course", new { CID = Model.CourseID})">學生名單</a>
-        </li>
-        <li class="nav-item">
-            <a class="text-white nav-link" href="@Url.Action("TeacherJourney","LearningBehaviors", new { CID = Model.CourseID})">學習表現</a>
-        </li>
-        <li class="nav-item">
-            <a class="text-white nav-link" href="@Url.Action("TeacherEvalutionJourney","LearningBehaviors",new {CID = Model.CourseID})">學習表現(互評版)</a>
-        </li>
+        @AllHelper.SetActiveNavData(Url.Action("Index", "Missions", new { CID = Model.CourseID }), "任務管理")
+        @AllHelper.SetUnActiveNavData(Url.Action("StudentManagement", "Course", new { CID = Model.CourseID }), "學生名單")
+        @AllHelper.SetUnActiveNavData(Url.Action("TeacherJourney", "LearningBehaviors", new { CID = Model.CourseID }), "學習表現")
+        @AllHelper.SetUnActiveNavData(Url.Action("TeacherEvalutionJourney", "LearningBehaviors", new { CID = Model.CourseID }), "學習表現(互評版)")
     </ul>
 }
 

@@ -1,73 +1,58 @@
 ﻿@model LMSweb.ViewModel.DrawingViewModel
 @{
     ViewBag.Title = "StudentDrawing";
-    Layout = "~/Views/Shared/_StudentLayout.cshtml";
 }
-<style>
-    .message-btn {
-        position: fixed;
-        width: 100px;
-        height: 100px;
-        right: 50px;
-        bottom: 50px;
-    }
-</style>
 
-<div class="cardArticle">
-    <h4>@Model.CName</h4>
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="@Url.Action("StudentMission","Student",new { CID = Model.CID})">任務列表</a></li>
-            <li class="breadcrumb-item"><a href="@Url.Action("StudentMissionDetail","Student",new { CID = Model.CID, MID = Model.MID})">@Model.MName</a></li>
-            <li class="breadcrumb-item active" aria-current="page">上傳流程圖</li>
-        </ol>
-    </nav>
-</div>
-<div class="article">
-    <div class="mb-3">
-        <h5>@Model.MName</h5>
-        <hr />
-        @if (DateTime.Compare(DateTime.Parse(Model.End), DateTime.Now) <= 0)
-        {
-            if (Model.DrawingImgPath == null)
+<div class="container">
+
+    @AllHelper.CouresTitleForStudentView(Model.CName)
+
+    <div class="card m-3 p-4">
+        <div class="mb-3">
+            <h5>@Model.MName</h5>
+            <hr />
+            @if (DateTime.Compare(DateTime.Parse(Model.End), DateTime.Now) <= 0)
             {
-                <p class="text-danger">任務已到期，如需補交作業請通知指導老師!</p>
+                if (Model.DrawingImgPath == null)
+                {
+                    <p class="text-danger">任務已到期，如需補交作業請通知指導老師!</p>
+                }
+                else
+                {
+                    <img src="~/UploadImages/@Model.DrawingImgPath" width="1060" />
+                }
+
             }
             else
             {
-                <img src="~/UploadImages/@Model.DrawingImgPath" width="1060" />
+                <div class="mb-3">
+                    <form action="@Url.Action("StudentDrawing", "Student", new { cid = Model.CID, mid = Model.MID, gid = Model.GID})" method="post" enctype="multipart/form-data">
+                        <input type="file" accept=".png, .jpg, .jpeg" name="File" id="file" />
+                        <input type="submit" id="File" value="上傳" class="btn btn-primary" />
+                    </form>
+                </div>
+
+                if (Model.DrawingImgPath == null)
+                {
+                    <p>尚未上傳流程圖</p>
+                }
+                else
+                {
+                    <img class="mb-3" src="~/UploadImages/@Model.DrawingImgPath" width="1060" />
+                }
+                <p>上傳檔預覽 :<img id="demo" width="1060" /></p>
+                <br />
+
             }
 
-        }
-        else
-        {
-            <div class="mb-3">
-                <form action="@Url.Action("StudentDrawing", "Student", new { cid = Model.CID, mid = Model.MID, gid = Model.GID})" method="post" enctype="multipart/form-data">
-                    <input type="file" accept=".png, .jpg, .jpeg" name="File" id="file" />
-                    <input type="submit" id="File" value="上傳" class="btn btn-primary" />
-                </form>
-            </div>
+        </div>
 
-            if (Model.DrawingImgPath == null)
-            {
-                <p>尚未上傳流程圖</p>
-            }
-            else
-            {
-                <img class="mb-3" src="~/UploadImages/@Model.DrawingImgPath" width="1060" />
-            }
-            <p>上傳檔預覽 :<img id="demo" width="1060" /></p>
-            <br />
-            
-        }
+
+        @Html.HiddenFor(model => model.CID)
+        @Html.HiddenFor(model => model.GID)
+        @Html.HiddenFor(model => model.MID)
 
     </div>
-    
-    
-    @Html.HiddenFor(model => model.CID)
-    @Html.HiddenFor(model => model.GID)
-    @Html.HiddenFor(model => model.MID)
-
 </div>
 
 <!-- 懸浮聊天室 -->

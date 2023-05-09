@@ -1,77 +1,69 @@
 ﻿@model LMSweb.ViewModel.StudentCodingViewModel
-@{ ViewBag.Title = "StudentCoding";
-    Layout = "~/Views/Shared/_OnlineEditorLayout.cshtml";
+@{
+    ViewBag.Title = "StudentCoding";
 }
-<style>
-    .message-btn {
-        position: fixed;
-        width: 100px;
-        height: 100px;
-        right: 50px;
-        bottom: 50px;
-    }
-</style>
 
-<div class="cardArticle">
-    <h4>@Model.CName</h4>
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="@Url.Action("StudentMission","Student",new { CID = Model.CID})">任務列表</a></li>
-            <li class="breadcrumb-item"><a href="@Url.Action("StudentMissionDetail","Student",new { CID = Model.CID, MID = Model.MID})">@Model.MName</a></li>
-            <li class="breadcrumb-item active" aria-current="page">合作撰寫程式碼</li>
-        </ol>
-    </nav>
-</div>
-<div class="article">
-    @if (DateTime.Compare(DateTime.Parse(Model.End), DateTime.Now) <= 0)
-    {
-        if (Model.CodePath == null)
-        {
-            <p class="text-danger">任務已到期，如需補交作業請通知指導老師!</p>
-        }
-        else
-        {
-            <h5>@Model.MName</h5>
-            <hr />
-            <div class="mb-3">
-                <input type="button" value="查看任務內容" onclick="myFunction()" class="btn btn-outline-dark" />
-            </div>
-            <img src="~/UploadCode/@Model.CodePath" width="1060" />
-        }
-    }
-    else
-    {
+<div class="container">
+
+    @AllHelper.CouresTitleForStudentView(Model.CName)
+
+    <div class="card m-3 p-4">
         <div class="mb-3">
-            <form action="@Url.Action("StudentCoding", "Student", new { cid = Model.CID, mid = Model.MID, gid = Model.GID})" method="post" enctype="multipart/form-data">
-                <input type="file" accept=".png, .jpg, .jpeg" name="File" id="file" />
-                <input type="submit" id="File" value="上傳" class="btn btn-primary" />
-                <p>上傳檔預覽 :<img id="demo" width="1060" /></p>
-            </form>
+            <h5>@Model.MName</h5>
+            @if (DateTime.Compare(DateTime.Parse(Model.End), DateTime.Now) <= 0)
+            {
+                if (Model.CodePath == null)
+                {
+                    <p class="text-danger">任務已到期，如需補交作業請通知指導老師!</p>
+                }
+                else
+                {
+                    <h5>@Model.MName</h5>
+                    <hr />
+                    <div class="mb-3">
+                        <input type="button" value="查看任務內容" onclick="myFunction()" class="btn btn-outline-dark" />
+                    </div>
+                    <img src="~/UploadCode/@Model.CodePath" width="1060" />
+                }
+            }
+            else
+            {
+                <div class="mb-3">
+                    <form action="@Url.Action("StudentCoding", "Student", new { cid = Model.CID, mid = Model.MID, gid = Model.GID})" method="post" enctype="multipart/form-data">
+                        <input type="file" accept=".png, .jpg, .jpeg" name="File" id="file" />
+                        <input type="submit" id="File" value="上傳" class="btn btn-primary" />
+                        <p>
+                            上傳檔預覽 :
+                            <img id="demo" width="1060" />
+                        </p>
+                    </form>
+                </div>
+
+                if (Model.CodePath == null)
+                {
+                    <p>尚未上傳程式碼</p>
+                }
+                else
+                {
+                    <img class="mb-3" src="~/UploadCode/@Model.CodePath" width="1060" />
+                }
+                <br />
+            }
+
         </div>
-
-        if (Model.CodePath == null)
-        {
-            <p>尚未上傳程式碼</p>
-        }
-        else
-        {
-            <img class="mb-3" src="~/UploadCode/@Model.CodePath" width="1060" />
-        }
-        <br />
-    }
-
+    </div>
 </div>
 
 <!-- 懸浮聊天室 -->
 <body>
-    @if(Model.IsDiscuss)
+    @if (Model.IsDiscuss)
     {
         <button type="button" class="btn btn-primary rounded-circle message-btn" data-bs-toggle="offcanvas"
                 data-bs-target="#messageBox" aria-controls="messageBox">
             討論區
         </button>
     }
-    
+
     <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="messageBox" aria-labelledby="messageBoxLabel">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="messageBoxLabel">聊天室</h5>

@@ -22,7 +22,21 @@
 @helper CouresTitleForStudentView(string CourseName, string MissionsName)
 {
     <div class="card m-3 p-3">
-        <h1 class="w-auto m-2 fs-2">@CourseName</h1>
-        <h3 class="w-auto m-2 fs-4">@MissionsName</h3>
+        <h1 class="w-auto m-2 fs-1">@CourseName</h1>
+        <h3 class="w-auto m-2 fs-5">@MissionsName</h3>
     </div>
+}
+
+@* NavBar *@
+@helper SetActiveNavData(string url, String display)
+{
+    <li class="nav-item">
+        <a class="text-white nav-link active" aria-current="page" href="@url">@display</a>
+    </li>
+}
+@helper SetUnActiveNavData(string url, String display)
+{
+    <li class="nav-item">
+        <a class="text-white nav-link" aria-current="page" href="@url">@display</a>
+    </li>
 }

@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    int k = 1;
 }
 
 <div class="container">
@@ -33,7 +33,7 @@
             </thead>
             <tbody id="number">
                 <tr class="row mx-3 my-1">
-                    <td class="col-1"></td>
+                    <td class="col-1">@(k++)</td>
                     <td class="col-2">
                         @Html.DisplayFor(model => model.CourseName)
                     </td>
@@ -65,14 +65,3 @@
         </table>
     </div>
 </div>
-@section scripts
-{
-    <script>
-        window.onload = function () {
-            var tableLine = document.getElementById("number");
-            for (var i = 0; i < tableLine.rows.length; i++) {
-                tableLine.rows[i].cells[0].innerHTML = (i + 1);
-            }
-        }
-    </script>
-}
