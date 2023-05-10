@@ -1,23 +1,29 @@
-﻿using System.Collections.Generic;
+﻿using DocumentFormat.OpenXml.Wordprocessing;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web;
 
 namespace LMSweb.ViewModel
 {
-    public class MissionIndexViewModel
+    public class SelectMissionViewModel
     {
         public string CourseID { get; set; }
         public string CourseName { get; set; }
         public int TestType { get; set; }
-        public List<MissionData> Missions { get; set; }
+        public List<TaskData> Missions { get; set; }
     }
-
-    public class MissionData
+    public class TaskData
     {
         [Display(Name = "任務編號")]
-        public string MID { get; set; }
+        public string TaskID { get; set; }
 
         [Display(Name = "任務名稱")]
         public string Name { get; set; }
+
+        [Display(Name = "任務內容")]
+        public string TaskDetail { get; set; }
 
         [Display(Name = "任務開始時間")]
         public string StartDate { get; set; }

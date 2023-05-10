@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Security.Claims;
 using System.Web.Mvc;
 using LMSweb.ViewModel;
 
@@ -66,7 +67,7 @@ namespace LMSweb.Models
                            IsAddMetacognition = c.IsAddMetacognition,
                            IsAddPeerAssessmemt = c.IsAddPeerAssessmemt
                        }).FirstOrDefault();
-            if(data.CurrentAction is null)
+            if(data != null && data.CurrentAction is null)
             {
                 data.CurrentAction = DefaultCurrentStatus(data.TestType);
             }
@@ -227,16 +228,41 @@ namespace LMSweb.Models
             db.SaveChanges();
             return RedirectToAction("Index", new { cid });
         }
-        
-        public ActionResult SelectMissions(string cid, string missionCourse)
-        {
-            MissionViewModel model = new MissionViewModel();
-            var cname = db.Courses.Find(cid).CName;
-            model.missions = db.Missions.Where(m=>m.CID == cid).ToList();
-            model.CID = cid;
-            model.CName = cname;
 
-            return View(model);
+        public ActionResult SelectCourses()
+        {
+            ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
+            var claimData = claims.Claims.Where(x => x.Type == "UID").FirstOrDefault();   //抓出當初記載Claims陣列中的TID
+            var tid = claimData.Value; //取值(因為只有一筆)
+            var courses = db.Courses.Where(c => c.TID == tid).Select(x => new TeacherHomeViewModel
+            {
+                CourseID = x.CID,
+                CourseName = x.CName,
+                TestType = x.TestType
+            });
+            return View(courses.ToList());
+        }
+        
+        public ActionResult SelectMissions(string cid)
+        {
+            var tasklist = db.Missions.Where(m => m.CID == cid).Select(s => new TaskData
+            {
+                TaskID = s.MID,
+                Name = s.MName,
+                TaskDetail = s.MDetail,
+                StartDate = s.Start,
+                EndDate = s.End
+            }).ToList();
+
+            var course = db.Courses.Find(cid);
+            var data = new SelectMissionViewModel
+            {
+                CourseID = course.CID,
+                CourseName = course.CName,
+                TestType = course.TestType,
+                Missions = tasklist
+            };
+            return View(data);
         }
 
         public ActionResult AddMissions(string mid, string cid)

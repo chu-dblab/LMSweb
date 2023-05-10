@@ -1,0 +1,42 @@
+﻿@model IEnumerable<LMSweb.ViewModel.TeacherHomeViewModel>
+
+@{
+    ViewBag.Title = "SelectCourses";
+}
+
+<div class="container bg-white mt-3 p-2">
+    <h2>SelectCourses</h2>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CourseID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CourseName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TestType)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CourseID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CourseName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TestType)
+                </td>
+                <td>
+                    @Html.ActionLink("進入任務", "SelectMissions", new { cid = item.CourseID, @class="btn btn-primary" })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
