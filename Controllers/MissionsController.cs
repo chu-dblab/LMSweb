@@ -229,7 +229,7 @@ namespace LMSweb.Models
             return RedirectToAction("Index", new { cid });
         }
 
-        public ActionResult SelectCourses()
+        public ActionResult SelectCourses(string cid)
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
             var claimData = claims.Claims.Where(x => x.Type == "UID").FirstOrDefault();   //抓出當初記載Claims陣列中的TID
@@ -240,6 +240,7 @@ namespace LMSweb.Models
                 CourseName = x.CName,
                 TestType = x.TestType
             });
+            ViewData["CurrentCourseID"] = cid;
             return View(courses.ToList());
         }
         
