@@ -529,6 +529,7 @@
     <Compile Include="ViewModel\MissionViewModel.cs" />
     <Compile Include="ViewModel\QuestionViewModel.cs" />
     <Compile Include="ViewModel\ReflectionViewModel.cs" />
+    <Compile Include="ViewModel\SelectMissionViewModel.cs" />
     <Compile Include="ViewModel\StudentCodingViewModel.cs" />
     <Compile Include="ViewModel\StudentHomePageViewModel.cs" />
     <Compile Include="ViewModel\StudentHomeViewModel.cs" />
