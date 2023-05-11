@@ -1,10 +1,13 @@
 ﻿@model IEnumerable<LMSweb.ViewModel.TeacherHomeViewModel>
 
 @{
-    ViewBag.Title = "SelectCourses";
+    ViewBag.Title = "SelectCourses";    
 }
 
 <div class="container bg-white mt-3 p-2">
+
+    @*@AllHelper.CouresTitleForTeacherView(Model.CourseName, Model.TestType)*@
+
     <h2>SelectCourses</h2>
     <table class="table">
         <tr>
@@ -33,10 +36,9 @@
                     @Html.DisplayFor(modelItem => item.TestType)
                 </td>
                 <td>
-                    @Html.ActionLink("進入任務", "SelectMissions", new { cid = item.CourseID, @class="btn btn-primary" })
+                    @Html.ActionLink("選擇此課程", "SelectMissions", new { cid = item.CourseID, @class = "btn btn-primary" })
                 </td>
             </tr>
         }
-
     </table>
 </div>
