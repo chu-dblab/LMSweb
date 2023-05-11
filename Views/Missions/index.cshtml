@@ -33,7 +33,7 @@
                         新增任務
                     </a>
 
-                    <a href="@Url.Action("SelectCourses", "Missions")" class="btn btn-primary w-auto my-auto">
+                    <a href="@Url.Action("SelectCourses", "Missions", new {cid = Model.CourseID})" class="btn btn-primary w-auto my-auto">
                         <i class="bi bi-files"></i>
                         複製任務
                     </a>

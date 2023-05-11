@@ -1741,7 +1741,7 @@
     <Content Include="Views\Missions\Delete.cshtml" />
     <Content Include="Views\Missions\Details.cshtml" />
     <Content Include="Views\Missions\Edit.cshtml" />
-    <Content Include="Views\Missions\index.cshtml" />
+    <Content Include="Views\Missions\Index.cshtml" />
     <Content Include="Views\KnowledgePoints\Create.cshtml" />
     <Content Include="Views\KnowledgePoints\Delete.cshtml" />
     <Content Include="Views\KnowledgePoints\Edit.cshtml" />

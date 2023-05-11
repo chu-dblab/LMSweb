@@ -1,44 +1,61 @@
 ﻿@model IEnumerable<LMSweb.ViewModel.TeacherHomeViewModel>
 
 @{
-    ViewBag.Title = "SelectCourses";    
+    ViewBag.Title = "SelectCourses";
+
+    string currentCourseId = (string)ViewData["CurrentCourseID"];
+    LMSweb.ViewModel.TeacherHomeViewModel currentCourse = Model.Where(x => x.CourseID == currentCourseId).FirstOrDefault();
+
+    int k = 1;
 }
 
-<div class="container bg-white mt-3 p-2">
+@section NavPills {
+    <ul class="nav nav-pills me-auto ms-3">
+        @AllHelper.SetActiveNavData(Url.Action("Index", "Missions", new { CID = currentCourse.CourseID }), "任務管理")
+        @AllHelper.SetUnActiveNavData(Url.Action("StudentManagement", "Course", new { CID = currentCourse.CourseID }), "學生名單")
+        @AllHelper.SetUnActiveNavData(Url.Action("TeacherJourney", "LearningBehaviors", new { CID = currentCourse.CourseID }), "學習表現")
+        @AllHelper.SetUnActiveNavData(Url.Action("TeacherEvalutionJourney", "LearningBehaviors", new { CID = currentCourse.CourseID }), "學習表現(互評版)")
+    </ul>
+}
 
-    @*@AllHelper.CouresTitleForTeacherView(Model.CourseName, Model.TestType)*@
+<div class="container">
+    @AllHelper.CouresTitleForTeacherView(currentCourse.CourseName, currentCourse.TestType)
 
-    <h2>SelectCourses</h2>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.CourseID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CourseName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TestType)
-            </th>
-            <th></th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CourseID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CourseName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TestType)
-                </td>
-                <td>
-                    @Html.ActionLink("選擇此課程", "SelectMissions", new { cid = item.CourseID, @class = "btn btn-primary" })
-                </td>
+    <div class="card m-3 p-4">
+        <h4 class="fw-bold">複製任務</h4>
+        <table class="table table-bordered">
+            <tr class="text-center">
+                <th>
+                    @Html.DisplayNameFor(model => model.CourseID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CourseName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TestType)
+                </th>
+                <th></th>
             </tr>
-        }
-    </table>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CourseID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CourseName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TestType)
+                    </td>
+                    <td>
+                        @Html.ActionLink("進入任務", "SelectMissions", new { cid = item.CourseID, @class = "btn btn-primary" })
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+    </div>
 </div>
