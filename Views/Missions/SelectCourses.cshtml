@@ -22,38 +22,49 @@
     @AllHelper.CouresTitleForTeacherView(currentCourse.CourseName, currentCourse.TestType)
 
     <div class="card m-3 p-4">
-        <h4 class="fw-bold">複製任務</h4>
-        <table class="table table-bordered">
-            <tr class="text-center">
-                <th>
-                    @Html.DisplayNameFor(model => model.CourseID)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CourseName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.TestType)
-                </th>
-                <th></th>
-            </tr>
-
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CourseID)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CourseName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TestType)
-                    </td>
-                    <td>
-                        @Html.ActionLink("進入此課程", "SelectMissions", new { cid = item.CourseID, @class = "btn btn-primary" })
-                    </td>
+        <h4 class="fw-bold ms-2 my-2">複製任務</h4>
+        <table class="table table-striped">
+            <thead>
+                <tr class="row mx-1">
+                    <th class="col-1">編號</th>
+                    <th class="col-2">
+                        @Html.DisplayNameFor(model => model.CourseID)
+                    </th>
+                    <th class="col">
+                        @Html.DisplayNameFor(model => model.CourseName)
+                    </th>
+                    <th class="col-4">
+                        @Html.DisplayNameFor(model => model.TestType)
+                    </th>
+                    <th class="col"></th>
                 </tr>
-            }
+            </thead>
+
+            <tdody>
+                @foreach (var item in Model)
+                {
+                    <tr class="row bg-white mx-1">
+                        <td class="col-1 align-self-center py-3">
+                            <span class='ms-2'>@(k++)</span>
+                        </td>
+                        <td class="col-2 align-self-center py-3">
+                            @Html.DisplayFor(modelItem => item.CourseID)
+                        </td>
+                        <td class="col align-self-center py-3">
+                            @Html.DisplayFor(modelItem => item.CourseName)
+                        </td>
+                        <td class="col-4 align-self-center py-3">
+                            @MissionsHelper.GetTypeString(item.TestType)
+                        </td>
+                        <td class="d-grid d-flex justify-content-end col flex-shrink-0">
+                            <a href="@Url.Action("SelectMissions", new { cid = item.CourseID })" class="btn btn-primary my-auto">
+                                進入此課程
+                            </a>
+                            
+                        </td>
+                    </tr>
+                }
+            </tdody>
 
         </table>
 
