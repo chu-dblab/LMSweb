@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Security.Claims;
 using System.Web.Mvc;
+using DocumentFormat.OpenXml.EMMA;
 using LMSweb.ViewModel;
 
 namespace LMSweb.Models
@@ -244,9 +245,9 @@ namespace LMSweb.Models
             return View(courses.ToList());
         }
         
-        public ActionResult SelectMissions(string cid)
+        public ActionResult SelectMissions(string selectedCID, string currentCID)
         {
-            var tasklist = db.Missions.Where(m => m.CID == cid).Select(s => new TaskData
+            var tasklist = db.Missions.Where(m => m.CID == selectedCID).Select(s => new TaskData
             {
                 TaskID = s.MID,
                 Name = s.MName,
@@ -255,9 +256,10 @@ namespace LMSweb.Models
                 EndDate = s.End
             }).ToList();
 
-            var course = db.Courses.Find(cid);
+            var course = db.Courses.Find(selectedCID);
             var data = new SelectMissionViewModel
             {
+                CurrentCourseID = currentCID,
                 CourseID = course.CID,
                 CourseName = course.CName,
                 TestType = course.TestType,
@@ -266,11 +268,11 @@ namespace LMSweb.Models
             return View(data);
         }
 
-        public ActionResult AddMissions(string mid, string cid)
+        public ActionResult Copy(string mid, string selectedCID,string currentCID)
         {
             var missionData = (from mission in db.Missions
                               from course in db.Courses
-                              where mission.CID == course.CID && mission.MID == mid && course.CID == cid
+                              where mission.CID == course.CID && mission.MID == mid && course.CID == selectedCID
                               select new MissionCreateViewModel
                               {
                                   CourseID = course.CID,
@@ -281,7 +283,34 @@ namespace LMSweb.Models
                                   StartDate = mission.Start,
                                   EndDate = mission.End
                               }).FirstOrDefault();
+            ViewData["CurrentCourseID"] = currentCID;
             return View(missionData);
+        }
+
+        [HttpPost]
+        public ActionResult Copy(string currentCID, MissionCreateViewModel formdata)
+        {
+            if (ModelState.IsValid)
+            {
+                var test_type = db.Courses.Where(x => x.CID == currentCID).Select(x => x.TestType).FirstOrDefault();
+                var missionData = new Mission
+                {
+                    CID = currentCID,
+                    MID = $"M{DateTime.Now.ToString("yyMMddHHmmss")}",
+                    MName = formdata.Name,
+                    MDetail = formdata.Contents,
+                    Start = formdata.StartDate.Replace("T", " "),
+                    End = formdata.EndDate.Replace("T", " "),
+                    CurrentAction = DefaultCurrentStatus(test_type)
+                };
+                formdata.CourseID = currentCID;
+                db.Missions.Add(missionData);
+                db.SaveChanges();
+
+                return RedirectToAction("Index", new {cid = formdata.CourseID});
+            }
+
+            return View(formdata);
         }
 
         protected override void Dispose(bool disposing)

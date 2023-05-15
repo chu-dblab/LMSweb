@@ -9,6 +9,8 @@ namespace LMSweb.ViewModel
 {
     public class SelectMissionViewModel
     {
+
+        public string CurrentCourseID { get; set; }
         public string CourseID { get; set; }
         public string CourseName { get; set; }
         public int TestType { get; set; }

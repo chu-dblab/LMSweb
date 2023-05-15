@@ -8,10 +8,10 @@
 
 @section NavPills {
     <ul class="nav nav-pills me-auto ms-3">
-        @AllHelper.SetActiveNavData(Url.Action("Index", "Missions", new { CID = Model.CourseID }), "任務管理")
-        @AllHelper.SetUnActiveNavData(Url.Action("StudentManagement", "Course", new { CID = Model.CourseID }), "學生名單")
-        @AllHelper.SetUnActiveNavData(Url.Action("TeacherJourney", "LearningBehaviors", new { CID = Model.CourseID }), "學習表現")
-        @AllHelper.SetUnActiveNavData(Url.Action("TeacherEvalutionJourney", "LearningBehaviors", new { CID = Model.CourseID }), "學習表現(互評版)")
+        @AllHelper.SetActiveNavData(Url.Action("Index", "Missions", new { CID = Model.CurrentCourseID }), "任務管理")
+        @AllHelper.SetUnActiveNavData(Url.Action("StudentManagement", "Course", new { CID = Model.CurrentCourseID }), "學生名單")
+        @AllHelper.SetUnActiveNavData(Url.Action("TeacherJourney", "LearningBehaviors", new { CID = Model.CurrentCourseID }), "學習表現")
+        @AllHelper.SetUnActiveNavData(Url.Action("TeacherEvalutionJourney", "LearningBehaviors", new { CID = Model.CurrentCourseID }), "學習表現(互評版)")
     </ul>
 }
 
@@ -65,7 +65,7 @@
 
                         </td>
                         <td class="pt-2 col">
-                            <a href="@Url.Action("AddMissions", "Missions", new { mid = item.TaskID, cid = Model.CourseID})" class="btn btn-primary w-auto mx-2">
+                            <a href="@Url.Action("Copy", "Missions", new { mid = item.TaskID, selectedCID = Model.CourseID, currentCID = Model.CurrentCourseID })" class="btn btn-primary w-auto mx-2">
                                 <i class="bi bi-plus-lg"></i>
                                 複製此任務
                             </a>

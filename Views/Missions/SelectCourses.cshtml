@@ -57,7 +57,7 @@
                             @MissionsHelper.GetTypeString(item.TestType)
                         </td>
                         <td class="d-grid d-flex justify-content-end col flex-shrink-0">
-                            <a href="@Url.Action("SelectMissions", new { cid = item.CourseID })" class="btn btn-primary my-auto">
+                            <a href="@Url.Action("SelectMissions", new { selectedCID = item.CourseID, currentCID = currentCourseId })" class="btn btn-primary my-auto">
                                 進入此課程
                             </a>
                             

@@ -1,14 +1,15 @@
 ﻿@model LMSweb.ViewModel.MissionCreateViewModel
 @{
-    ViewBag.Title = "AddMission";
+    ViewBag.Title = "複製任務";
+    string CurrentCourseID = (string)ViewData["CurrentCourseID"];
 }
 
 @section NavPills {
     <ul class="nav nav-pills me-auto ms-3">
-        @AllHelper.SetActiveNavData(Url.Action("Index", "Missions", new { CID = Model.CourseID }), "任務管理")
-        @AllHelper.SetUnActiveNavData(Url.Action("StudentManagement", "Course", new { CID = Model.CourseID }), "學生名單")
-        @AllHelper.SetUnActiveNavData(Url.Action("TeacherJourney", "LearningBehaviors", new { CID = Model.CourseID }), "學習表現")
-        @AllHelper.SetUnActiveNavData(Url.Action("TeacherEvalutionJourney", "LearningBehaviors", new { CID = Model.CourseID }), "學習表現(互評版)")
+        @AllHelper.SetActiveNavData(Url.Action("Index", "Missions", new { CID = CurrentCourseID }), "任務管理")
+        @AllHelper.SetUnActiveNavData(Url.Action("StudentManagement", "Course", new { CID = CurrentCourseID }), "學生名單")
+        @AllHelper.SetUnActiveNavData(Url.Action("TeacherJourney", "LearningBehaviors", new { CID = CurrentCourseID }), "學習表現")
+        @AllHelper.SetUnActiveNavData(Url.Action("TeacherEvalutionJourney", "LearningBehaviors", new { CID = CurrentCourseID }), "學習表現(互評版)")
     </ul>
 }
 
@@ -19,13 +20,12 @@
 
     <div class="card m-3 p-4">
         <h4 class="fs-3 text-center my-1">複製任務</h4>
-        @using (Html.BeginForm("Create", "Missions"))
+        @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
-            @Html.HiddenFor(model => model.MID, new { @class = "form-control", @Value = $"M{DateTime.Now.ToString("yyMMddHHmmss")}" })
 
             <div class="mb-3 my-1">
-                @Html.LabelFor(model => model.MID, htmlAttributes: new { @class = "form-label ms-2 fs-5 my-1" })
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "form-label ms-2 fs-5 my-1" })
                 <div class="row mx-1">
                     @Html.TextBoxFor(model => model.Name, new { @class = "form-control col-12 fs-5" })
                     @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
@@ -58,8 +58,6 @@
 
                 </div>
             </div>
-
-            @Html.HiddenFor(model => model.CourseID, htmlAttributes: new { @value = Model.CourseID })
 
             <div class="mb-3">
                 <div class="row">

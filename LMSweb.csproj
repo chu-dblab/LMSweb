@@ -1750,7 +1750,7 @@
     <Content Include="Views\Course\StudentGroup.cshtml" />
     <Content Include="Views\Groups\Edit.cshtml" />
     <Content Include="Views\Groups\Index.cshtml" />
-    <Content Include="Views\Missions\AddMissions.cshtml" />
+    <Content Include="Views\Missions\Copy.cshtml" />
     <Content Include="Views\Missions\SelectMissions.cshtml" />
     <Content Include="Views\Shared\_StudentLayout.cshtml" />
     <Content Include="Views\Student\StudentCourse.cshtml" />
