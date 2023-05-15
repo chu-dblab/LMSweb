@@ -481,6 +481,10 @@
     <Compile Include="Migrations\202305010138152_alter_col_student_gid.designer.cs">
       <DependentUpon>202305010138152_alter_col_student_gid.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202305120723219_add_IsLeader_to_Student.cs" />
+    <Compile Include="Migrations\202305120723219_add_IsLeader_to_Student.designer.cs">
+      <DependentUpon>202305120723219_add_IsLeader_to_Student.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\Course.cs" />
@@ -2106,6 +2110,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202305010138152_alter_col_student_gid.resx">
       <DependentUpon>202305010138152_alter_col_student_gid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202305120723219_add_IsLeader_to_Student.resx">
+      <DependentUpon>202305120723219_add_IsLeader_to_Student.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

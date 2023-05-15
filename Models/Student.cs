@@ -28,6 +28,7 @@ namespace LMSweb.Models
         [Display(Name = "性別")]
         public string Sex { get; set; }
 
+        public bool IsLeader { get; set; }
 
         [Display(Name = "積分")]
         public string Score { get; set; }
