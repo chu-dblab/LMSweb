@@ -1915,6 +1915,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Assets\" />
     <Folder Include="FileUpload\" />
   </ItemGroup>
   <ItemGroup>
