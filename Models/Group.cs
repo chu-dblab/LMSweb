@@ -22,5 +22,6 @@ namespace LMSweb.Models
         public virtual ICollection<TeacherAssessment> TeacherA { get; set; }
         public virtual ICollection<PeerAssessment> PeerAssessments{ get; set; }
         public virtual ICollection<StudentCode> StudentCode { get; set; }
+        public virtual ICollection<Execution> Executions { get; set; }
     }
 }

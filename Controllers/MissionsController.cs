@@ -11,7 +11,7 @@ using LMSweb.ViewModel;
 
 namespace LMSweb.Models
 {
-    [Authorize(Roles = "Teacher")]
+    [Authorize]
     public class MissionsController : Controller
     {
         private LMSmodel db = new LMSmodel();
@@ -19,15 +19,19 @@ namespace LMSweb.Models
         {
             if (cid is null)
             {
-                return RedirectToAction("Home", "Teacher");
+                var data = (ClaimsIdentity)User.Identity;
+                var role = data.Claims.Where(x => x.Type == ClaimTypes.Role).FirstOrDefault();
+                return RedirectToAction("Home", role.Value);
             }
-            var mission_datas = db.Missions.Where(c => c.CID == cid).Select(m => new MissionData()
-            {
-                MID = m.MID,
-                Name = m.MName,
-                StartDate = m.Start,
-                EndDate = m.End
-            }).ToList();
+            var mission_datas = db.Missions
+                .Where(c => c.CID == cid)
+                .Select(m => new MissionData()
+                {
+                    MID = m.MID,
+                    Name = m.MName,
+                    StartDate = m.Start,
+                    EndDate = m.End
+                }).ToList();
             var course_data = db.Courses.Where(c => c.CID == cid).FirstOrDefault();
 
             var mission_list = new MissionIndexViewModel()
@@ -76,6 +80,7 @@ namespace LMSweb.Models
         }
 
         [HttpGet]
+        [Authorize(Roles = "Teacher")]
         public ActionResult Create(string cid)
         { 
             var course = db.Courses.Find(cid);
@@ -90,6 +95,7 @@ namespace LMSweb.Models
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Teacher")]
         public ActionResult Create(string cid,MissionCreateViewModel model)
         {
             if (ModelState.IsValid)
@@ -127,6 +133,7 @@ namespace LMSweb.Models
         }
 
         [HttpGet]
+        [Authorize(Roles = "Teacher")]
         public ActionResult Edit(string mid, string cid)
         {
             var missionData = (from mission in db.Missions
@@ -147,6 +154,7 @@ namespace LMSweb.Models
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Teacher")]
         public ActionResult Edit(string mid, string cid, MissionCreateViewModel model)
         {
             if (ModelState.IsValid)
@@ -177,6 +185,7 @@ namespace LMSweb.Models
             return View(model);
         }
         [HttpGet]
+        [Authorize(Roles = "Teacher")]
         public ActionResult Delete(string mid, string cid)
         {
             if (mid == null)
@@ -199,6 +208,7 @@ namespace LMSweb.Models
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Teacher")]
         public ActionResult DeleteConfirmed(string mid)
         {
 
@@ -229,7 +239,8 @@ namespace LMSweb.Models
             db.SaveChanges();
             return RedirectToAction("Index", new { cid });
         }
-
+        
+        [Authorize(Roles = "Teacher")]
         public ActionResult SelectCourses(string cid)
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
@@ -244,7 +255,8 @@ namespace LMSweb.Models
             ViewData["CurrentCourseID"] = cid;
             return View(courses.ToList());
         }
-        
+
+        [Authorize(Roles = "Teacher")]
         public ActionResult SelectMissions(string selectedCID, string currentCID)
         {
             var tasklist = db.Missions.Where(m => m.CID == selectedCID).Select(s => new TaskData
@@ -268,6 +280,7 @@ namespace LMSweb.Models
             return View(data);
         }
 
+        [Authorize(Roles = "Teacher")]
         public ActionResult Copy(string mid, string selectedCID,string currentCID)
         {
             var missionData = (from mission in db.Missions
@@ -288,6 +301,7 @@ namespace LMSweb.Models
         }
 
         [HttpPost]
+        [Authorize(Roles = "Teacher")]
         public ActionResult Copy(string currentCID, MissionCreateViewModel formdata)
         {
             if (ModelState.IsValid)
@@ -323,6 +337,7 @@ namespace LMSweb.Models
         }
 
         [HttpPost]
+        [Authorize(Roles = "Teacher")]
         public ActionResult SwitchDrawing(string mid, string cid, string type, bool sw)
         {
             Mission mission = db.Missions.Find(mid);
