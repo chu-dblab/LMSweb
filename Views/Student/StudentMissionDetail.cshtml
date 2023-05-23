@@ -1,6 +1,9 @@
 ﻿@model LMSweb.ViewModel.MissionViewModel
 @{
     ViewBag.Title = "StudentMissionDetail";
+
+    // 這是給陣列用的
+    int k = 0;
 }
 
 @section NavPills {
@@ -8,19 +11,138 @@
         @AllHelper.SetUnActiveNavData(Url.Action("StudentMission", "Student", new { CID = Model.CID }), "任務列表")
     </ul>
 }
-
 <div class="container">
+
+    @AllHelper.CouresTitleForTeacherView(Model.CName, 5)
+
+    <div class="row m-3" style="min-height: 80vh">
+        <div class="col card me-2 p-3 bg-white">
+            <div class="shadow-sm">
+                <h3 class="text-center mt-2 pt-1">任務進度</h3>
+
+                <div id="stepper4" class="bs-stepper vertical">
+                    <div class="bs-stepper-header w-100 pb-3" role="tablist">
+
+                        @MissionsHelper.GetTaskGuideStapString("目標設置", "000000", k++)
+                        <div class="bs-stepper-line"></div>
+                        @MissionsHelper.GetTaskGuideStapString("畫流程圖", "000000", k++)
+                        <div class="bs-stepper-line"></div>
+                        @MissionsHelper.GetTaskGuideStapString("寫程式碼", "000000", k++)
+                        <div class="bs-stepper-line"></div>
+                        @MissionsHelper.GetTaskGuideStapString("同儕互評", "000000", k++)
+                        <div class="bs-stepper-line"></div>
+                        @MissionsHelper.GetTaskGuideStapString("評價回饋", "000000", k++)
+                        <div class="bs-stepper-line"></div>
+                        @MissionsHelper.GetTaskGuideStapString("團隊反思", "000000", k++)
+
+
+                        @*@switch (Model.TestType)
+                            {
+                                case 0:
+                                    // 控制組
+                                    @MissionsHelper.GetTaskGuideStapString("畫流程圖", Model.CurrentAction, k++)
+                                    <div class="bs-stepper-line"></div>
+                                    @MissionsHelper.GetTaskGuideStapString("寫程式碼", Model.CurrentAction, k++)
+                                    break;
+                                case 1:
+                                    // 實驗組一：自我調節
+                                    @MissionsHelper.GetTaskGuideStapString("目標設置", Model.CurrentAction, k++)
+                                    <div class="bs-stepper-line"></div>
+                                    @MissionsHelper.GetTaskGuideStapString("畫流程圖", Model.CurrentAction, k++)
+                                    <div class="bs-stepper-line"></div>
+                                    @MissionsHelper.GetTaskGuideStapString("寫程式碼", Model.CurrentAction, k++)
+                                    <div class="bs-stepper-line"></div>
+                                    @MissionsHelper.GetTaskGuideStapString("自我反思", Model.CurrentAction, k++)
+                                    break;
+                                case 2:
+                                    // 實驗組二：同儕互評
+                                    @MissionsHelper.GetTaskGuideStapString("畫流程圖", Model.CurrentAction, k++)
+                                    <div class="bs-stepper-line"></div>
+                                    @MissionsHelper.GetTaskGuideStapString("寫程式碼", Model.CurrentAction, k++)
+                                    <div class="bs-stepper-line"></div>
+                                    @MissionsHelper.GetTaskGuideStapString("同儕互評", Model.CurrentAction, k++)
+                                    break;
+                                case 3:
+                                    // 實驗組三：社會共享調節
+                                    @MissionsHelper.GetTaskGuideStapString("目標設置", Model.CurrentAction, k++)
+                                    <div class="bs-stepper-line"></div>
+                                    @MissionsHelper.GetTaskGuideStapString("畫流程圖", Model.CurrentAction, k++)
+                                    <div class="bs-stepper-line"></div>
+                                    @MissionsHelper.GetTaskGuideStapString("寫程式碼", Model.CurrentAction, k++)
+                                    <div class="bs-stepper-line"></div>
+                                    @MissionsHelper.GetTaskGuideStapString("團隊反思", Model.CurrentAction, k++)
+                                    break;
+                                case 4:
+                                    // 實驗組四：互動式同儕互評
+                                    @MissionsHelper.GetTaskGuideStapString("畫流程圖", Model.CurrentAction, k++)
+                                    <div class="bs-stepper-line"></div>
+                                    @MissionsHelper.GetTaskGuideStapString("寫程式碼", Model.CurrentAction, k++)
+                                    <div class="bs-stepper-line"></div>
+                                    @MissionsHelper.GetTaskGuideStapString("同儕互評", Model.CurrentAction, k++)
+                                    <div class="bs-stepper-line"></div>
+                                    @MissionsHelper.GetTaskGuideStapString("評價回饋", Model.CurrentAction, k++)
+                                    break;
+                                case 5:
+                                    // 實驗組五：社會共享調節 & 互動式同儕互評
+                                    @MissionsHelper.GetTaskGuideStapString("目標設置", Model.CurrentAction, k++)
+                                    <div class="bs-stepper-line"></div>
+                                    @MissionsHelper.GetTaskGuideStapString("畫流程圖", Model.CurrentAction, k++)
+                                    <div class="bs-stepper-line"></div>
+                                    @MissionsHelper.GetTaskGuideStapString("寫程式碼", Model.CurrentAction, k++)
+                                    <div class="bs-stepper-line"></div>
+                                    @MissionsHelper.GetTaskGuideStapString("同儕互評", Model.CurrentAction, k++)
+                                    <div class="bs-stepper-line"></div>
+                                    @MissionsHelper.GetTaskGuideStapString("評價回饋", Model.CurrentAction, k++)
+                                    <div class="bs-stepper-line"></div>
+                                    @MissionsHelper.GetTaskGuideStapString("團隊反思", Model.CurrentAction, k++)
+                                    break;
+                                default:
+                                    break;
+                            }*@
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-10 card p-3 bg-white">
+            <div class="mx-3 mt-2">
+                <div class="row mb-3">
+                    <div class="col my-auto">
+                        <h3 class="h-auto">@Model.CName</h3>
+                    </div>
+                </div>
+
+
+                <div class="row gx-2 gy-3">
+                    @MissionsHelper.GetDetailDataListGroupTemplate(
+                        Html.DisplayNameFor(model => model.mis.MDetail),
+                        Html.DisplayFor(model => model.mis.MDetail), 300)
+
+                    @MissionsHelper.GetDetailDataListGroupTemplate(
+                        Html.DisplayNameFor(model => model.mis.Start),
+                        Html.DisplayFor(model => model.mis.Start))
+
+                    @MissionsHelper.GetDetailDataListGroupTemplate(
+                        Html.DisplayNameFor(model => model.mis.End),
+                        Html.DisplayFor(model => model.mis.End))
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--<div class="container">
 
     @AllHelper.CouresTitleForStudentView(Model.MName, Model.CName)
 
     <div class="card m-3 p-4">
 
-        <div class="row gx-2 gy-3">
-            @*@MissionsHelper.GetDetailDataListGroupTemplate(
-                Html.DisplayNameFor(model => model.mis.MName),
-                Html.DisplayFor(model => model.mis.MName))*@
+        <div class="row gx-2 gy-3">-->
+@*@MissionsHelper.GetDetailDataListGroupTemplate(
+    Html.DisplayNameFor(model => model.mis.MName),
+    Html.DisplayFor(model => model.mis.MName))*@
 
-            @MissionsHelper.GetDetailDataListGroupTemplate(
+<!--@MissionsHelper.GetDetailDataListGroupTemplate(
                 Html.DisplayNameFor(model => model.mis.MDetail),
                 Html.DisplayFor(model => model.mis.MDetail), 300)
 
@@ -96,24 +218,23 @@
             </div>
         </div>
     </div>
-</div>
-
+</div>-->
 @*@if (!Model.mis.IsDiscuss)
-{
-    <button type="button" class="btn btn-primary rounded-circle message-btn" data-bs-toggle="offcanvas"
-            data-bs-target="#messageBox" aria-controls="messageBox">
-        討論區
-    </button>
-}
-<div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="messageBox" aria-labelledby="messageBoxLabel">
-    <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="messageBoxLabel">聊天室</h5>
-        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-        <iframe src="@Url.Action("Chat","Student",new { MID = @Model.MID, CID = @Model.CID})" width="365" height="830" frameborder="0" scrolling="no"></iframe>
-    </div>
-</div>*@
+    {
+        <button type="button" class="btn btn-primary rounded-circle message-btn" data-bs-toggle="offcanvas"
+                data-bs-target="#messageBox" aria-controls="messageBox">
+            討論區
+        </button>
+    }
+    <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="messageBox" aria-labelledby="messageBoxLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="messageBoxLabel">聊天室</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <iframe src="@Url.Action("Chat","Student",new { MID = @Model.MID, CID = @Model.CID})" width="365" height="830" frameborder="0" scrolling="no"></iframe>
+        </div>
+    </div>*@
 
 <!-- 懸浮聊天室 -->
 <!--<body>

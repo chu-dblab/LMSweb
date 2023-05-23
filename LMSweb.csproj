@@ -225,6 +225,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Assets\Guide.cs" />
     <Compile Include="ChatHub.cs" />
     <Compile Include="CodeServiceHub.cs" />
     <Compile Include="Controllers\ChartController.cs" />
@@ -1915,7 +1916,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Assets\" />
     <Folder Include="FileUpload\" />
   </ItemGroup>
   <ItemGroup>
