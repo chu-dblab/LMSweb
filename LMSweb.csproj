@@ -486,6 +486,10 @@
     <Compile Include="Migrations\202305120723219_add_IsLeader_to_Student.designer.cs">
       <DependentUpon>202305120723219_add_IsLeader_to_Student.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202305230106129_AddExecutionTable.cs" />
+    <Compile Include="Migrations\202305230106129_AddExecutionTable.designer.cs">
+      <DependentUpon>202305230106129_AddExecutionTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\Course.cs" />
@@ -493,6 +497,7 @@
     <Compile Include="Models\DefaultQuestion.cs" />
     <Compile Include="Models\EnableFunction.cs" />
     <Compile Include="Models\EvalutionResponse.cs" />
+    <Compile Include="Models\Execution.cs" />
     <Compile Include="Models\Group.cs" />
     <Compile Include="Models\GroupER.cs" />
     <Compile Include="Models\GroupOption.cs" />
@@ -2114,6 +2119,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202305120723219_add_IsLeader_to_Student.resx">
       <DependentUpon>202305120723219_add_IsLeader_to_Student.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202305230106129_AddExecutionTable.resx">
+      <DependentUpon>202305230106129_AddExecutionTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

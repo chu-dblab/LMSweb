@@ -76,6 +76,7 @@ namespace LMSweb.Models
         public virtual ICollection<LearningBehavior> LearningBehaviors { get; set; }
         public virtual ICollection<StudentCode> StudentCode { get; set; }
         public virtual ICollection<Question> Questions { get; set; }
+        public virtual ICollection<Execution> Executions { get; set; }
 
     }
 }

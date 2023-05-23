@@ -31,6 +31,7 @@ namespace LMSweb.Models
         public DbSet<GroupOption> GroupOptions { get; set; }
         public DbSet<GroupER> GroupERs { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Execution> Executions { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

@@ -68,28 +68,6 @@ namespace LMSweb.Controllers
             return View(data);
         }
 
-        /*[HttpGet]  可刪除
-        [Authorize(Roles = "Student")]
-        public ActionResult StudentCourse(string cid)
-        {
-            CourseViewModel model = new CourseViewModel();
-            if (cid == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Course course = db.Courses.Find(cid);
-            if (course == null)
-            {
-                return HttpNotFound();
-            }
-
-            var cname = course.CName;
-            model.CID = cid;
-            model.CName = cname;
-
-            return View(model);
-        }*/
-
         public ActionResult StudentMission(string cid)
         {
             MissionViewModel model = new MissionViewModel();
