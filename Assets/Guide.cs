@@ -57,8 +57,7 @@ namespace LMSweb.Assets
         private string GetNewCurrentActionForTestType0()
         {
             var MissionsData = (from m in db.Missions
-                                join c in db.Courses on m.CID equals c.CID
-                                where m.MID == mid && c.CID == cid
+                                where m.MID == mid
                                 select new
                                 {
                                     m.Start,
@@ -66,6 +65,17 @@ namespace LMSweb.Assets
                                     m.CurrentAction,
                                     m.IsAssess,
                                 }).FirstOrDefault();
+
+            var MissionGroupData = (from e in db.Executions
+                                    join s in db.Students on e.GID equals s.GID
+                                    join g in db.Groups on e.GID equals g.GID
+                                    where e.MID == mid && s.IsLeader == true
+                                    select new
+                                    {
+                                        s.SID,
+                                    });
+
+
             if (MissionsData != null)
             {
                 var StartDate = DateTime.Parse(MissionsData.Start);
@@ -83,13 +93,6 @@ namespace LMSweb.Assets
                         return "10";
                     }
                 }
-                //if (MissionsData.CurrentAction == "10")
-                //{
-                //    var CourseData = (from c in db.Courses
-                //                      from m in db.Missions
-                //                      from 
-                //                      where c.CID == m.CID && c.CID == cid && m.MID == mid
-                //}
             }
 
 
