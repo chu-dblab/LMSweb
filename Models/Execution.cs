@@ -15,7 +15,7 @@ namespace LMSweb.Models
         [Key]
         [Column(Order = 2)]
         public string MID { get; set; }
-        public string CurrentAction { get; set; }
+        public string CurrentStatus { get; set; }
 
         [ForeignKey("GID")]
         public Group Group { get; set; }

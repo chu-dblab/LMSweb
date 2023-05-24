@@ -490,6 +490,10 @@
     <Compile Include="Migrations\202305230106129_AddExecutionTable.designer.cs">
       <DependentUpon>202305230106129_AddExecutionTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202305240718370_AlterColumnCurrentActionToCurrentStatus.cs" />
+    <Compile Include="Migrations\202305240718370_AlterColumnCurrentActionToCurrentStatus.designer.cs">
+      <DependentUpon>202305240718370_AlterColumnCurrentActionToCurrentStatus.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\Course.cs" />
@@ -2122,6 +2126,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202305230106129_AddExecutionTable.resx">
       <DependentUpon>202305230106129_AddExecutionTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202305240718370_AlterColumnCurrentActionToCurrentStatus.resx">
+      <DependentUpon>202305240718370_AlterColumnCurrentActionToCurrentStatus.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
