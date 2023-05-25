@@ -62,7 +62,7 @@ namespace LMSweb.Infrastructure.Helpers
                     student.SID = row.SID;
                     student.SName = row.SName;
                     //student.SPassword = row.SPassword;
-                    student.Sex = row.Sex;
+                   student.Sex = row.Sex;
                     //student.Score = row.Score;
                     //student.CourseID = row.CourseID;
 
@@ -159,10 +159,11 @@ namespace LMSweb.Infrastructure.Helpers
                 {
                     foreach (var item in importStudent)
                     {
-                        db.Students.Add(item);
                         item.CID = cid;
+                        item.IsLeader = false;
+                        db.Students.Add(item);
+                        db.SaveChanges();
                     }
-                    db.SaveChanges();
                 }
             }
             catch (Exception ex)

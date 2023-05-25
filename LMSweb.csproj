@@ -225,6 +225,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Assets\GlobalClass.cs" />
+    <Compile Include="Assets\GuideForStudent.cs" />
     <Compile Include="Assets\Guide.cs" />
     <Compile Include="ChatHub.cs" />
     <Compile Include="CodeServiceHub.cs" />

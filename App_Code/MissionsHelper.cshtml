@@ -11,25 +11,12 @@
         "組別Type錯誤"
     };
 
-@str[input]
+    @str[input]
 }
 
 @helper GetTaskGuideStapString(string StapName, string CurrentAction, int k)
 {
-    string[] str =
-    {
-        "step align-self-center opacity-50",
-        "step align-self-center active",
-        "step align-self-center"
-    };
-
-    // -48 是因為 char 轉 int 的關係
-    <div class="@str[Convert.ToInt32(CurrentAction[k])-48]" data-target="#test-vl-3">
-        <button type="button" class="step-trigger" role="tab" id="stepper4trigger3" aria-controls="test-vl-3">
-            <span class="bs-stepper-circle">@(k + 1)</span>
-            <span class="bs-stepper-label">@StapName</span>
-        </button>
-    </div>
+    @MissionsHelper.GetTaskGuideStapString(StapName, CurrentAction, k, "")
 }
 
 @* 製作有點及功用的按鈕 *@
@@ -44,10 +31,10 @@
 
     // -48 是因為 char 轉 int 的關係
     <div class="@str[Convert.ToInt32(CurrentAction[k])-48]" data-target="#test-vl-3">
-        <button type="button" class="step-trigger" role="tab" id="stepper4trigger3" aria-controls="test-vl-3">
+        <a class="step-trigger" role="tab" id="stepper4trigger3" aria-controls="test-vl-3" href="@buttonLink">
             <span class="bs-stepper-circle">@(k + 1)</span>
             <span class="bs-stepper-label">@StapName</span>
-        </button>
+        </a>
     </div>
 }
 

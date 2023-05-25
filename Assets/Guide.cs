@@ -29,11 +29,11 @@ namespace LMSweb.Assets
                              from c in db.Courses
                              where m.CID == c.CID && m.MID == mid && c.CID == cid
                              select c.TestType
-                        ).FirstOrDefault();
+                             ).FirstOrDefault();
         }
 
         // 幫我創建一個判斷目前步驟進度方法
-        public string GetNewCurrentAction()
+        public string UpdataStudent()
         {
             switch (TestType)
             {
@@ -66,37 +66,45 @@ namespace LMSweb.Assets
                                     m.IsAssess,
                                 }).FirstOrDefault();
 
-            var MissionGroupData = (from e in db.Executions
-                                    join s in db.Students on e.GID equals s.GID
-                                    join g in db.Groups on e.GID equals g.GID
-                                    where e.MID == mid && s.IsLeader == true
-                                    select new
-                                    {
-                                        s.SID,
-                                    });
+            var Leaders = (from e in db.Executions
+                           join s in db.Students on e.GID equals s.GID
+                           join g in db.Groups on e.GID equals g.GID
+                           where e.MID == mid && s.IsLeader == true
+                           select new
+                           {
+                               s.SID,
+                               s.GID,
+                           });
 
+            var mission = db.Missions.Find(mid);
 
-            if (MissionsData != null)
+            if (MissionsData != null && Leaders.Count() > 0)
             {
+
                 var StartDate = DateTime.Parse(MissionsData.Start);
                 var EndDate = DateTime.Parse(MissionsData.End);
+                
 
                 // 啟動任務引導系統
-                if (MissionsData.CurrentAction == "00")
+                if (MissionsData.CurrentAction == "00" && DateTime.Now >= StartDate)
                 {
-                    if (DateTime.Now < StartDate)
+                    foreach (var Leader in Leaders)
                     {
-                        return "00";
+                        var execution = db.Executions.Find(Leader.SID, mid);
+
+                        execution.CurrentStatus = "10";
                     }
-                    else
+
+                    if (DateTime.Now >= StartDate)
                     {
-                        return "10";
+                        mission.CurrentAction = "10";
                     }
+
+                    db.SaveChanges();
                 }
             }
 
-
-            throw new NotImplementedException();
+            return mission.CurrentAction;
         }
         private string GetNewCurrentActionForTestType1()
         {

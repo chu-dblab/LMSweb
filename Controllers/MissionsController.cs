@@ -7,6 +7,7 @@ using System.Net;
 using System.Security.Claims;
 using System.Web.Mvc;
 using DocumentFormat.OpenXml.EMMA;
+using LMSweb.Assets;
 using LMSweb.ViewModel;
 
 namespace LMSweb.Models
@@ -45,44 +46,79 @@ namespace LMSweb.Models
             return View(mission_list);
         }
 
-        public ActionResult Details(string mid,string cid)
+        public ActionResult Details(string mid, string cid)
         {
+            // Executions資料表中有資料
             var data = (from m in db.Missions
-                       from c in db.Courses
-                       where m.CID == c.CID && m.MID == mid && c.CID == cid
-                       select new MissionDetailViewModel
-                       {
-                           MissionID = m.MID,
-                           CourseID = m.CID,
-                           CourseName = c.CName,
-                           TestType = c.TestType,
-                           Name = m.MName,
-                           Content = m.MDetail,
-                           StartDate = m.Start,
-                           EndDate = m.End,
-                           CurrentAction = m.CurrentAction,
-                           IsAssess = m.IsAssess,
-                           IsCoding = m.IsCoding,
-                           IsDiscuss = m.IsDiscuss,
-                           IsDrawing = m.IsDrawing,
-                           IsGoalSetting = m.IsGoalSetting,
-                           IsGReflect = m.IsGReflect,
-                           IsReflect = m.IsReflect,
-                           Is_Journey = m.Is_Journey,
-                           IsAddMetacognition = c.IsAddMetacognition,
-                           IsAddPeerAssessmemt = c.IsAddPeerAssessmemt
-                       }).FirstOrDefault();
-            if(data != null && data.CurrentAction is null)
+                        from c in db.Courses
+                        from s in db.Students
+                        from e in db.Executions
+                        where m.CID == c.CID && m.MID == mid && c.CID == cid && s.CID == c.CID && e.MID == m.MID && e.GID == s.GID
+                        select new MissionDetailViewModel
+                        {
+                            MissionID = m.MID,
+                            CourseID = m.CID,
+                            CourseName = c.CName,
+                            TestType = c.TestType,
+                            Name = m.MName,
+                            Content = m.MDetail,
+                            StartDate = m.Start,
+                            EndDate = m.End,
+                            CurrentAction = m.CurrentAction,
+                            CurrentStatus = e.CurrentStatus,
+                            IsAssess = m.IsAssess,
+                            IsCoding = m.IsCoding,
+                            IsDiscuss = m.IsDiscuss,
+                            IsDrawing = m.IsDrawing,
+                            IsGoalSetting = m.IsGoalSetting,
+                            IsGReflect = m.IsGReflect,
+                            IsReflect = m.IsReflect,
+                            Is_Journey = m.Is_Journey,
+                            IsAddMetacognition = c.IsAddMetacognition,
+                            IsAddPeerAssessmemt = c.IsAddPeerAssessmemt
+                        }).FirstOrDefault();
+
+            // 如果上面沒資料就用舊版
+            if (data == null)
             {
-                data.CurrentAction = DefaultCurrentStatus(data.TestType);
+                data = (from m in db.Missions
+                        from c in db.Courses
+                        where m.CID == c.CID && m.MID == mid && c.CID == cid
+                        select new MissionDetailViewModel
+                        {
+                            MissionID = m.MID,
+                            CourseID = m.CID,
+                            CourseName = c.CName,
+                            TestType = c.TestType,
+                            Name = m.MName,
+                            Content = m.MDetail,
+                            StartDate = m.Start,
+                            EndDate = m.End,
+                            CurrentAction = m.CurrentAction,
+                            IsAssess = m.IsAssess,
+                            IsCoding = m.IsCoding,
+                            IsDiscuss = m.IsDiscuss,
+                            IsDrawing = m.IsDrawing,
+                            IsGoalSetting = m.IsGoalSetting,
+                            IsGReflect = m.IsGReflect,
+                            IsReflect = m.IsReflect,
+                            Is_Journey = m.Is_Journey,
+                            IsAddMetacognition = c.IsAddMetacognition,
+                            IsAddPeerAssessmemt = c.IsAddPeerAssessmemt
+                        }).FirstOrDefault();
             }
+
+            if (data != null && data.CurrentAction is null)
+            {
+                data.CurrentAction = GlobalClass.DefaultCurrentStatus(data.TestType);
+            }
+            
             return View(data);
         }
 
-        [HttpGet]
         [Authorize(Roles = "Teacher")]
         public ActionResult Create(string cid)
-        { 
+        {
             var course = db.Courses.Find(cid);
 
             var createModel = new MissionCreateViewModel
@@ -96,7 +132,7 @@ namespace LMSweb.Models
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Teacher")]
-        public ActionResult Create(string cid,MissionCreateViewModel model)
+        public ActionResult Create(string cid, MissionCreateViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -109,7 +145,7 @@ namespace LMSweb.Models
                     MDetail = model.Contents,
                     Start = model.StartDate.Replace("T", " "),
                     End = model.EndDate.Replace("T", " "),
-                    CurrentAction = DefaultCurrentStatus(test_type)
+                    CurrentAction = GlobalClass.DefaultCurrentStatus(test_type)
                 };
                 model.CourseID = cid;
                 db.Missions.Add(missionData);
@@ -119,36 +155,23 @@ namespace LMSweb.Models
             return View(model);
         }
 
-        [NonAction]
-        private string DefaultCurrentStatus(int type)
-        {
-            var table = new Dictionary<int, string>();
-            table[0] = "00";
-            table[1] = "0000";
-            table[2] = "000";
-            table[3] = "0000";
-            table[4] = "0000";
-            table[5] = "000000";
-            return table[type];
-        }
-
         [HttpGet]
         [Authorize(Roles = "Teacher")]
         public ActionResult Edit(string mid, string cid)
         {
             var missionData = (from mission in db.Missions
-                              from course in db.Courses
-                              where mission.CID == course.CID && mission.MID == mid && mission.CID == cid
-                              select new MissionCreateViewModel
-                              {
-                                  CourseID = course.CID,
-                                  CourseName = course.CName,
-                                  MID = mission.MID,
-                                  Name = mission.MName,
-                                  Contents = mission.MDetail,
-                                  StartDate = mission.Start,
-                                  EndDate = mission.End                                  
-                              })
+                               from course in db.Courses
+                               where mission.CID == course.CID && mission.MID == mid && mission.CID == cid
+                               select new MissionCreateViewModel
+                               {
+                                   CourseID = course.CID,
+                                   CourseName = course.CName,
+                                   MID = mission.MID,
+                                   Name = mission.MName,
+                                   Contents = mission.MDetail,
+                                   StartDate = mission.Start,
+                                   EndDate = mission.End
+                               })
                               .FirstOrDefault();
             return View(missionData);
         }
@@ -160,13 +183,13 @@ namespace LMSweb.Models
             if (ModelState.IsValid)
             {
                 var original = db.Missions
-                    .Where(m=>m.CID == cid && m.MID == mid)
+                    .Where(m => m.CID == cid && m.MID == mid)
                     .FirstOrDefault();
-                
+
                 var test_type = db.Courses.Where(x => x.CID == cid).Select(x => x.TestType).FirstOrDefault();
                 if (original.CurrentAction is null)
                 {
-                    original.CurrentAction = DefaultCurrentStatus(test_type);
+                    original.CurrentAction = GlobalClass.DefaultCurrentStatus(test_type);
                 }
                 var newMission = new Mission
                 {
@@ -239,7 +262,7 @@ namespace LMSweb.Models
             db.SaveChanges();
             return RedirectToAction("Index", new { cid });
         }
-        
+
         [Authorize(Roles = "Teacher")]
         public ActionResult SelectCourses(string cid)
         {
@@ -281,21 +304,21 @@ namespace LMSweb.Models
         }
 
         [Authorize(Roles = "Teacher")]
-        public ActionResult Copy(string mid, string selectedCID,string currentCID)
+        public ActionResult Copy(string mid, string selectedCID, string currentCID)
         {
             var missionData = (from mission in db.Missions
-                              from course in db.Courses
-                              where mission.CID == course.CID && mission.MID == mid && course.CID == selectedCID
-                              select new MissionCreateViewModel
-                              {
-                                  CourseID = course.CID,
-                                  CourseName = course.CName,
-                                  MID = mission.MID,
-                                  Name = mission.MName,
-                                  Contents = mission.MDetail,
-                                  StartDate = mission.Start,
-                                  EndDate = mission.End
-                              }).FirstOrDefault();
+                               from course in db.Courses
+                               where mission.CID == course.CID && mission.MID == mid && course.CID == selectedCID
+                               select new MissionCreateViewModel
+                               {
+                                   CourseID = course.CID,
+                                   CourseName = course.CName,
+                                   MID = mission.MID,
+                                   Name = mission.MName,
+                                   Contents = mission.MDetail,
+                                   StartDate = mission.Start,
+                                   EndDate = mission.End
+                               }).FirstOrDefault();
             ViewData["CurrentCourseID"] = currentCID;
             return View(missionData);
         }
@@ -315,13 +338,13 @@ namespace LMSweb.Models
                     MDetail = formdata.Contents,
                     Start = formdata.StartDate.Replace("T", " "),
                     End = formdata.EndDate.Replace("T", " "),
-                    CurrentAction = DefaultCurrentStatus(test_type)
+                    CurrentAction = GlobalClass.DefaultCurrentStatus(test_type)
                 };
                 formdata.CourseID = currentCID;
                 db.Missions.Add(missionData);
                 db.SaveChanges();
 
-                return RedirectToAction("Index", new {cid = formdata.CourseID});
+                return RedirectToAction("Index", new { cid = formdata.CourseID });
             }
 
             return View(formdata);
@@ -346,11 +369,11 @@ namespace LMSweb.Models
             {
                 mission.IsCoding = sw;
             }
-            else if(type == "is_Discuss")
+            else if (type == "is_Discuss")
             {
                 mission.IsDiscuss = sw;
             }
-            else if(type == "is_Drawing")
+            else if (type == "is_Drawing")
             {
                 mission.IsDrawing = sw;
             }
@@ -377,7 +400,7 @@ namespace LMSweb.Models
 
             db.SaveChanges();
 
-            return Json(new { Status = HttpStatusCode.OK , type = type, sw = sw});
+            return Json(new { Status = HttpStatusCode.OK, type = type, sw = sw });
         }
     }
 }

@@ -22,6 +22,7 @@ namespace LMSweb.ViewModel
         [Display(Name = "結束時間")]
         public string EndDate { get; set; }
         public string CurrentAction { get; set; }
+        public string CurrentStatus { get; set; }
 
         //以下欄位之後可能會刪除
         public bool IsGoalSetting { get; set; }        

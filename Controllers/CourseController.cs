@@ -41,13 +41,22 @@ namespace LMSweb.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Students.Add(vmodel.student);
+                var _student = new Student()
+                {
+                    CID = vmodel.CID,
+                    SID = vmodel.student.SID,
+                    SName = vmodel.student.SName,
+                    Sex = vmodel.student.Sex,
+                    SPassword = vmodel.student.SID,
+                    IsLeader = false
+                };
+
+                db.Students.Add(_student);
                 db.SaveChanges();
                 return RedirectToAction("StudentManagement",new { cid = vmodel.student.CID } );
             }
             vmodel.CID = vmodel.student.CID;
             var course = db.Courses.Where(c => c.CID == vmodel.student.CID).Single();
-
             
             vmodel.CName = course.CName;                                     
 
@@ -326,6 +335,7 @@ namespace LMSweb.Controllers
                 groups.Add(g);
             }
             int g_idx = 0;
+            stus[0].IsLeader = true;
             for (int i = 0; i < stus.Count; i++)
             {
                 groups[g_idx].Students.Add(stus[i]);
