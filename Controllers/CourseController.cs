@@ -354,6 +354,7 @@ namespace LMSweb.Controllers
             
             for (int i = 0; i < stus.Count; i++)
             {
+                if(i < n) stus[i].IsLeader = true;
                 groups[g_idx].Students.Add(stus[i]);
                 g_idx++;
                 g_idx = g_idx % n;
@@ -365,14 +366,6 @@ namespace LMSweb.Controllers
             }
 
             db.SaveChanges();
-
-            //for (int i = 0; i < stus.Count; i++)
-            //{
-            //    var GIDList = db.Groups.Where(g => g.CID == cid).Select(g => g.GID).ToList();
-            //    var stu = db.Students.Where(s => s.SID == stus[i].SID).Single();
-            //    stu.GID = GIDList[i % n];
-            //    db.SaveChanges();
-            //}
 
             return RedirectToAction("StudentGroup", new { cid });
         }
@@ -395,6 +388,7 @@ namespace LMSweb.Controllers
             foreach (var stu in GroupStu)
             {
                 stu.GID = 6;
+                stu.IsLeader = false;
             }
 
             var cid = group.CID;

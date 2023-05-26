@@ -165,6 +165,17 @@ namespace LMSweb.Infrastructure.Helpers
                         item.GID = 6;
                         db.Students.Add(item);
                         db.SaveChanges();
+
+                        var _User = new User()
+                        {
+                            ID = item.SID,
+                            UPassword = item.SID,
+                            Name = item.SName,
+                            Gender = item.Sex,
+                            RoleName = "Student"
+                        };
+                        db.Users.Add(_User);
+                        db.SaveChanges();
                     }
                 }
             }
