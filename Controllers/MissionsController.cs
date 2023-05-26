@@ -150,6 +150,21 @@ namespace LMSweb.Models
                 model.CourseID = cid;
                 db.Missions.Add(missionData);
                 db.SaveChanges();
+
+                // 新增任務後，將該任務的資料新增至Executions資料表中
+                var students = db.Students.Where(x => x.CID == cid && x.IsLeader == true).ToList();
+                foreach (var student in students)
+                {
+                    var executionData = new Execution
+                    {
+                        MID = missionData.MID,
+                        GID = student.GID,
+                        CurrentStatus = GlobalClass.DefaultCurrentStatus(test_type)
+                    };
+                    db.Executions.Add(executionData);
+                    db.SaveChanges();
+                }
+
                 return RedirectToAction("Index", new { cid = model.CourseID });
             }
             return View(model);
