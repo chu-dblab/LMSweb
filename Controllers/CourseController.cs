@@ -15,6 +15,7 @@ using Newtonsoft.Json;
 using System.IO;
 using LMSweb.Infrastructure.Helpers;
 
+
 namespace LMSweb.Controllers
 {
     [RoutePrefix("Teacher")]
@@ -43,15 +44,28 @@ namespace LMSweb.Controllers
             {
                 var _student = new Student()
                 {
-                    CID = vmodel.CID,
+                    CID = vmodel.student.CID,
                     SID = vmodel.student.SID,
                     SName = vmodel.student.SName,
                     Sex = vmodel.student.Sex,
                     SPassword = vmodel.student.SID,
-                    IsLeader = false
+                    IsLeader = false,
+
+                    GID = 6
                 };
 
-                db.Students.Add(_student);
+                var _User = new User()
+                {
+                    ID = vmodel.student.SID,
+                    UPassword = vmodel.student.SID,
+                    Name = vmodel.student.SName,
+                    Gender = vmodel.student.Sex,
+                    RoleName = "Student"
+                };
+
+                db.Students.Add(vmodel.student);
+                db.SaveChanges();   
+                db.Users.Add(_User);
                 db.SaveChanges();
                 return RedirectToAction("StudentManagement",new { cid = vmodel.student.CID } );
             }
@@ -241,7 +255,9 @@ namespace LMSweb.Controllers
         }
         private List<SelectListItem> GetStudent(string cid, IEnumerable<int> SelectStudentList = null)
         {
-            return new MultiSelectList(db.Students.Where(x => x.Group == null && x.CID == cid), "SID", "SName", SelectStudentList).ToList();
+            // 註解是原本的寫法
+            //return new MultiSelectList(db.Students.Where(x => x.Group == null && x.CID == cid), "SID", "SName", SelectStudentList).ToList();
+            return new MultiSelectList(db.Students.Where(x => (x.Group == null || x.GID == 6) && x.CID == cid), "SID", "SName", SelectStudentList).ToList();
         }
 
         // GET: StudentGroup
@@ -321,7 +337,7 @@ namespace LMSweb.Controllers
         public ActionResult GroupN(int n, string cid)
         {
             
-            var stus = GetRandomElements(db.Students.Where(x => x.Group == null && cid == x.CID).ToList());
+            var stus = GetRandomElements(db.Students.Where(x => (x.Group == null || x.GID == 6) && cid == x.CID).ToList());
             List<Group> groups = new List<Group>();
             var left_s = stus.Count % n;
             
@@ -335,7 +351,7 @@ namespace LMSweb.Controllers
                 groups.Add(g);
             }
             int g_idx = 0;
-            stus[0].IsLeader = true;
+            
             for (int i = 0; i < stus.Count; i++)
             {
                 groups[g_idx].Students.Add(stus[i]);
@@ -349,6 +365,14 @@ namespace LMSweb.Controllers
             }
 
             db.SaveChanges();
+
+            //for (int i = 0; i < stus.Count; i++)
+            //{
+            //    var GIDList = db.Groups.Where(g => g.CID == cid).Select(g => g.GID).ToList();
+            //    var stu = db.Students.Where(s => s.SID == stus[i].SID).Single();
+            //    stu.GID = GIDList[i % n];
+            //    db.SaveChanges();
+            //}
 
             return RedirectToAction("StudentGroup", new { cid });
         }
@@ -366,10 +390,17 @@ namespace LMSweb.Controllers
             {
                 return HttpNotFound();
             }
+
+            var GroupStu = db.Students.Where(x => x.GID == groupId);
+            foreach (var stu in GroupStu)
+            {
+                stu.GID = 6;
+            }
+
             var cid = group.CID;
             group.Students.Clear();
             db.Groups.Remove(group);
-            var learnb = db.LearnB.Where(l => l.group.GID == groupId);
+            var learnb = db.LearnB.Where(x => x.group.GID == groupId);
             db.LearnB.RemoveRange(learnb);
             var studentCode = db.StudentCodes.Where(sc => sc.group.GID == groupId);
             db.StudentCodes.RemoveRange(studentCode);
@@ -392,7 +423,7 @@ namespace LMSweb.Controllers
 
             Group group = student.Group;
             group.Students.Remove(student);
-            student.Group = null;
+            student.GID = 6;
 
             db.SaveChanges();
 

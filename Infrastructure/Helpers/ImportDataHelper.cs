@@ -159,8 +159,10 @@ namespace LMSweb.Infrastructure.Helpers
                 {
                     foreach (var item in importStudent)
                     {
+                        // GID = 6 代表學生尚未分組
                         item.CID = cid;
                         item.IsLeader = false;
+                        item.GID = 6;
                         db.Students.Add(item);
                         db.SaveChanges();
                     }
