@@ -24,11 +24,65 @@
         KForGuideStapUrl = 1;
     }
 
-    var GuideStapUrlList = new List<string>()
-{
+    var DrawingUrl = Url.Action("StudentDrawing", "Student", new { mid = Model.MissionID, cid = Model.CourseID });
+    var CodingUrl = Url.Action("StudentCoding", "Student", new { mid = Model.MissionID, cid = Model.CourseID });
+
+    string[][] GuideStapUrlList = new string[6][];
+
+    GuideStapUrlList[0] = new string[]
+    {
         "",
-        Url.Action("StudentDrawing", "Student", new { mid = Model.MissionID, cid = Model.CourseID }),
-        Url.Action("StudentCoding", "Student", new { mid = Model.MissionID, cid = Model.CourseID }),
+        DrawingUrl,
+        CodingUrl,
+    };
+    
+    GuideStapUrlList[1] = new string[]
+    {
+        "",
+        "",
+        DrawingUrl,
+        "",
+        CodingUrl,
+        "",
+    };
+
+    GuideStapUrlList[2] = new string[]
+    {
+        "",
+        DrawingUrl,
+        CodingUrl,
+        "",
+    };
+
+    GuideStapUrlList[3] = new string[]
+    {
+        "",
+        "",
+        DrawingUrl,
+        "",
+        CodingUrl,
+        "",
+    };
+
+    GuideStapUrlList[4] = new string[]
+    {
+        "",
+        DrawingUrl,
+        CodingUrl,
+        "",
+        "",
+    };
+
+    GuideStapUrlList[5] = new string[]
+    {
+        "",
+        "",
+        DrawingUrl,
+        "",
+        CodingUrl,
+        "",
+        "",
+        "",
     };
 }
 
@@ -64,10 +118,10 @@
                         {
                             case 0:
                                 // 控制組
-                                @MissionsHelper.GetTaskGuideStapString("畫流程圖", GuideString, k++, GuideStapUrlList[KForGuideStapUrl])
+                                @MissionsHelper.GetTaskGuideStapString("畫流程圖", GuideString, k++, GuideStapUrlList[TestType][KForGuideStapUrl])
                                 KForGuideStapUrl += UserType;
                                 <div class="bs-stepper-line"></div>
-                                @MissionsHelper.GetTaskGuideStapString("寫程式碼", GuideString, k++, GuideStapUrlList[KForGuideStapUrl])
+                                @MissionsHelper.GetTaskGuideStapString("寫程式碼", GuideString, k++, GuideStapUrlList[TestType][KForGuideStapUrl])
                                 KForGuideStapUrl += UserType;
                                 break;
                             case 1:
