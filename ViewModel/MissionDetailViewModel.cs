@@ -24,6 +24,8 @@ namespace LMSweb.ViewModel
         public string CurrentAction { get; set; }
         public string CurrentStatus { get; set; }
 
+        public bool IsLeader { get; set; }
+
         //以下欄位之後可能會刪除
         public bool IsGoalSetting { get; set; }        
         public bool IsDrawing { get; set; }

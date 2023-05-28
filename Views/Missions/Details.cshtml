@@ -5,7 +5,7 @@
     int k = 0;
     int TestType;
     string GuideString;
-    int UserType;
+    int UserTypeForGuide;
     int KForGuideStapUrl;
 
     // 這邊目前是測試用資料
@@ -13,15 +13,16 @@
     {
         GuideString = Model.CurrentAction;
         TestType = TestType = Model.TestType;
-        UserType = 0;
+        UserTypeForGuide = 0;
         KForGuideStapUrl = 0;
     }
     else
     {
         GuideString = Model.CurrentStatus;
         TestType = TestType = Model.TestType;
-        UserType = 1;
-        KForGuideStapUrl = 1;
+        if (Model.IsLeader) { UserTypeForGuide = 1; KForGuideStapUrl = 1; }
+        else { UserTypeForGuide = 0; KForGuideStapUrl = 0; }
+
     }
 
     var DrawingUrl = Url.Action("StudentDrawing", "Student", new { mid = Model.MissionID, cid = Model.CourseID });
@@ -35,7 +36,7 @@
         DrawingUrl,
         CodingUrl,
     };
-    
+
     GuideStapUrlList[1] = new string[]
     {
         "",
@@ -119,10 +120,10 @@
                             case 0:
                                 // 控制組
                                 @MissionsHelper.GetTaskGuideStapString("畫流程圖", GuideString, k++, GuideStapUrlList[TestType][KForGuideStapUrl])
-                                KForGuideStapUrl += UserType;
+                                KForGuideStapUrl += UserTypeForGuide;
                                 <div class="bs-stepper-line"></div>
                                 @MissionsHelper.GetTaskGuideStapString("寫程式碼", GuideString, k++, GuideStapUrlList[TestType][KForGuideStapUrl])
-                                KForGuideStapUrl += UserType;
+                                KForGuideStapUrl += UserTypeForGuide;
                                 break;
                             case 1:
                                 // 實驗組一：自我調節

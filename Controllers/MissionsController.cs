@@ -91,6 +91,7 @@ namespace LMSweb.Models
                 _Guide.UpdateCurrentStatus();
 
                 data.CurrentStatus = db.Executions.Where(x => x.GID == student.GID && x.MID == mid).First().CurrentStatus;
+                data.IsLeader = student.IsLeader;
             }
 
             return View(data);
