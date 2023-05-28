@@ -63,7 +63,7 @@ namespace LMSweb.Controllers
                     RoleName = "Student"
                 };
 
-                db.Students.Add(vmodel.student);
+                db.Students.Add(_student);
                 db.SaveChanges();   
                 db.Users.Add(_User);
                 db.SaveChanges();
@@ -284,10 +284,23 @@ namespace LMSweb.Controllers
                 Group group = new Group();
                 group.GName = GName;
                 group.CID = cid;
-                group.Students = db.Students.Where(x => StudentList.Contains(x.SID)).ToList();
+                //group.Students = db.Students.Where(x => StudentList.Contains(x.SID)).ToList();
+                //group.Students.FirstOrDefault().IsLeader = true;
                 db.Groups.Add(group);
 
                 db.SaveChanges();
+
+                var stu = db.Students.Where(x => StudentList.Contains(x.SID)).ToList();
+
+                var index = 0;
+                foreach (var s in stu)
+                {
+                    s.GID = group.GID;
+                    if(index++ == 0) s.IsLeader = true;
+
+                    db.Entry(s).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
 
                 return new HttpStatusCodeResult(200);
             }
@@ -426,14 +439,19 @@ namespace LMSweb.Controllers
 
         public ActionResult AddStuToOtherGroup(int gid, List<string> StudentList, string CID)
         {
-           
-
             if (ModelState.IsValid)
             {
-                foreach(var sid in StudentList)
+                //var index = 0;
+                foreach(var sid in StudentList) 
                 {
+
                     Student student = db.Students.Find(sid);
                     Group group = db.Groups.Find(gid);
+                    //if (index == 0)
+                    //{
+                    //    student.IsLeader = true;
+                    //}
+                    //index++;
                     group.Students.Add(student);
  
                 }

@@ -30,6 +30,7 @@
 
     string[][] GuideStapUrlList = new string[6][];
 
+    // 所有陣列 0 都是空的，因為要讓老師與組員頁面無法連結繳交任務
     GuideStapUrlList[0] = new string[]
     {
         "",
@@ -127,61 +128,85 @@
                                 break;
                             case 1:
                                 // 實驗組一：自我調節
-                                @MissionsHelper.GetTaskGuideStapString("目標設置", GuideString, k++)
+                                @MissionsHelper.GetTaskGuideStapString("目標設置", GuideString, k++, GuideStapUrlList[TestType][KForGuideStapUrl])
+                                KForGuideStapUrl += UserTypeForGuide;
                                 <div class="bs-stepper-line"></div>
-                                @MissionsHelper.GetTaskGuideStapString("畫流程圖", GuideString, k++)
+                                @MissionsHelper.GetTaskGuideStapString("畫流程圖", GuideString, k++, GuideStapUrlList[TestType][KForGuideStapUrl])
+                                KForGuideStapUrl += UserTypeForGuide;
                                 <div class="bs-stepper-line"></div>
-                                @MissionsHelper.GetTaskGuideStapString("學習監督", GuideString, k++)
+                                @MissionsHelper.GetTaskGuideStapString("學習監督", GuideString, k++, GuideStapUrlList[TestType][KForGuideStapUrl])
+                                KForGuideStapUrl += UserTypeForGuide;
                                 <div class="bs-stepper-line"></div>
-                                @MissionsHelper.GetTaskGuideStapString("寫程式碼", GuideString, k++)
+                                @MissionsHelper.GetTaskGuideStapString("寫程式碼", GuideString, k++, GuideStapUrlList[TestType][KForGuideStapUrl])
+                                KForGuideStapUrl += UserTypeForGuide;
                                 <div class="bs-stepper-line"></div>
-                                @MissionsHelper.GetTaskGuideStapString("自我反思", GuideString, k++)
+                                @MissionsHelper.GetTaskGuideStapString("自我反思", GuideString, k++, GuideStapUrlList[TestType][KForGuideStapUrl])
+                                KForGuideStapUrl += UserTypeForGuide;
                                 break;
                             case 2:
                                 // 實驗組二：同儕互評
-                                @MissionsHelper.GetTaskGuideStapString("畫流程圖", GuideString, k++)
+                                @MissionsHelper.GetTaskGuideStapString("畫流程圖", GuideString, k++, GuideStapUrlList[TestType][KForGuideStapUrl])
+                                KForGuideStapUrl += UserTypeForGuide;
                                 <div class="bs-stepper-line"></div>
-                                @MissionsHelper.GetTaskGuideStapString("寫程式碼", GuideString, k++)
+                                @MissionsHelper.GetTaskGuideStapString("寫程式碼", GuideString, k++, GuideStapUrlList[TestType][KForGuideStapUrl])
+                                KForGuideStapUrl += UserTypeForGuide;
                                 <div class="bs-stepper-line"></div>
-                                @MissionsHelper.GetTaskGuideStapString("同儕互評", GuideString, k++)
+                                @MissionsHelper.GetTaskGuideStapString("同儕互評", GuideString, k++, GuideStapUrlList[TestType][KForGuideStapUrl])
+                                KForGuideStapUrl += UserTypeForGuide;
                                 break;
                             case 3:
                                 // 實驗組三：社會共享調節
-                                @MissionsHelper.GetTaskGuideStapString("目標設置", GuideString, k++)
+                                @MissionsHelper.GetTaskGuideStapString("目標設置", GuideString, k++, GuideStapUrlList[TestType][KForGuideStapUrl])
+                                KForGuideStapUrl += UserTypeForGuide;
                                 <div class="bs-stepper-line"></div>
-                                @MissionsHelper.GetTaskGuideStapString("畫流程圖", GuideString, k++)
+                                @MissionsHelper.GetTaskGuideStapString("畫流程圖", GuideString, k++, GuideStapUrlList[TestType][KForGuideStapUrl])
+                                KForGuideStapUrl += UserTypeForGuide;
                                 <div class="bs-stepper-line"></div>
-                                @MissionsHelper.GetTaskGuideStapString("學習監督", GuideString, k++)
+                                @MissionsHelper.GetTaskGuideStapString("學習監督", GuideString, k++, GuideStapUrlList[TestType][KForGuideStapUrl])
+                                KForGuideStapUrl += UserTypeForGuide;
                                 <div class="bs-stepper-line"></div>
-                                @MissionsHelper.GetTaskGuideStapString("寫程式碼", GuideString, k++)
+                                @MissionsHelper.GetTaskGuideStapString("寫程式碼", GuideString, k++, GuideStapUrlList[TestType][KForGuideStapUrl])
+                                KForGuideStapUrl += UserTypeForGuide;
                                 <div class="bs-stepper-line"></div>
-                                @MissionsHelper.GetTaskGuideStapString("團隊反思", GuideString, k++)
+                                @MissionsHelper.GetTaskGuideStapString("團隊反思", GuideString, k++, GuideStapUrlList[TestType][KForGuideStapUrl])
+                                KForGuideStapUrl += UserTypeForGuide;
                                 break;
                             case 4:
                                 // 實驗組四：互動式同儕互評
-                                @MissionsHelper.GetTaskGuideStapString("畫流程圖", GuideString, k++)
+                                @MissionsHelper.GetTaskGuideStapString("畫流程圖", GuideString, k++, GuideStapUrlList[TestType][KForGuideStapUrl])
+                                KForGuideStapUrl += UserTypeForGuide;
                                 <div class="bs-stepper-line"></div>
-                                @MissionsHelper.GetTaskGuideStapString("寫程式碼", GuideString, k++)
+                                @MissionsHelper.GetTaskGuideStapString("寫程式碼", GuideString, k++, GuideStapUrlList[TestType][KForGuideStapUrl])
+                                KForGuideStapUrl += UserTypeForGuide;
                                 <div class="bs-stepper-line"></div>
-                                @MissionsHelper.GetTaskGuideStapString("同儕互評", GuideString, k++)
+                                @MissionsHelper.GetTaskGuideStapString("同儕互評", GuideString, k++, GuideStapUrlList[TestType][KForGuideStapUrl])
+                                KForGuideStapUrl += UserTypeForGuide;
                                 <div class="bs-stepper-line"></div>
-                                @MissionsHelper.GetTaskGuideStapString("評價回饋", GuideString, k++)
+                                @MissionsHelper.GetTaskGuideStapString("評價回饋", GuideString, k++, GuideStapUrlList[TestType][KForGuideStapUrl])
+                                KForGuideStapUrl += UserTypeForGuide;
                                 break;
                             case 5:
                                 // 實驗組五：社會共享調節 & 互動式同儕互評
-                                @MissionsHelper.GetTaskGuideStapString("目標設置", GuideString, k++)
+                                @MissionsHelper.GetTaskGuideStapString("目標設置", GuideString, k++, GuideStapUrlList[TestType][KForGuideStapUrl])
+                                KForGuideStapUrl += UserTypeForGuide;
                                 <div class="bs-stepper-line"></div>
-                                @MissionsHelper.GetTaskGuideStapString("畫流程圖", GuideString, k++)
+                                @MissionsHelper.GetTaskGuideStapString("畫流程圖", GuideString, k++, GuideStapUrlList[TestType][KForGuideStapUrl])
+                                KForGuideStapUrl += UserTypeForGuide;
                                 <div class="bs-stepper-line"></div>
-                                @MissionsHelper.GetTaskGuideStapString("學習監督", GuideString, k++)
+                                @MissionsHelper.GetTaskGuideStapString("學習監督", GuideString, k++, GuideStapUrlList[TestType][KForGuideStapUrl])
+                                KForGuideStapUrl += UserTypeForGuide;
                                 <div class="bs-stepper-line"></div>
-                                @MissionsHelper.GetTaskGuideStapString("寫程式碼", GuideString, k++)
+                                @MissionsHelper.GetTaskGuideStapString("寫程式碼", GuideString, k++, GuideStapUrlList[TestType][KForGuideStapUrl])
+                                KForGuideStapUrl += UserTypeForGuide;
                                 <div class="bs-stepper-line"></div>
-                                @MissionsHelper.GetTaskGuideStapString("同儕互評", GuideString, k++)
+                                @MissionsHelper.GetTaskGuideStapString("同儕互評", GuideString, k++, GuideStapUrlList[TestType][KForGuideStapUrl])
+                                KForGuideStapUrl += UserTypeForGuide;
                                 <div class="bs-stepper-line"></div>
-                                @MissionsHelper.GetTaskGuideStapString("評價回饋", GuideString, k++)
+                                @MissionsHelper.GetTaskGuideStapString("評價回饋", GuideString, k++, GuideStapUrlList[TestType][KForGuideStapUrl])
+                                KForGuideStapUrl += UserTypeForGuide;
                                 <div class="bs-stepper-line"></div>
-                                @MissionsHelper.GetTaskGuideStapString("團隊反思", GuideString, k++)
+                                @MissionsHelper.GetTaskGuideStapString("團隊反思", GuideString, k++, GuideStapUrlList[TestType][KForGuideStapUrl])
+                                KForGuideStapUrl += UserTypeForGuide;
                                 break;
                             default:
                                 break;
