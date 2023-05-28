@@ -3,6 +3,12 @@
     ViewBag.Title = "StudentDrawing";
 }
 
+@section NavPills {
+    <ul class="nav nav-pills me-auto ms-3">
+        @AllHelper.SetUnActiveNavData(Url.Action("Index", "Missions", new { CID = Model.CID }), "任務列表")
+    </ul>
+}
+
 <div class="container">
 
     @AllHelper.CouresTitleForStudentView(Model.CName)

@@ -51,38 +51,6 @@ namespace LMSweb.Models
             // Executions資料表中有資料
             var data = (from m in db.Missions
                         from c in db.Courses
-                        from s in db.Students
-                        from e in db.Executions
-                        where m.CID == c.CID && m.MID == mid && c.CID == cid && s.CID == c.CID && e.MID == m.MID && e.GID == s.GID
-                        select new MissionDetailViewModel
-                        {
-                            MissionID = m.MID,
-                            CourseID = m.CID,
-                            CourseName = c.CName,
-                            TestType = c.TestType,
-                            Name = m.MName,
-                            Content = m.MDetail,
-                            StartDate = m.Start,
-                            EndDate = m.End,
-                            CurrentAction = m.CurrentAction,
-                            CurrentStatus = e.CurrentStatus,
-                            IsAssess = m.IsAssess,
-                            IsCoding = m.IsCoding,
-                            IsDiscuss = m.IsDiscuss,
-                            IsDrawing = m.IsDrawing,
-                            IsGoalSetting = m.IsGoalSetting,
-                            IsGReflect = m.IsGReflect,
-                            IsReflect = m.IsReflect,
-                            Is_Journey = m.Is_Journey,
-                            IsAddMetacognition = c.IsAddMetacognition,
-                            IsAddPeerAssessmemt = c.IsAddPeerAssessmemt
-                        }).FirstOrDefault();
-
-            // 如果上面沒資料就用舊版
-            if (data == null)
-            {
-                data = (from m in db.Missions
-                        from c in db.Courses
                         where m.CID == c.CID && m.MID == mid && c.CID == cid
                         select new MissionDetailViewModel
                         {
@@ -106,13 +74,25 @@ namespace LMSweb.Models
                             IsAddMetacognition = c.IsAddMetacognition,
                             IsAddPeerAssessmemt = c.IsAddPeerAssessmemt
                         }).FirstOrDefault();
-            }
 
             if (data != null && data.CurrentAction is null)
             {
                 data.CurrentAction = GlobalClass.DefaultCurrentStatus(data.TestType);
             }
-            
+
+            if (User.IsInRole("Student"))
+            {
+                ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
+                var claimData = claims.Claims.Where(x => x.Type == "UID").FirstOrDefault();   //抓出當初記載Claims陣列中的SID
+                var sid = claimData.Value;
+                var student = db.Students.Find(sid);
+
+                GuideForStudent _Guide = new GuideForStudent(mid, cid, sid);
+                _Guide.UpdateCurrentStatus();
+
+                data.CurrentStatus = db.Executions.Where(x => x.GID == student.GID && x.MID == mid).First().CurrentStatus;
+            }
+
             return View(data);
         }
 

@@ -5,19 +5,31 @@
     int k = 0;
     int TestType;
     string GuideString;
+    int UserType;
+    int KForGuideStapUrl;
 
     // 這邊目前是測試用資料
     if (User.IsInRole("Teacher"))
     {
         GuideString = Model.CurrentAction;
         TestType = TestType = Model.TestType;
+        UserType = 0;
+        KForGuideStapUrl = 0;
     }
     else
     {
-        GuideString = Model.CurrentStatus ?? "0000000";
+        GuideString = Model.CurrentStatus;
         TestType = TestType = Model.TestType;
+        UserType = 1;
+        KForGuideStapUrl = 1;
     }
 
+    var GuideStapUrlList = new List<string>()
+{
+        "",
+        Url.Action("StudentDrawing", "Student", new { mid = Model.MissionID, cid = Model.CourseID }),
+        Url.Action("StudentCoding", "Student", new { mid = Model.MissionID, cid = Model.CourseID }),
+    };
 }
 
 @section NavPills {
@@ -31,7 +43,7 @@
         }
         else
         {
-            @AllHelper.SetUnActiveNavData(Url.Action("StudentMission", "Student", new { CID = Model.CourseID }), "任務列表")
+            @AllHelper.SetUnActiveNavData(Url.Action("Index", "Missions", new { CID = Model.CourseID }), "任務列表")
         }
     </ul>
 }
@@ -52,9 +64,11 @@
                         {
                             case 0:
                                 // 控制組
-                                @MissionsHelper.GetTaskGuideStapString("畫流程圖", GuideString, k++)
+                                @MissionsHelper.GetTaskGuideStapString("畫流程圖", GuideString, k++, GuideStapUrlList[KForGuideStapUrl])
+                                KForGuideStapUrl += UserType;
                                 <div class="bs-stepper-line"></div>
-                                @MissionsHelper.GetTaskGuideStapString("寫程式碼", GuideString, k++)
+                                @MissionsHelper.GetTaskGuideStapString("寫程式碼", GuideString, k++, GuideStapUrlList[KForGuideStapUrl])
+                                KForGuideStapUrl += UserType;
                                 break;
                             case 1:
                                 // 實驗組一：自我調節

@@ -43,7 +43,7 @@ namespace LMSweb.Assets
             this.StartDate = DateTime.Parse(MissionData.Start);
             this.EndDate = DateTime.Parse(MissionData.End);
         }
-        public GuideForStudent(string mid, string cid, string sid):this(mid, cid)
+        public GuideForStudent(string mid, string cid, string sid) : this(mid, cid)
         {
             this.sid = sid;
         }
@@ -77,9 +77,23 @@ namespace LMSweb.Assets
 
         private void UpdateCurrentStatusForTestType0()
         {
-            if(sid != null)
+            if (sid != null)
             {
-                var execution = db.Executions.Find(sid, mid);
+                var student = db.Students.Find(sid);
+                var execution = db.Executions.Find(student.GID, mid);
+
+                if (execution == null)
+                {
+                    var _execution = new Execution()
+                    {
+                        GID = student.GID, 
+                        MID = mid,
+                        CurrentStatus = GlobalClass.DefaultCurrentStatus(TestType),
+                    };
+                    db.Executions.Add(_execution);
+                    db.SaveChanges();
+                    execution = db.Executions.Find(student.GID, mid);
+                }
 
                 // 開啟第一步驟畫流程圖
                 if (execution.CurrentStatus == "00")
@@ -90,18 +104,28 @@ namespace LMSweb.Assets
                 // 判斷流程圖是否上傳
                 else if (execution.CurrentStatus == "10")
                 {
-                    var Draw = db.StudentDraws.Find(sid, mid);
-
-                    if (Draw != null)
+                    try
                     {
-                        execution.CurrentStatus = "21";
+                        var Draw = (from d in db.StudentDraws
+                                    where d.GID == student.GID && d.MID == mid
+                                    select d).FirstOrDefault();
+
+                        if (Draw != null)
+                        {
+                            execution.CurrentStatus = "21";
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        execution.CurrentStatus = "10";
                     }
                 }
 
                 // 判斷程式碼是否上傳
                 else if (execution.CurrentStatus == "21")
                 {
-                    var Code = db.StudentCodes.Find(sid, mid);
+                    //var Code = db.StudentCodes.Find(sid, mid);
+                    var Code = db.StudentCodes.Where(x => x.GID == student.GID && x.MID == mid).FirstOrDefault();
 
                     if (Code != null)
                     {
