@@ -16,7 +16,6 @@
     <div class="card m-3 p-4">
         <div class="mb-3">
             <h5>@Model.MName</h5>
-            <hr />
             @if (DateTime.Compare(DateTime.Parse(Model.End), DateTime.Now) <= 0)
             {
                 if (Model.DrawingImgPath == null)
@@ -25,7 +24,10 @@
                 }
                 else
                 {
-                    <img src="~/UploadImages/@Model.DrawingImgPath" width="1060" />
+                    <div class="mb-3">
+                        <input type="button" value="查看任務內容" onclick="myFunction()" class="btn btn-outline-dark" />
+                    </div>
+                    <img src="~/UploadImages/@Model.DrawingImgPath" class="img-fluid" />
                 }
 
             }
@@ -33,8 +35,12 @@
             {
                 <div class="mb-3">
                     <form action="@Url.Action("StudentDrawing", "Student", new { cid = Model.CID, mid = Model.MID, gid = Model.GID})" method="post" enctype="multipart/form-data">
-                        <input type="file" accept=".png, .jpg, .jpeg" name="File" id="file" />
-                        <input type="submit" id="File" value="上傳" class="btn btn-primary" />
+                        <div class="input-group mb-3">
+                            <input type="file" accept=".png, .jpg, .jpeg" name="File" id="file" class="form-control" />
+                            <input type="submit" id="File" value="上傳" for="file" class="input-group-text">
+                        </div>
+                        <p>上傳檔預覽 :</p>
+                        <img id="demo" class="img-fluid" />
                     </form>
                 </div>
 
@@ -44,55 +50,16 @@
                 }
                 else
                 {
-                    <img class="mb-3" src="~/UploadImages/@Model.DrawingImgPath" width="1060" />
+                    <p>已上傳流程圖圖片</p>
+                    <img class="mb-3 img-fluid" src="~/UploadImages/@Model.DrawingImgPath" />
                 }
-                <p>上傳檔預覽 :<img id="demo" width="1060" /></p>
-                <br />
-
             }
-
         </div>
 
-
-        @Html.HiddenFor(model => model.CID)
-        @Html.HiddenFor(model => model.GID)
-        @Html.HiddenFor(model => model.MID)
+        <a class="btn btn-secondary" href="@Url.Action("Details", "Missions", new {mid = Model.MID, cid = Model.CID})">返回任務</a>
 
     </div>
 </div>
-
-<!-- 懸浮聊天室 -->
-<body>
-    @if (Model.IsDiscuss)
-    {
-        <button type="button" class="btn btn-primary rounded-circle message-btn" data-bs-toggle="offcanvas"
-                data-bs-target="#messageBox" aria-controls="messageBox">
-            討論區
-        </button>
-    }
-
-    <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="messageBox" aria-labelledby="messageBoxLabel">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="messageBoxLabel">聊天室</h5>
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-            <iframe src="@Url.Action("Chat","Student",new { MID = @Model.MID, CID = @Model.CID})" width="365" height="830" frameborder="0" scrolling="no"></iframe>
-        </div>
-    </div>
-
-    <!-- Optional JavaScript; choose one of the two! -->
-    <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-            crossorigin="anonymous"></script>
-
-    <!-- Option 2: Separate Popper and Bootstrap JS -->
-    <!--
-    <script src="https://cdn.jsdelivr.net/npm/popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
-    -->
-</body>
 
 @section scripts
 {
@@ -112,5 +79,40 @@
     </script>
 
 }
+
+<!-- 懸浮聊天室 -->
+<!--<body>
+    @if (Model.IsDiscuss)
+    {
+        <button type="button" class="btn btn-primary rounded-circle message-btn" data-bs-toggle="offcanvas"
+                data-bs-target="#messageBox" aria-controls="messageBox">
+            討論區
+        </button>
+    }
+
+    <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="messageBox" aria-labelledby="messageBoxLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="messageBoxLabel">聊天室</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <iframe src="@Url.Action("Chat","Student",new { MID = @Model.MID, CID = @Model.CID})" width="365" height="830" frameborder="0" scrolling="no"></iframe>
+        </div>
+    </div>-->
+
+    <!-- Optional JavaScript; choose one of the two! -->
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"></script>-->
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    -->
+<!--</body>-->
+
+
 
 

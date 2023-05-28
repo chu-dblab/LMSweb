@@ -24,24 +24,22 @@
                 }
                 else
                 {
-                    <h5>@Model.MName</h5>
-                    <hr />
                     <div class="mb-3">
                         <input type="button" value="查看任務內容" onclick="myFunction()" class="btn btn-outline-dark" />
                     </div>
-                    <img src="~/UploadCode/@Model.CodePath" width="1060" />
+                    <img src="~/UploadCode/@Model.CodePath" class="img-fluid" />
                 }
             }
             else
             {
                 <div class="mb-3">
                     <form action="@Url.Action("StudentCoding", "Student", new { cid = Model.CID, mid = Model.MID, gid = Model.GID})" method="post" enctype="multipart/form-data">
-                        <input type="file" accept=".png, .jpg, .jpeg" name="File" id="file" />
-                        <input type="submit" id="File" value="上傳" class="btn btn-primary" />
-                        <p>
-                            上傳檔預覽 :
-                            <img id="demo" width="1060" />
-                        </p>
+                        <div class="input-group mb-3">
+                            <input type="file" accept=".png, .jpg, .jpeg" name="File" id="file" class="form-control" />
+                            <input type="submit" id="File" value="上傳" for="file" class="input-group-text">
+                        </div>
+                        <p>上傳檔預覽 :</p>
+                        <img id="demo" class="img-fluid" />
                     </form>
                 </div>
 
@@ -51,12 +49,14 @@
                 }
                 else
                 {
-                    <img class="mb-3" src="~/UploadCode/@Model.CodePath" width="1060" />
+                    <p>已上傳程式碼圖片</p>
+                    <img class="mb-3 img-fluid" src="~/UploadCode/@Model.CodePath" />
                 }
-                <br />
             }
-
         </div>
+
+        <a class="btn btn-secondary" href="@Url.Action("Details", "Missions", new {mid = Model.MID, cid = Model.CID})">返回任務</a>
+
     </div>
 </div>
 
