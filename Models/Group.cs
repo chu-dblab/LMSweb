@@ -18,6 +18,7 @@ namespace LMSweb.Models
         public string GName { get; set; }
 
         public string CID { get; set; }
+        // 導覽屬性
         public virtual ICollection<Student> Students { get; set; }
         public virtual ICollection<TeacherAssessment> TeacherA { get; set; }
         public virtual ICollection<PeerAssessment> PeerAssessments{ get; set; }

@@ -86,7 +86,7 @@ namespace LMSweb.Assets
                 {
                     var _execution = new Execution()
                     {
-                        GID = student.GID, 
+                        GID = student.GID,
                         MID = mid,
                         CurrentStatus = GlobalClass.DefaultCurrentStatus(TestType),
                     };
@@ -104,27 +104,17 @@ namespace LMSweb.Assets
                 // 判斷流程圖是否上傳
                 else if (execution.CurrentStatus == "10")
                 {
-                    try
-                    {
-                        var Draw = (from d in db.StudentDraws
-                                    where d.GID == student.GID && d.MID == mid
-                                    select d).FirstOrDefault();
+                    var Draw = db.StudentDraws.Where(x => x.GID == student.GID && x.MID == mid).FirstOrDefault();
 
-                        if (Draw != null)
-                        {
-                            execution.CurrentStatus = "21";
-                        }
-                    }
-                    catch (Exception)
+                    if (Draw != null)
                     {
-                        execution.CurrentStatus = "10";
+                        execution.CurrentStatus = "21";
                     }
                 }
 
                 // 判斷程式碼是否上傳
                 else if (execution.CurrentStatus == "21")
                 {
-                    //var Code = db.StudentCodes.Find(sid, mid);
                     var Code = db.StudentCodes.Where(x => x.GID == student.GID && x.MID == mid).FirstOrDefault();
 
                     if (Code != null)
@@ -174,70 +164,6 @@ namespace LMSweb.Assets
                 db.Executions.Add(execution);
                 db.SaveChanges();
             }
-        }
-
-        private string GetNewCurrentActionForTestType0()
-        {
-            var MissionsData = (from m in db.Missions
-                                where m.MID == mid
-                                select new
-                                {
-                                    m.Start,
-                                    m.End,
-                                    m.CurrentAction,
-                                    m.IsAssess,
-                                }).FirstOrDefault();
-
-            var Leaders = (from e in db.Executions
-                           join s in db.Students on e.GID equals s.GID
-                           join g in db.Groups on e.GID equals g.GID
-                           where e.MID == mid && s.IsLeader == true
-                           select new
-                           {
-                               s.SID,
-                               s.GID,
-                           });
-
-
-            if (MissionsData != null && Leaders.Count() > 0)
-            {
-
-                var StartDate = DateTime.Parse(MissionsData.Start);
-                var EndDate = DateTime.Parse(MissionsData.End);
-
-                // 啟動任務引導系統
-                if (MissionsData.CurrentAction == "00")
-                {
-                    foreach (var Leader in Leaders)
-                    {
-                        //var CurrentStatus = (from e in db.Executions
-                        //                     where e.MID == mid && e.GID == Leader.GID
-                        //                     select e.CurrentStatus).FirstOrDefault();
-                        var execution = db.Executions.Find(Leader.SID, mid);
-
-                        if (DateTime.Now < StartDate)
-                        {
-                            execution.CurrentStatus = "00";
-                        }
-                        else
-                        {
-                            execution.CurrentStatus = "10";
-                        }
-                    }
-
-                    var mission = db.Missions.Find(mid);
-
-                    if (DateTime.Now >= StartDate)
-                    {
-                        mission.CurrentAction = "10";
-                    }
-
-                    db.SaveChanges();
-                }
-            }
-
-
-            throw new NotImplementedException();
         }
     }
 }

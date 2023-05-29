@@ -37,3 +37,7 @@ nav {
     right: 50px;
     bottom: 50px;
 }
+
+.text-with-newlines {
+    white-space: pre-line;
+}

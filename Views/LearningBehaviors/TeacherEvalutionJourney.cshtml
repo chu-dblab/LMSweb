@@ -6,36 +6,35 @@
     ViewBag.Title = "學習表現";
     Layout = "~/Views/Shared/_TeacherLayout.cshtml";
     //小組成果
-    var Teachercourse = 0;
-    var Classcourse = 0;
-    string s = "";
-    string gs = "";
-    string TAnser = "";
+    //var Teachercourse = 0;
+    //var Classcourse = 0;
+    //string s = "";
+    //string gs = "";
+    //string TAnser = "";
 
-    //幫我把下面變成一個array
     //合作學習
-    var peerCode = 0;
-    var peerDiscuss = 0;
-    var peerDraw = 0;
-    var peerContribute = 0;
-    var selfCode = 0;
-    var selfDraw = 0;
-    var selfDiscuss = 0;
-    var selfContribute = 0;
-    var selfDiscussCount = 0;
-    var selfDrawCount = 0;
-    var selfCodeCount = 0;
-    var selfContributeCount = 0;
-    var peerDiscussCount = 0;
-    var peerDrawCount = 0;
-    var peerCodeCount = 0;
-    var peerContributeCount = 0;
+    //var peerCode = 0;
+    //var peerDiscuss = 0;
+    //var peerDraw = 0;
+    //var peerContribute = 0;
+    //var selfCode = 0;
+    //var selfDraw = 0;
+    //var selfDiscuss = 0;
+    //var selfContribute = 0;
+    //var selfDiscussCount = 0;
+    //var selfDrawCount = 0;
+    //var selfCodeCount = 0;
+    //var selfContributeCount = 0;
+    //var peerDiscussCount = 0;
+    //var peerDrawCount = 0;
+    //var peerCodeCount = 0;
+    //var peerContributeCount = 0;
 
 
     var CSEvalution = ((Model.classSelfDraw) + (Model.classSelfCode) + (Model.classSelfDiscuss) + (Model.classSelfContribute)) / 4;//自我評價分數 全班平均
-    CSEvalution = Math.Round((CSEvalution), 1, MidpointRounding.ToEven);    
+    CSEvalution = Math.Round((CSEvalution), 1, MidpointRounding.ToEven);
 
-    var CPEvalution = ((Model.classPeerDraw) + (Model.classPeerCode) + (Model.classPeerDiscuss) + (Model.classPeerContribute)) / 4;////同儕互評分數 全班平均
+    var CPEvalution = ((Model.classPeerDraw) + (Model.classPeerCode) + (Model.classPeerDiscuss) + (Model.classPeerContribute)) / 4;//同儕互評分數 全班平均
     CPEvalution = Math.Round((CPEvalution), 1, MidpointRounding.ToEven);
 
     var CgResults = Math.Round((((Model.classTeacherScore) + (Model.classGroupScore)) / 2), 1, MidpointRounding.ToEven);// 小組成果分數全班平均
@@ -258,8 +257,12 @@
     </div>
 </div>
 
-<!-- 自我評價 -->
-<script>
+
+
+@section scripts
+{
+    <!-- 自我評價 -->
+    <script>
     //var jsMonth = @@Html.Raw(ViewBag.JsonMonth);
     var ctx = document.getElementById("Radar");
     var chart = new Chart(ctx, {
@@ -309,9 +312,9 @@
             }
         }
     });
-</script>
-<!-- 總攬 -->
-<script>
+    </script>
+    <!-- 總攬 -->
+    <script>
     var ctx = document.getElementById("bar");
     var chart = new Chart(ctx, {
         type: "bar",
@@ -358,9 +361,9 @@
             }
         }
     });
-</script>
-<!-- 同儕互評 -->
-<script>
+    </script>
+    <!-- 同儕互評 -->
+    <script>
     //var jsMonth = @@Html.Raw(ViewBag.JsonMonth);
     var ctx = document.getElementById("peerRadar");
     var chart = new Chart(ctx, {
@@ -407,9 +410,9 @@
             }
         }
     });
-</script>
-<!-- 小組成果 -->
-<script>
+    </script>
+    <!-- 小組成果 -->
+    <script>
     var ctx = document.getElementById("groupbar");
     var chart = new Chart(ctx, {
         type: "bar",
@@ -453,10 +456,8 @@
             }
         }
     });
-</script>
+    </script>
 
-@section scripts
-{
     <script type="text/javascript" language="javascript">
         var cid = '@Model.CID';
         $('#Groups option:selected').val("0");
@@ -485,7 +486,7 @@
             });
         });
         function Send() {
-            location.href = "/LMSweb/LearningBehaviors/TeacherEvalutionJourneyR?cid=" + cid + "&mid=" + selectedMID + "&gid=" + selectedGID + "&sid=" + selectedSID;
+            location.href = "@Url.Action("TeacherEvalutionJourneyR", "LearningBehaviors")" + "?cid=" + cid + "&mid=" + selectedMID + "&gid=" + selectedGID + "&sid=" + selectedSID;
         }
         function ChangeStudent() {
             var selectedValue = $('#Groups option:selected').val();
@@ -507,7 +508,7 @@
                         $('#Studsnts').empty();
                         $('#Studsnts').append($('<option></option>').val('').text('請選擇學生'));
                         $('#Studsnts').append($('<option></option>').val('').text('請先選擇組別'));
-                        
+
                     }
                     if (data.length > 0) {
                         $('#Studsnts').empty();

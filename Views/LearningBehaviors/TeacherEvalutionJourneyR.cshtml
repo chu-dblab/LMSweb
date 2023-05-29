@@ -1753,7 +1753,7 @@
         });
         function Send() {
             //location.href = "/LearningBehaviors/TeacherEvalutionJourneyR?cid=" + cid + "&mid=" + selectedMID + "&gid=" + selectedGID + "&sid=" + selectedSID;
-            location.href = "/LMSweb/LearningBehaviors/TeacherEvalutionJourneyR?cid=" + cid + "&mid=" + selectedMID + "&gid=" + selectedGID + "&sid=" + selectedSID;
+            location.href = "@Url.Action("TeacherEvalutionJourneyR", "LearningBehaviors")" + "?cid=" + cid + "&mid=" + selectedMID + "&gid=" + selectedGID + "&sid=" + selectedSID;
 
         }
         function ChangeStudent() {
