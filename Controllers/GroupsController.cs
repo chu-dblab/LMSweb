@@ -71,7 +71,7 @@ namespace LMSweb.Controllers
         public ActionResult Assessment(int gid, string mid, string cid)
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            var TID = claims.Claims.Where(x => x.Type == "TID").SingleOrDefault().Value;
+            var TID = claims.Claims.Where(x => x.Type == "UID").SingleOrDefault().Value;
             var evalution = db.GroupERs.Where(r => r.GID == gid && r.EvaluatorSID == TID && r.MID == mid);
             var qids = evalution.Select(r => r.GQID).ToList();
             var questions = db.GroupOptions.Where(q => qids.Contains(q.GQID)).ToList();
