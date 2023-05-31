@@ -96,30 +96,30 @@ namespace LMSweb.Assets
                 }
 
                 // 開啟第一步驟畫流程圖
-                if (execution.CurrentStatus == "00")
+                if (execution.CurrentStatus == "000")
                 {
-                    execution.CurrentStatus = "10";
+                    execution.CurrentStatus = "100";
                 }
 
                 // 判斷流程圖是否上傳
-                else if (execution.CurrentStatus == "10")
+                else if (execution.CurrentStatus == "100")
                 {
                     var Draw = db.StudentDraws.Where(x => x.GID == student.GID && x.MID == mid).FirstOrDefault();
 
                     if (Draw != null)
                     {
-                        execution.CurrentStatus = "21";
+                        execution.CurrentStatus = "210";
                     }
                 }
 
                 // 判斷程式碼是否上傳
-                else if (execution.CurrentStatus == "21")
+                else if (execution.CurrentStatus == "210")
                 {
                     var Code = db.StudentCodes.Where(x => x.GID == student.GID && x.MID == mid).FirstOrDefault();
 
                     if (Code != null)
                     {
-                        execution.CurrentStatus = "22";
+                        execution.CurrentStatus = "221";
                     }
                 }
                 db.SaveChanges();

@@ -23,6 +23,7 @@ namespace LMSweb.ViewModel
         public string EndDate { get; set; }
         public string CurrentAction { get; set; }
         public string CurrentStatus { get; set; }
+        public string GroupName { get; set; }
 
         public bool IsLeader { get; set; }
 
