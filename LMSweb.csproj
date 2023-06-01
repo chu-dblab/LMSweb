@@ -1917,11 +1917,6 @@
     <Content Include="Views\Student\_StudentLayout.cshtml" />
     <Content Include="Views\Course\_CourseLayout.cshtml" />
     <Content Include="Views\LearningBehaviors\_LearningBehaviorsLayout.cshtml" />
-    <Content Include="Views\Missions\GuideMod\_ExperimentalGroupOneLayout.cshtml" />
-    <Content Include="Views\Missions\GuideMod\_ExperimentalGroupTwoLayout.cshtml" />
-    <Content Include="Views\Missions\GuideMod\_ExperimentalGroupThreeLayout.cshtml" />
-    <Content Include="Views\Missions\GuideMod\_ExperimentalGroupFourLayout.cshtml" />
-    <Content Include="Views\Missions\GuideMod\_ExperimentalGroupFiveLayout.cshtml" />
     <Content Include="Views\Chart\_ChartStackedBar.cshtml" />
     <Content Include="App_Code\MissionsHelper.cshtml" />
     <Content Include="Views\Missions\SelectCourses.cshtml" />
