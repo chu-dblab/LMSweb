@@ -528,6 +528,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\TextIO.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModel\ChangeLeaderViewModel.cs" />
     <Compile Include="ViewModel\CourseCreateViewModel.cs" />
     <Compile Include="ViewModel\CourseEditViewModel.cs" />
     <Compile Include="ViewModel\CourseViewModel.cs" />
@@ -1924,6 +1925,7 @@
     <Content Include="Views\Chart\_ChartStackedBar.cshtml" />
     <Content Include="App_Code\MissionsHelper.cshtml" />
     <Content Include="Views\Missions\SelectCourses.cshtml" />
+    <Content Include="Views\Course\ChangeLeader.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

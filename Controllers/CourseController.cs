@@ -265,7 +265,7 @@ namespace LMSweb.Controllers
         {            
             var vmodel = new GroupCreateViewModel();
             vmodel.StudentList = GetStudent(cid);
-            vmodel.students = db.Students.Where(x => x.Group != null && x.CID == cid).ToList();
+            vmodel.students = db.Students.Where(x => x.Group != null && x.CID == cid).OrderBy(x => x.GID).ToList();
             vmodel.CID = cid;
             
             var course = db.Courses.Where(c => c.CID == cid).Single();
@@ -543,6 +543,47 @@ namespace LMSweb.Controllers
             goalSetting.MName = mname;
 
             return View(goalSetting);
+        }
+
+        public ActionResult ChangeLeader(int gid)
+        {
+            var groupStu = db.Students.Where(s => s.GID == gid).ToList();
+            var GName = db.Groups.Find(gid).GName;
+            var CourseId = db.Groups.Find(gid).CID;
+            List<ChangeLeaderViewModel> changeLeaderViewModels = new List<ChangeLeaderViewModel>();
+            
+            if (groupStu == null)
+            {
+                return RedirectToAction("StudentGroup");
+            } else
+            {
+                foreach(var stu in groupStu)
+                {
+                    changeLeaderViewModels.Add(new ChangeLeaderViewModel
+                    {
+                        GroupName = GName,
+                        CourseID = CourseId,
+                        StudentID = stu.SID,
+                        StudentName = stu.SName,
+                        IsLeader = stu.IsLeader
+                    });
+                }
+            }
+            return View(changeLeaderViewModels);
+        }
+
+        [HttpPost]
+        public ActionResult ChangeLeader(string cid, string chackString)
+        {
+            var gid = db.Students.Find(chackString).GID;
+            var groupStu = db.Students.Where(s => s.GID == gid).ToList();
+
+            groupStu.ForEach(s => s.IsLeader = false);
+            db.SaveChanges();
+            groupStu.Find(s => s.SID == chackString).IsLeader = true;
+            db.SaveChanges();
+
+            return RedirectToAction("StudentGroup", new { cid = cid});
         }
     }
 }

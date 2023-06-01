@@ -117,12 +117,13 @@
                                 </div>
                             </div>
                         </div>
-                        @foreach (var item in Model.groups)
+
+                        @foreach (var item in (Model.groups.OrderBy(x => x.GName.Length).ThenBy(x => x.GName)))
                         {
                             <div class="card">
                                 <div class="card-header">
                                     <div class="row">
-                                        <div class="col-8">
+                                        <div class="col-11">
                                             @Html.DisplayFor(modelItem => item.GName)
                                             <a type="button" data-id="@item.GName" data-gid="@item.GID" class="open-Dialog " style="padding: 5px 5px 5px 5px" data-bs-toggle="modal" href="#editGnameModal">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="grey" class="bi bi-pencil-fill" viewBox="0 0 16 16">
@@ -130,14 +131,8 @@
                                                 </svg>
                                             </a>
                                         </div>
-                                        <div class="col-3">
-                                            <button type="button" class="btn btn-primary addGbtn" id="@item.GID">
-                                                加入組別
-                                            </button>
-                                        </div>
-                                        <div class="col-1">
-                                            <button type="button" class="btn-close groupclose" aria-label="btn-Close" aria-hidden="true" id="@item.GID">
-                                            </button>
+                                        <div class="col-1 my-auto">
+                                            <button type="button" class="btn-close groupclose" aria-label="btn-Close" aria-hidden="true" id="@item.GID"></button>
                                         </div>
                                     </div>
                                 </div>
@@ -145,16 +140,38 @@
                                     @foreach (var stu in item.Students)
                                     {
                                         <div class="row justify-content-between">
-                                            <div class="col-4">
+                                            <div class="col-1">
+                                                @if (stu.IsLeader)
+                                                {
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                        <path d="M8.5 12.794l-3.908 2.21.746-4.33L.5 6.706l4.33-.63L8.5 2.5l2.67 3.576 4.33.63-3.338 3.968.746 4.33z" />
+                                                    </svg>
+                                                }
+                                            </div>
+                                            <div class="col">
                                                 <p>@Html.DisplayFor(sid => stu.SName) &ensp;</p>
                                             </div>
                                             <div class="col-1">
-                                                <button type="button" class="btn-close stuclose" aria-label="Close" aria-hidden="true" id="@stu.SID">
-                                                </button>
+                                                <button type="button" class="btn-close stuclose" aria-label="Close" aria-hidden="true" id="@stu.SID"></button>
                                             </div>
                                         </div>
                                     }
+
+                                    <div class="row mt-3">
+                                        <div class="col mt-1">
+                                            <a  class="btn btn-primary w-100" href="@Url.Action("ChangeLeader", "Course", new {gid = item.GID})">
+                                                變更組長
+                                            </a>
+                                        </div>
+                                        <div class="col mt-1">
+                                            <button type="button" class="btn btn-primary w-100 addGbtn" id="@item.GID">
+                                                加入組別
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
+
+                                
                             </div>
                             <br />
                         }
