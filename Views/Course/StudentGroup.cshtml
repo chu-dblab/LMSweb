@@ -137,7 +137,7 @@
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    @foreach (var stu in item.Students)
+                                    @foreach (var stu in (item.Students.OrderBy(x => x.SID)))
                                     {
                                         <div class="row justify-content-between">
                                             <div class="col-1">
