@@ -11,6 +11,13 @@ namespace LMSweb.ViewModel
         public string CourseName { get; set; }
         public string TeacherName { get; set; }
         public string GroupName { get; set; }
-        public List<string> GroupMembers { get; set; }
+        public List<GroupStudentHomeViewModel> GroupStudent { get; set; }
+    }
+
+    public class GroupStudentHomeViewModel
+    {
+        public string StudentID { get; set; }
+        public string StudentName { get; set; }
+        public bool IsLeader { get; set; }
     }
 }

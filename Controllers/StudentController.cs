@@ -48,7 +48,7 @@ namespace LMSweb.Controllers
                        where s.CID == c.CID && c.TID == t.TID && s.GID == g.GID && s.GID == gid
                        select new
                        {
-                           c.CID, c.CName, t.TName, g.GName, s.SName
+                           c.CID, c.CName, t.TName, g.GName, s.SName, s.SID, s.IsLeader
                        }).ToList();
             var data = results
                 .Select(x => new StudentHomeViewModel
@@ -57,12 +57,18 @@ namespace LMSweb.Controllers
                     CourseName = x.CName,
                     TeacherName = x.TName,
                     GroupName = x.GName,
-                    GroupMembers = new List<string>()
+                    GroupStudent = new List<GroupStudentHomeViewModel>()
                 }).FirstOrDefault();
 
             foreach (var item in results)
             {
-                data.GroupMembers.Add(item.SName);
+                data.GroupStudent.Add(
+                    new GroupStudentHomeViewModel
+                    {
+                        StudentID = item.SID,
+                        StudentName = item.SName,
+                        IsLeader = item.IsLeader
+                    });
             }
 
             return View(data);

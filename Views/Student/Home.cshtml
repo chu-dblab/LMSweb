@@ -44,11 +44,16 @@
                         @Html.DisplayFor(model => model.GroupName)
                     </td>
                     <td class="col-2">
-                        @if (Model.GroupMembers.Count > 0)
+                        @if (Model.GroupStudent.Count > 0)
                         {
-                            foreach (var member in Model.GroupMembers)
+                            foreach (var stu in (Model.GroupStudent.OrderByDescending(x => x.IsLeader).ThenBy(x => x.StudentID)))
                             {
-                                @member<br>
+                                @stu.StudentName
+                                if (stu.IsLeader)
+                                {
+                                    <span>組長</span>
+                                }
+                                <br>
                             }
                         }
                     </td>
