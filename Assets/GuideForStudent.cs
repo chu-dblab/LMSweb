@@ -79,21 +79,9 @@ namespace LMSweb.Assets
         {
             if (sid != null)
             {
-                var student = db.Students.Find(sid);
-                var execution = db.Executions.Find(student.GID, mid);
-
-                if (execution == null)
-                {
-                    var _execution = new Execution()
-                    {
-                        GID = student.GID,
-                        MID = mid,
-                        CurrentStatus = GlobalClass.DefaultCurrentStatus(TestType),
-                    };
-                    db.Executions.Add(_execution);
-                    db.SaveChanges();
-                    execution = db.Executions.Find(student.GID, mid);
-                }
+                Student student;
+                Execution execution;
+                SetExecutionByCurrentStatus(out student, out execution);
 
                 // 開啟第一步驟畫流程圖
                 if (execution.CurrentStatus == "000")
@@ -128,41 +116,70 @@ namespace LMSweb.Assets
 
         private void UpdateCurrentStatusForTestType1()
         {
-            throw new NotImplementedException();
+            if (sid != null)
+            {
+                Student student;
+                Execution execution;
+                SetExecutionByCurrentStatus(out student, out execution);
+            }
         }
 
         private void UpdateCurrentStatusForTestType2()
         {
-            throw new NotImplementedException();
+            if (sid != null)
+            {
+                Student student;
+                Execution execution;
+                SetExecutionByCurrentStatus(out student, out execution);
+            }
         }
 
         private void UpdateCurrentStatusForTestType3()
         {
-            throw new NotImplementedException();
+            if (sid != null)
+            {
+                Student student;
+                Execution execution;
+                SetExecutionByCurrentStatus(out student, out execution);
+            }
         }
 
         private void UpdateCurrentStatusForTestType4()
         {
-            throw new NotImplementedException();
+            if (sid != null)
+            {
+                Student student;
+                Execution execution;
+                SetExecutionByCurrentStatus(out student, out execution);
+            }
         }
 
         private void UpdateCurrentStatusForTestType5()
         {
-            throw new NotImplementedException();
+            if (sid != null)
+            {
+                Student student;
+                Execution execution;
+                SetExecutionByCurrentStatus(out student, out execution);
+            }
         }
 
         // 這邊要做的事情是，把所有學生的CurrentStatus都設為00，代表任務尚未開始，做初始化。
-        private void SetMission()
+        private void SetExecutionByCurrentStatus(out Student student, out Execution execution)
         {
-            // 新增任務執行關係
-            foreach (var Leader in Leaders)
+            student = db.Students.Find(sid);
+            execution = db.Executions.Find(student.GID, mid);
+            if (execution == null)
             {
-                var execution = new Execution();
-                execution.GID = Leader.GID;
-                execution.MID = mid;
-                execution.CurrentStatus = GlobalClass.DefaultCurrentStatus(TestType);
-                db.Executions.Add(execution);
+                var _execution = new Execution()
+                {
+                    GID = student.GID,
+                    MID = mid,
+                    CurrentStatus = GlobalClass.DefaultCurrentStatus(TestType),
+                };
+                db.Executions.Add(_execution);
                 db.SaveChanges();
+                execution = db.Executions.Find(student.GID, mid);
             }
         }
     }
