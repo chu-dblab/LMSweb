@@ -139,7 +139,7 @@
                                 <div class="card-body">
                                     @foreach (var stu in (item.Students.OrderBy(x => x.SID)))
                                     {
-                                        <div class="row justify-content-between">
+                                        <div class="row justify-content-betwee">
                                             <div class="col-1">
                                                 @if (stu.IsLeader)
                                                 {
@@ -148,8 +148,11 @@
                                                     </svg>
                                                 }
                                             </div>
+                                            <div class="col-2">
+                                                <p>@stu.SName&ensp;</p>
+                                            </div>
                                             <div class="col">
-                                                <p>@Html.DisplayFor(sid => stu.SName) &ensp;</p>
+                                                <p>@stu.Sex</p>
                                             </div>
                                             <div class="col-1">
                                                 <button type="button" class="btn-close stuclose" aria-label="Close" aria-hidden="true" id="@stu.SID"></button>

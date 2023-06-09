@@ -1,0 +1,161 @@
+﻿@model LMSweb.ViewModel.LearningBehaviorsViewModel
+@{
+    ViewBag.Title = "學習歷程";
+
+    int k = 1;
+
+    int TestType = 0;
+
+    string FormSelectString = "col-6";
+
+    var MissionList = Model.MissionLearningBehaviors;
+    var GroupList = Model.GroupLearningBehaviors.OrderBy(x => x.GroupName.Length).ThenBy(x => x.GroupName);
+
+    if (TestType == 1)
+    {
+        FormSelectString = "col-4";
+    }
+}
+
+<div class="container">
+    @AllHelper.CouresTitleForTeacherView("學習歷程")
+
+    <div class="card m-3 p-4">
+        <div class="row">
+            <div class="@FormSelectString">
+                <select name="MissionSelect" class="form-select form-select-lg" aria-label="Default select example">
+                    <option value="" selected>請選擇任務</option>
+                    @(k = 1);
+                    @foreach (var Mission in MissionList)
+                    {
+                        <option value="@Mission.MisstionID">@Mission.MisstionName</option>
+                    }
+                </select>
+            </div>
+            <div class="@FormSelectString">
+                <select name="GroupSelect" class="form-select form-select-lg" aria-label="Default select example">
+                    <option value="" selected>請選擇組別</option>
+                    @(k = 1);
+                    @foreach (var Group in GroupList)
+                    {
+                        <option value="@Group.GroupID">@Group.GroupName</option>
+                    }
+                </select>
+            </div>
+            @if (false)
+            {
+                <div class="@FormSelectString">
+                    <select class="form-select form-select-lg" aria-label="Default select example">
+                        <option selected>請選擇學生</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                </div>
+            }
+        </div>
+
+        <button id="SearchSubmitButton" class="btn btn-primary mt-3">送出</button>
+    </div>
+
+    <div class="card m-3 p-4">
+        <div class="row">
+            <div class="col-7">
+                <canvas id="myChart" width="400" height="400"></canvas>
+            </div>
+            <div class="col ms-1 me-3 row align-content-start">
+                <div class="col-12 p-3 ">
+                    <p class="h5 opacity-50">任務</p>
+                    <hr class="mt-0 mb-3" />
+                    <p class="h4">Python</p>
+                </div>
+                <div class="col-12 p-3 ">
+                    <p class="h5 opacity-50">組別</p>
+                    <hr class="mt-0 mb-3" />
+                    <p class="h4">第1組</p>
+                </div>
+                <div class="col-12 row">
+                    <div class="col h4 p-3 ">
+                        <p class="h5 opacity-50">教師評分</p>
+                        <hr class="mt-0 mb-3" />
+                        <p class="h4"><span class="fs-1 text-primary">80</span> 分</p>
+                    </div>
+                    <div class="col h4 p-3 ">
+                        <p class="h5 opacity-50">全班平均</p>
+                        <hr class="mt-0 mb-3" />
+                        <p class="h4"><span class="fs-1 text-primary">75</span> 分</p>
+                    </div>
+                </div>
+                <div class="col-12 p-3 ">
+                    <p class="h5 opacity-50">教師評語</p>
+                    <hr class="mt-0 mb-3" />
+                    <p class="h4">你好棒棒你好棒棒你好棒棒你好棒棒你好棒棒你好棒棒你好棒棒你好棒棒你好棒棒你好棒棒你好棒棒你好棒棒你好棒棒你好棒棒你好棒棒你好棒棒</p>
+                </div>
+                
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+@section endJS
+{
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        const ctx = document.getElementById('myChart').getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                //labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                labels: ['Red'],
+                datasets: [{
+                    label: '# of Votes',
+                    //data: [12, 19, 3, 5, 2, 3],
+                    data: [12],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+            }
+        });
+    </script>
+
+    <script>
+        $("#SearchSubmitButton").click(function () {
+            var MissionValue = $("select[name='MissionSelect']").val();
+            var GroupValue = $("select[name='GroupSelect']").val();
+
+            $.ajax({
+            url: "@Url.Action("SearchSubmit", "LearningBehaviors")",
+            method: "post",
+                contentType: 'application/json',
+            ////data: JSON.stringify({ gid: gid, StudentList : otherGroupStudent, CID : "" })
+            success: function (response) {
+
+            },
+            error: function (thrownError) {
+                console.log(thrownError);
+            }
+        });
+        });
+    </script>
+}

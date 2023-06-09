@@ -364,13 +364,48 @@ namespace LMSweb.Controllers
                 groups.Add(g);
             }
             int g_idx = 0;
-            
-            for (int i = 0; i < stus.Count; i++)
+
+            // 無排除狀況
+            //for (int i = 0; i < stus.Count; i++)
+            //{
+            //    if (i < n) stus[i].IsLeader = true;
+            //    groups[g_idx].Students.Add(stus[i]);
+            //    g_idx++;
+            //    g_idx = g_idx % n;
+            //}
+
+            bool GoodGroup = false;
+            while (!GoodGroup)
             {
-                if(i < n) stus[i].IsLeader = true;
-                groups[g_idx].Students.Add(stus[i]);
-                g_idx++;
-                g_idx = g_idx % n;
+                GoodGroup = true;
+                for (int i = 0; i < stus.Count; i++)
+                {
+                    if (i < n) stus[i].IsLeader = true;
+                    else stus[i].IsLeader = false;
+                    groups[g_idx].Students.Add(stus[i]);
+                    g_idx++;
+                    g_idx = g_idx % n;
+                }
+                foreach (var g in groups)
+                {
+                    int GroupCount = g.Students.Count;
+                    int SexSoucec = 0;
+                    foreach (var s in g.Students)
+                    {
+                        if (s.Sex == "男") SexSoucec+=1;
+                        else SexSoucec+=2;
+                    }
+                    if (SexSoucec == (GroupCount+1) || SexSoucec == (GroupCount*2 - 1)) GoodGroup = false;
+                }
+                if (!GoodGroup)
+                {
+                    foreach (var g in groups)
+                    {
+                        g.Students.Clear();
+                    }
+                    g_idx = 0;
+                    stus = GetRandomElements(db.Students.Where(x => (x.Group == null || x.GID == 6) && cid == x.CID).ToList());
+                }
             }
 
             for (int i = 0; i < n; i++)

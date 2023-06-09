@@ -529,6 +529,7 @@
     <Compile Include="Service\TextIO.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModel\ChangeLeaderViewModel.cs" />
+    <Compile Include="ViewModel\Chart\BarChartViewModel.cs" />
     <Compile Include="ViewModel\CourseCreateViewModel.cs" />
     <Compile Include="ViewModel\CourseEditViewModel.cs" />
     <Compile Include="ViewModel\CourseViewModel.cs" />
@@ -539,6 +540,7 @@
     <Compile Include="ViewModel\GroupCreateViewModel.cs" />
     <Compile Include="ViewModel\GroupViewModel.cs" />
     <Compile Include="ViewModel\LearnBViewModel.cs" />
+    <Compile Include="ViewModel\LearningBehaviorsViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MissionCreateViewModel.cs" />
     <Compile Include="ViewModel\MissionDetailViewModel.cs" />
@@ -1917,10 +1919,11 @@
     <Content Include="Views\Student\_StudentLayout.cshtml" />
     <Content Include="Views\Course\_CourseLayout.cshtml" />
     <Content Include="Views\LearningBehaviors\_LearningBehaviorsLayout.cshtml" />
-    <Content Include="Views\Chart\_ChartStackedBar.cshtml" />
+    <Content Include="Views\Chart\_BarChartPartial.cshtml" />
     <Content Include="App_Code\MissionsHelper.cshtml" />
     <Content Include="Views\Missions\SelectCourses.cshtml" />
     <Content Include="Views\Course\ChangeLeader.cshtml" />
+    <Content Include="Views\LearningBehaviors\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

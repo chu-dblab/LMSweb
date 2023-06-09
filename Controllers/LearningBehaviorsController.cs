@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Core.Metadata.Edm;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -11,6 +12,7 @@ using System.Web.Mvc;
 using ClosedXML.Excel;
 using LMSweb.Models;
 using LMSweb.ViewModel;
+using Remotion.Data.Linq.Clauses.ResultOperators;
 
 namespace LMSweb.Controllers
 {
@@ -18,18 +20,78 @@ namespace LMSweb.Controllers
     {
         private LMSmodel db = new LMSmodel();
         LearnBViewModel vm = new LearnBViewModel();
+
+        [HttpGet]
+        public ActionResult Index(string SearchID)
+        {
+            if (User.IsInRole("Teacher"))
+            {
+                var _Missions = db.Missions.Where(x => x.CID == SearchID).ToList();
+                var _Course = db.Courses.Find(SearchID);
+
+                var dataVM = new LearningBehaviorsViewModel
+                {
+                    CourseID = SearchID,
+                    CourseName = _Course.CName,
+                    MissionLearningBehaviors = new List<MissionLearningBehaviorsViewModel>(),
+                    GroupLearningBehaviors = new List<GroupLearningBehaviorsViewModel>()
+                };
+
+                dataVM.MissionLearningBehaviors = (from m in _Missions
+                                                   where m.CID == SearchID
+                                                   select new MissionLearningBehaviorsViewModel
+                                                   {
+                                                       MisstionID = m.MID,
+                                                       MisstionName = m.MName
+                                                   }).ToList();
+
+                dataVM.GroupLearningBehaviors = (from g in db.Groups
+                                                 join s in db.Students on g.GID equals s.GID
+                                                 where s.CID == SearchID && s.IsLeader == true
+                                                 select new GroupLearningBehaviorsViewModel
+                                                 {
+                                                     GroupID = g.GID,
+                                                     GroupName = g.GName,
+                                                 }).ToList();
+
+                return View(dataVM);
+            }
+
+            else if (User.IsInRole("Student"))
+            {
+
+            }
+
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult SearchSubmit(string SearchID)
+        {
+            return Json(new { success = true, responseText = "Success!" });
+        }
+
         public ActionResult StudentJourney(string cid, string mid)//學生普通版學習表現
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity;
             var claimData = claims.Claims.Where(x => x.Type == "UID").ToList();
             var sid = claimData[0].Value;
+
             var stu = db.Students.Where(s => s.SID == sid);
             var stuG = db.Students.Find(sid).Group;
             var sname = db.Students.Find(sid).SName;
-            var gqid = 1002.ToString();
             var gid = stuG.GID.ToString();
+
             //var i = db.GroupERs.Where(c => c.EvaluatorSID == "T004" && c.GID == stuG.GID && c.MID == mid).ToList().Count();
 
+            var output = new Dictionary<string, double>();
+
+            string[] Key = { "TeacherCor", "TeacherLogi", "TeacherRead", "classTeacherCor", "classTeacherLogi", "classTeacherRead" };
             double TeacherCor = 0;
             double TeacherLogi = 0;
             double TeacherRead = 0;
@@ -44,13 +106,26 @@ namespace LMSweb.Controllers
             vm.SName = sname;
             vm.TeacherER = db.GroupERs.Where(sg => sg.GID == stuG.GID && sg.MID == mid).ToList();
             vm.ClassER = db.GroupERs.ToList();
-            vm.missions = db.Missions.Where(m => m.CID == cid).ToList();           
+            vm.missions = db.Missions.Where(m => m.CID == cid).ToList();
             vm.Teachercourse = db.Groups.Where(c => c.CID == cid).Count();
             vm.CID = cid;
             var i = db.GroupERs.Where(c => (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.GID == stuG.GID && c.MID == mid).ToList().Count();
 
             if (i != 0)
             {
+                for(int k = 0; k < 3; k++)
+                {
+                    var dataVM = (from GER in db.GroupERs
+                                  where GER.GQID == (k+1) && GER.EvaluatorSID == "T004" && GER.GID == stuG.GID && GER.MID == mid
+                                  select new
+                                  {
+                                      GER.Answer
+                                  }).ToList();
+
+                    var Avg = dataVM.Average(x => Convert.ToDouble(x.Answer));
+
+                    output.Add(Key[k], Avg);
+                }
                 TeacherCor = db.GroupERs.Where(c => c.GQID == 1 && c.EvaluatorSID == "T004" && c.GID == stuG.GID && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
                 TeacherLogi = db.GroupERs.Where(c => c.GQID == 2 && c.EvaluatorSID == "T004" && c.GID == stuG.GID && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
                 TeacherRead = db.GroupERs.Where(c => c.GQID == 3 && c.EvaluatorSID == "T004" && c.GID == stuG.GID && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
@@ -78,7 +153,7 @@ namespace LMSweb.Controllers
             var stu = db.Students.Where(s => s.SID == sid);
             var stuG = db.Students.Find(sid).Group;
             var sname = db.Students.Find(sid).SName;
-            var gqid = 1002.ToString();        
+            var gqid = 1002.ToString();
 
             vm.Groups = db.Groups.Where(g => g.CID == cid).ToList();
             vm.SID = sid;
@@ -91,7 +166,7 @@ namespace LMSweb.Controllers
             vm.Teachercourse = db.Groups.Where(c => c.CID == cid).Count();
             vm.missions = db.Missions.Where(m => m.CID == cid).ToList();
             vm.PeerER = db.EvalutionResponse.Where(p => p.CID == cid && p.SID == sid && p.EvaluatorSID != sid && p.MID == mid).ToList();
-            vm.GPeerER = db.EvalutionResponse.Where(p => p.CID == cid && p.SID != p.EvaluatorSID  && p.MID == mid).ToList();
+            vm.GPeerER = db.EvalutionResponse.Where(p => p.CID == cid && p.SID != p.EvaluatorSID && p.MID == mid).ToList();
             vm.SelfER = db.EvalutionResponse.Where(p => p.CID == cid && p.SID == sid && p.EvaluatorSID == sid && p.MID == mid).ToList();
             vm.GSelfER = db.EvalutionResponse.Where(p => p.CID == cid && p.SID == p.EvaluatorSID && p.MID == mid).ToList();
             vm.student = db.Students.Where(g => g.Group.GID == gid).ToList();
@@ -105,7 +180,7 @@ namespace LMSweb.Controllers
             double classTeacherRead = 0;
 
             var i = db.GroupERs.Where(c => c.EvaluatorSID == "T004" && c.GID == stuG.GID && c.MID == mid).ToList().Count();
-            if(i != 0)
+            if (i != 0)
             {
                 TeacherCor = db.GroupERs.Where(c => c.GQID == 1 && c.EvaluatorSID == "T004" && c.GID == stuG.GID && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
                 TeacherLogi = db.GroupERs.Where(c => c.GQID == 2 && c.EvaluatorSID == "T004" && c.GID == stuG.GID && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
@@ -114,7 +189,7 @@ namespace LMSweb.Controllers
             var TeacherScore = ((TeacherCor * 0.4) + (TeacherLogi * 0.4) + (TeacherRead * 0.2));
             vm.TeacherScore = Math.Round(TeacherScore, 1, MidpointRounding.ToEven);
             i = db.GroupERs.Where(c => c.EvaluatorSID == "T004" && c.MID == mid).ToList().Count();
-            if(i != 0)
+            if (i != 0)
             {
                 classTeacherCor = db.GroupERs.Where(c => c.GQID == 1 && c.EvaluatorSID == "T004" && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
                 classTeacherLogi = db.GroupERs.Where(c => c.GQID == 2 && c.EvaluatorSID == "T004" && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
@@ -131,7 +206,7 @@ namespace LMSweb.Controllers
             double classGroupRead = 0;
 
             i = db.GroupERs.Where(c => c.EvaluatorSID != "T004" && c.GID == stuG.GID && c.MID == mid).ToList().Count();
-            if(i != 0)
+            if (i != 0)
             {
                 GroupCor = db.GroupERs.Where(c => c.GQID == 1 && c.EvaluatorSID != "T004" && c.GID == stuG.GID && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
                 GroupLogi = db.GroupERs.Where(c => c.GQID == 2 && c.EvaluatorSID != "T004" && c.GID == stuG.GID && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
@@ -140,7 +215,7 @@ namespace LMSweb.Controllers
             var GroupScore = ((GroupCor * 0.4) + (GroupLogi * 0.4) + (GroupRead * 0.2));
             vm.GroupScore = Math.Round(GroupScore, 1, MidpointRounding.ToEven);
             i = db.GroupERs.Where(c => c.EvaluatorSID != "T004" && c.MID == mid).ToList().Count();
-            if(i != 0)
+            if (i != 0)
             {
                 classGroupCor = db.GroupERs.Where(c => c.GQID == 1 && c.EvaluatorSID != "T004" && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
                 classGroupLogi = db.GroupERs.Where(c => c.GQID == 2 && c.EvaluatorSID != "T004" && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
@@ -160,7 +235,7 @@ namespace LMSweb.Controllers
             double classSelfContribute = 0;
 
             i = db.EvalutionResponse.Where(p => p.CID == cid && p.SID == sid && p.EvaluatorSID == sid && p.MID == mid).ToList().Count();
-            if(i != 0)
+            if (i != 0)
             {
                 SelfDiscuss = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 20 && p.SID == sid && p.EvaluatorSID == sid && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
                 SelfDraw = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 21 && p.SID == sid && p.EvaluatorSID == sid && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
@@ -209,7 +284,7 @@ namespace LMSweb.Controllers
             vm.PeerCode = Math.Round(PeerCode, 1, MidpointRounding.ToEven);
             vm.PeerContribute = Math.Round(PeerContribute, 1, MidpointRounding.ToEven);
             i = db.EvalutionResponse.Where(p => p.CID == cid && p.SID != p.EvaluatorSID && p.MID == mid).ToList().Count();
-            if(i != 0)
+            if (i != 0)
             {
                 classPeerDiscuss = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 20 && p.SID != p.EvaluatorSID && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
                 classPeerDraw = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 21 && p.SID != p.EvaluatorSID && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
@@ -230,7 +305,7 @@ namespace LMSweb.Controllers
             vm.TeacherER = db.GroupERs.ToList();
             vm.ClassER = db.GroupERs.ToList();
             vm.CID = cid;
-            
+
             SelectList selectGid = new SelectList(db.Groups.Where(c => c.CID == cid).ToList(), "GID", "GName");
             vm.missions = db.Missions.Where(m => m.CID == cid).ToList();
             ViewBag.SelectList = selectGid;
@@ -320,12 +395,12 @@ namespace LMSweb.Controllers
                 vm.classTeacherScore = Math.Round(classTeacherScore, 1, MidpointRounding.ToEven);
             }
 
-            else if(gid == 0)
+            else if (gid == 0)
             {
                 vm.MName = db.Missions.Find(mid).MName;
 
                 var i = db.GroupERs.Where(c => c.EvaluatorSID == "T004" && c.MID == mid).ToList().Count();
-                
+
                 var TeacherScore = ((TeacherCor * 0.4) + (TeacherLogi * 0.4) + (TeacherRead * 0.2));
                 vm.TeacherScore = Math.Round(TeacherScore, 1, MidpointRounding.ToEven);
 
@@ -340,7 +415,7 @@ namespace LMSweb.Controllers
                 vm.classTeacherScore = Math.Round(classTeacherScore, 1, MidpointRounding.ToEven);
             }
 
-            else if(mid != "" && gid != 0)
+            else if (mid != "" && gid != 0)
             {
                 vm.MName = db.Missions.Find(mid).MName;
                 vm.GName = db.Groups.Find(gid).GName;
@@ -388,9 +463,9 @@ namespace LMSweb.Controllers
             vm.ClassER = db.GroupERs.ToList();
             vm.Teachercourse = db.Groups.Where(c => c.CID == cid).Count();
             vm.missions = db.Missions.Where(m => m.CID == cid).ToList();
-            vm.PeerER = db.EvalutionResponse.Where(p => p.CID == cid ).ToList();
-            vm.GPeerER = db.EvalutionResponse.Where(p => p.CID == cid ).ToList();
-            vm.SelfER = db.EvalutionResponse.Where(p => p.CID == cid ).ToList();
+            vm.PeerER = db.EvalutionResponse.Where(p => p.CID == cid).ToList();
+            vm.GPeerER = db.EvalutionResponse.Where(p => p.CID == cid).ToList();
+            vm.SelfER = db.EvalutionResponse.Where(p => p.CID == cid).ToList();
             vm.GSelfER = db.EvalutionResponse.Where(p => p.CID == cid && p.SID == p.EvaluatorSID).ToList();
             //小組成果 教師
             vm.CID = cid;
@@ -401,7 +476,7 @@ namespace LMSweb.Controllers
             double classTeacherRead = 0;
 
             var i = db.GroupERs.Where(c => c.CID == cid && c.EvaluatorSID == "T004").ToList().Count();
-           
+
             if (i != 0)
             {
                 classTeacherCor = db.GroupERs.Where(c => c.CID == cid && c.GQID == 1 && c.EvaluatorSID == "T004").ToList().Average(t => Convert.ToInt32(t.Answer));
@@ -491,6 +566,7 @@ namespace LMSweb.Controllers
             vm.MID = mid;
             vm.GID = gid;
             vm.SID = sid;
+
             double TeacherCor = 0;
             double TeacherLogi = 0;
             double TeacherRead = 0;
@@ -523,12 +599,12 @@ namespace LMSweb.Controllers
             double classPeerCode = 0;
             double classPeerContribute = 0;
 
-            if(mid == "")
+            if (mid == "")
             {
-                if(gid != 0)
+                if (gid != 0)
                 {
                     vm.GName = db.Groups.Find(gid).GName;
-                    if(sid == "")//NYN
+                    if (sid == "")//NYN
                     {
                         vm.PeerER = db.EvalutionResponse.Where(p => p.CID == cid && p.SID != p.EvaluatorSID).ToList();
                         vm.GPeerER = db.EvalutionResponse.Where(p => p.CID == cid && p.SID != p.EvaluatorSID).ToList();
@@ -630,12 +706,12 @@ namespace LMSweb.Controllers
                         vm.classPeerCode = Math.Round(classPeerCode, 1, MidpointRounding.ToEven);
                         vm.classPeerContribute = Math.Round(classPeerContribute, 1, MidpointRounding.ToEven);
                     }
-                    else if(sid != "")//NYY
+                    else if (sid != "")//NYY
                     {
                         vm.SName = db.Students.Find(sid).SName;
                         vm.PeerER = db.EvalutionResponse.Where(p => p.CID == cid && p.SID == sid && p.EvaluatorSID != sid).ToList();
                         vm.GPeerER = db.EvalutionResponse.Where(p => p.CID == cid && p.SID != p.EvaluatorSID).ToList();
-                        vm.SelfER = db.EvalutionResponse.Where(p => p.CID == cid && p.SID == sid && p.EvaluatorSID == sid ).ToList();
+                        vm.SelfER = db.EvalutionResponse.Where(p => p.CID == cid && p.SID == sid && p.EvaluatorSID == sid).ToList();
                         vm.GSelfER = db.EvalutionResponse.Where(p => p.CID == cid && p.SID == p.EvaluatorSID).ToList();
                         vm.student = db.Students.Where(g => g.Group.GID == gid).ToList();
 
@@ -734,12 +810,12 @@ namespace LMSweb.Controllers
                         vm.classPeerContribute = Math.Round(classPeerContribute, 1, MidpointRounding.ToEven);
                     }
                 }
-                if(gid == 0)//NNN
+                if (gid == 0)//NNN
                 {
                     return RedirectToAction("TeacherEvalutionJourney", "LearningBehaviors", new { cid });
                 }
             }
-            else if(mid != "")
+            else if (mid != "")
             {
                 vm.MName = db.Missions.Find(mid).MName;
 
@@ -748,7 +824,7 @@ namespace LMSweb.Controllers
                     vm.GName = db.Groups.Find(gid).GName;
                     if (sid == "")//YYN
                     {
-                        
+
                         vm.PeerER = db.EvalutionResponse.Where(p => p.CID == cid && p.SID != p.EvaluatorSID && p.MID == mid).ToList();
                         vm.GPeerER = db.EvalutionResponse.Where(p => p.CID == cid && p.SID != p.EvaluatorSID && p.MID == mid).ToList();
                         vm.SelfER = db.EvalutionResponse.Where(p => p.CID == cid && p.SID == p.EvaluatorSID && p.MID == mid).ToList();
@@ -1056,7 +1132,7 @@ namespace LMSweb.Controllers
                     vm.classPeerContribute = Math.Round(classPeerContribute, 1, MidpointRounding.ToEven);
                 }
             }
-            
+
             return View(vm);
         }
         public ActionResult PersonalJourney(string CID)
@@ -1065,11 +1141,11 @@ namespace LMSweb.Controllers
             //ViewBag.Studemt = db.LearnB.Where(s => s.StudentMissions.SID == "S001");
             //產生ViewModel物件
             vm.CID = CID;
-           // vm.learningbehavior = db.LearnB.Where(s => s.StudentMissions.SID == "S001").ToList();(因修改Model所以註解)
+            // vm.learningbehavior = db.LearnB.Where(s => s.StudentMissions.SID == "S001").ToList();(因修改Model所以註解)
             return View(vm);
         }
         public ActionResult Chat()
-        {         
+        {
             return View();
         }
         [HttpPost]

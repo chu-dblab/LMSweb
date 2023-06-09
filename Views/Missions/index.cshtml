@@ -15,6 +15,7 @@
             @AllHelper.SetUnActiveNavData(Url.Action("StudentManagement", "Course", new { CID = Model.CourseID }), "學生名單")
             @AllHelper.SetUnActiveNavData(Url.Action("TeacherJourney", "LearningBehaviors", new { CID = Model.CourseID }), "學習表現")
             @AllHelper.SetUnActiveNavData(Url.Action("TeacherEvalutionJourney", "LearningBehaviors", new { CID = Model.CourseID }), "學習表現(互評版)")
+            @AllHelper.SetUnActiveNavData(Url.Action("Index", "LearningBehaviors", new { SearchID = Model.CourseID }), "新學習表現")
         </ul>
     }
 }
