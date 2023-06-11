@@ -8,13 +8,16 @@ namespace LMSweb.Models
 {
     public class Option
     {
+        // 選項編號
         [Key]
         public int OID { get; set; }
         public int QID { get; set; }
 
-        public virtual Question Question { get; set; }
-
+        // 題目選項
         [Display(Name = "選項")]
         public string OptionName { get; set; }
+
+
+        public virtual Question Question { get; set; }
     }
 }
