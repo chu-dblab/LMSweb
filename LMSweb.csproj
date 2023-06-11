@@ -496,8 +496,13 @@
     <Compile Include="Migrations\202305240718370_AlterColumnCurrentActionToCurrentStatus.designer.cs">
       <DependentUpon>202305240718370_AlterColumnCurrentActionToCurrentStatus.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202306110736308_Add-new-Question-model.cs" />
+    <Compile Include="Migrations\202306110736308_Add-new-Question-model.designer.cs">
+      <DependentUpon>202306110736308_Add-new-Question-model.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Admin.cs" />
+    <Compile Include="Models\Answer.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\DefaultOption.cs" />
     <Compile Include="Models\DefaultQuestion.cs" />
@@ -512,10 +517,13 @@
     <Compile Include="Models\LearningBehavior.cs" />
     <Compile Include="Models\LMSmodel.cs" />
     <Compile Include="Models\Option.cs" />
+    <Compile Include="Models\Provided.cs" />
     <Compile Include="Models\Question.cs" />
     <Compile Include="Models\Mission.cs" />
     <Compile Include="Controllers\MissionsController.cs" />
     <Compile Include="Models\PeerAssessment.cs" />
+    <Compile Include="Models\QuestionNew.cs" />
+    <Compile Include="Models\ExperimentalProcedure.cs" />
     <Compile Include="Models\Response.cs" />
     <Compile Include="Models\SelfAssessment.cs" />
     <Compile Include="Models\Student.cs" />
@@ -2131,6 +2139,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202305240718370_AlterColumnCurrentActionToCurrentStatus.resx">
       <DependentUpon>202305240718370_AlterColumnCurrentActionToCurrentStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202306110736308_Add-new-Question-model.resx">
+      <DependentUpon>202306110736308_Add-new-Question-model.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

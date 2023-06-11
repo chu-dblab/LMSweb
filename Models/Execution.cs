@@ -13,7 +13,7 @@ namespace LMSweb.Models
         [Column(Order = 0)]
         public int GID { get; set; }
         [Key]
-        [Column(Order = 2)]
+        [Column(Order = 1)]
         public string MID { get; set; }
         public string CurrentStatus { get; set; }
 
