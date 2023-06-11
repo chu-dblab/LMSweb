@@ -500,6 +500,14 @@
     <Compile Include="Migrations\202306110736308_Add-new-Question-model.designer.cs">
       <DependentUpon>202306110736308_Add-new-Question-model.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202306110908492_AddQuestionNewFKCID.cs" />
+    <Compile Include="Migrations\202306110908492_AddQuestionNewFKCID.designer.cs">
+      <DependentUpon>202306110908492_AddQuestionNewFKCID.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202306110910404_FIXQuestionNewContent.cs" />
+    <Compile Include="Migrations\202306110910404_FIXQuestionNewContent.designer.cs">
+      <DependentUpon>202306110910404_FIXQuestionNewContent.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\Answer.cs" />
@@ -2142,6 +2150,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202306110736308_Add-new-Question-model.resx">
       <DependentUpon>202306110736308_Add-new-Question-model.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202306110908492_AddQuestionNewFKCID.resx">
+      <DependentUpon>202306110908492_AddQuestionNewFKCID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202306110910404_FIXQuestionNewContent.resx">
+      <DependentUpon>202306110910404_FIXQuestionNewContent.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

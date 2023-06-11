@@ -48,6 +48,6 @@ namespace LMSweb.Models
         public virtual ICollection<KnowledgePoint> KnowledgePoints { get; set; }
         public virtual ICollection<StudentCode> StudentCode { get; set; }
         public virtual ICollection<Question> Questions { get; set; }
-
+        public virtual ICollection<QuestionNew> QuestionNews { get; set; }
     }
 }

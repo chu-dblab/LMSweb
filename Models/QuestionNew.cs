@@ -12,12 +12,15 @@ namespace LMSweb.Models
         [Key]
         public string QuestionNewID { get; set; }
         // 題目內容
-        public string Content { get; set; }
+        public string QContent { get; set; }
         // 題目類型
         public string QType { get; set; }
-
+        
+        // 隸屬課程
+        public string CID { get; set; }
         // 題目類別
         public string EProcedureID { get; set; }
         public virtual ExperimentalProcedure ExperimentalProcedure { get; set; }
+        public virtual Course Course { get; set; }
     }
 }
