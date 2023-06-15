@@ -278,7 +278,7 @@ namespace LMSweb.Controllers
         {
             EvalutionViewModel evalution = new EvalutionViewModel();
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            var TID = claims.Claims.Where(x => x.Type == "TID").SingleOrDefault().Value;
+            var TID = claims.Claims.Where(x => x.Type == "UID").SingleOrDefault().Value;
             var cname = db.Courses.Find(cid).CName;
             var mname = db.Missions.Find(mid).MName;
             var gname = db.Groups.Find(gid).GName;
@@ -331,7 +331,7 @@ namespace LMSweb.Controllers
         {
             
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            var TID = claims.Claims.Where(x => x.Type == "TID").SingleOrDefault().Value;
+            var TID = claims.Claims.Where(x => x.Type == "UID").SingleOrDefault().Value;
             var evalution = db.GroupERs.Where(r => r.GID == gid && r.EvaluatorSID == TID && r.MID == mid);
             var qids = evalution.Select(r => r.GQID).ToList();
             var rids = evalution.Select(r => r.RID).ToList();

@@ -547,6 +547,12 @@ namespace LMSweb.Controllers
             return RedirectToAction("PersonalAbility", new { cid = cidHidden, mid = midHidden });
         }
 
+        public ActionResult ManagementInterface()
+        {
+
+
+            return View();
+        }
     }
 
     
