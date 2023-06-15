@@ -6,10 +6,7 @@
 
 @section NavPills {
     <ul class="nav nav-pills me-auto ms-3">
-        @AllHelper.SetActiveNavData(Url.Action("Index", "Missions", new { CID = CurrentCourseID }), "任務管理")
-        @AllHelper.SetUnActiveNavData(Url.Action("StudentManagement", "Course", new { CID = CurrentCourseID }), "學生名單")
-        @AllHelper.SetUnActiveNavData(Url.Action("TeacherJourney", "LearningBehaviors", new { CID = CurrentCourseID }), "學習表現")
-        @AllHelper.SetUnActiveNavData(Url.Action("TeacherEvalutionJourney", "LearningBehaviors", new { CID = CurrentCourseID }), "學習表現(互評版)")
+        @Html.Partial("~/Views/Nav/_TeacherNavPartial.cshtml", new LMSweb.ViewModel.NavPartial.TeacherNavViewModel { CourseID = CurrentCourseID })
     </ul>
 }
 

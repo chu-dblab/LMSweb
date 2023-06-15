@@ -2,145 +2,158 @@
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_TeacherLayout.cshtml";
+
+    var CourseID = Model.CID;
 }
-<div class="cardArticle">
-    <h4>@Model.CName</h4>
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="@Url.Action("Index", "Missions", new { CID = Model.CID})">任務列表</a></li>
-            <li class="breadcrumb-item"><a href="@Url.Action("Details", "Missions", new { mid = Model.MID, cid = Model.CID})">任務內容</a></li>
-            <li class="breadcrumb-item" active" aria-current="page">後設認知題目設定</li>
-        </ol>
-    </nav>
-</div>
-<div class="card " style="box-sizing: border-box; width: 100%; max-width: 1200px; margin: 20px auto 20px; border-radius: 5px; border: 1px solid #dee2e6; border-color: #cdcdcd;">
-    <div class="card-header" style=" padding: 30px 50px 8px 50px;">
-        <ul class="nav nav-tabs card-header-tabs">
-            <li class="nav-item">
-                <a class="nav-link active" aria-current="true" href="@Url.Action("Index","Questions",new { mid = Model.MID, cid=Model.CID })"><h5>目標設置</h5></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="@Url.Action("ReflectionIndex", "Questions", new {  mid = Model.MID, cid=Model.CID })"><h5>自我反思</h5></a>
-            </li>
-        </ul>
-    </div>
-    
-    <br />
-    <div class="card-body" style="padding: 20px 50px 50px;">
-        <div>
-            <button class="btn btn-outline-dark" value="選擇範本題目" onclick="location.href='@Url.Action("SelectQuestion", "Questions", new { Model.MID, cid = Model.CID})'">
-                選擇範本題目
-            </button>
-            <button class="btn btn-outline-dark" value="新增題目" onclick="location.href='@Url.Action("Create", "Questions", new { Model.MID, cid = Model.CID})'">
-                新增題目
-            </button>
-        </div>
-        <br />
-        @Html.HiddenFor(model => model.MID)
-        @if (Model.Questions.ToList().Count == 0)
+
+@section NavPills {
+    <ul class="nav nav-pills me-auto ms-3">
+        @if (User.IsInRole("Teacher"))
         {
-            <p>目前還沒有新增題目哦~</p>
+            @Html.Partial("~/Views/Nav/_TeacherNavPartial.cshtml", new LMSweb.ViewModel.NavPartial.TeacherNavViewModel { CourseID = CourseID })
         }
-        else
-        {
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>
-                            題型
-                        </th>
-                        <th>
-                            題目
-                        </th>
-                        <th>
-                            選項
-                        </th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody id="number">
-                    @foreach (var item in Model.Questions)
-                    {
+    </ul>
+}
+
+<div class="container">
+    <div class="card m-3 p-3">
+        <h1 class="w-auto m-2 fs-2">@Model.CName</h1>
+        <nav class="bg-white m-2 fs-5" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a class="text-decoration-none text-secondary" href="@Url.Action("Index", "Missions", new { CID = CourseID})">任務列表</a></li>
+                <li class="breadcrumb-item"><a class="text-decoration-none text-secondary" href="@Url.Action("Details", "Missions", new { mid = Model.MID, cid = CourseID})">任務內容</a></li>
+                <li class="breadcrumb-item active text-secondary opacity-75" active" aria-current="page">後設認知題目設定</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="card m-3 p-3">
+        <div class="card-header" style=" padding: 30px 50px 8px 50px;">
+            <ul class="nav nav-tabs card-header-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="true" href="@Url.Action("Index","Questions",new { mid = Model.MID, cid=Model.CID })"><h5>目標設置</h5></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.Action("ReflectionIndex", "Questions", new {  mid = Model.MID, cid=Model.CID })"><h5>自我反思</h5></a>
+                </li>
+            </ul>
+        </div>
+
+        <br />
+        <div class="card-body" style="padding: 20px 50px 50px;">
+            <div>
+                <button class="btn btn-outline-dark" value="選擇範本題目" onclick="location.href='@Url.Action("SelectQuestion", "Questions", new { Model.MID, cid = Model.CID})'">
+                    選擇範本題目
+                </button>
+                <button class="btn btn-outline-dark" value="新增題目" onclick="location.href='@Url.Action("Create", "Questions", new { Model.MID, cid = Model.CID})'">
+                    新增題目
+                </button>
+            </div>
+            <br />
+            @Html.HiddenFor(model => model.MID)
+            @if (Model.Questions.ToList().Count == 0)
+            {
+                <p>目前還沒有新增題目哦~</p>
+            }
+            else
+            {
+                <table class="table table-striped">
+                    <thead>
                         <tr>
-                            <td class="col-1"></td>
-                            <td class="col-2">
-                                @Html.DisplayFor(modelItem => item.Type)
-                            </td>
-                            <td class="col-5">
-                                @Html.DisplayFor(modelItem => item.Description)
-                            </td>
-                            <td>
-                                @if (item.Options != null)
-                                {
-                                    foreach (var op in item.Options)
+                            <th>#</th>
+                            <th>
+                                題型
+                            </th>
+                            <th>
+                                題目
+                            </th>
+                            <th>
+                                選項
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="number">
+                        @foreach (var item in Model.Questions)
+                        {
+                            <tr>
+                                <td class="col-1"></td>
+                                <td class="col-2">
+                                    @Html.DisplayFor(modelItem => item.Type)
+                                </td>
+                                <td class="col-5">
+                                    @Html.DisplayFor(modelItem => item.Description)
+                                </td>
+                                <td>
+                                    @if (item.Options != null)
                                     {
-                                        if (op.QID == item.QID)
+                                        foreach (var op in item.Options)
                                         {
-                                            @op.OptionName
-                                            <br />
+                                            if (op.QID == item.QID)
+                                            {
+                                                @op.OptionName
+                                                <br />
+                                            }
                                         }
                                     }
+                                </td>
+                                <td class="col-1">
+                                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                        <button type="button" class="btn btn-link" style="padding: 5px 5px 5px 5px" onclick="location.href='@Url.Action("Edit", "Questions", new { qid = item.QID, mid = item.MID, cid = Model.CID })'">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="grey" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+                                                <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
+                                            </svg>
+                                        </button>
+
+                                        <botton data-bs-toggle="modal" class="open-Dialog" style="padding: 5px 5px 5px 5px" href="#delModal" data-qid="@item.QID" data-mid="@item.MID" data-cid="@Model.CID">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="grey" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                                <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                            </svg>
+                                        </botton>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+
+
+
+                </table>
+
+                <div class="modal hide" id="delModal" tabindex="-1" aria-labelledby="delModalLabel" aria-hidden="true">
+                    <form id="DelQuestionForm" action="@Url.Action("Delete", "Questions")" method="post" enctype="multipart/form-data">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="delModalLabel">刪除</h5>
+                                    <button type="button" class="btn-close" aria-label="Close" aria-hidden="true" data-bs-dismiss="modal"></button>
+
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <p>確定要刪除嗎?</p>
+                                        <input type="hidden" name="qidHidden" id="qidHidden" class="form-control" value="" />
+                                        <input type="hidden" name="midHidden" id="midHidden" class="form-control" value="" />
+                                        <input type="hidden" name="cidHidden" id="cidHidden" class="form-control" value="" />
+                                    </div>
+                                </div>
+                                @using (Html.BeginForm())
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary">確定</button>
+                                    </div>
                                 }
-                            </td>
-                            <td class="col-1">
-                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                    <button type="button" class="btn btn-link" style="padding: 5px 5px 5px 5px" onclick="location.href='@Url.Action("Edit", "Questions", new { qid = item.QID, mid = item.MID, cid = Model.CID })'">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="grey" class="bi bi-pencil-fill" viewBox="0 0 16 16">
-                                            <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
-                                        </svg>
-                                    </button>
-
-                                    <botton data-bs-toggle="modal" class="open-Dialog" style="padding: 5px 5px 5px 5px" href="#delModal" data-qid="@item.QID" data-mid="@item.MID" data-cid="@Model.CID">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="grey" class="bi bi-trash-fill" viewBox="0 0 16 16">
-                                            <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
-                                        </svg>
-                                    </botton>
-                                </div>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-
-
-
-            </table>
-
-            <div class="modal hide" id="delModal" tabindex="-1" aria-labelledby="delModalLabel" aria-hidden="true">
-                <form id="DelQuestionForm" action="@Url.Action("Delete", "Questions")" method="post" enctype="multipart/form-data">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="delModalLabel">刪除</h5>
-                                <button type="button" class="btn-close" aria-label="Close" aria-hidden="true" data-bs-dismiss="modal"></button>
 
                             </div>
-                            <div class="modal-body">
-                                <div class="form-group">
-                                    <p>確定要刪除嗎?</p>
-                                    <input type="hidden" name="qidHidden" id="qidHidden" class="form-control" value="" />
-                                    <input type="hidden" name="midHidden" id="midHidden" class="form-control" value="" />
-                                    <input type="hidden" name="cidHidden" id="cidHidden" class="form-control" value="" />
-                                </div>
-                            </div>
-                            @using (Html.BeginForm())
-                            {
-                                @Html.AntiForgeryToken()
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary">確定</button>
-                                </div>
-                            }
-
                         </div>
-                    </div>
-                </form>
-            </div>
-        }
-       
+                    </form>
+                </div>
+            }
+
+        </div>
     </div>
 </div>
-   
+
 @section scripts
 {
     <script>
@@ -162,5 +175,5 @@
             }
         }
     </script>
-    
+
 }

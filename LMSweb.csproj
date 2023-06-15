@@ -237,6 +237,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KnowledgePointsController.cs" />
     <Compile Include="Controllers\LearningBehaviorsController.cs" />
+    <Compile Include="Controllers\NavController.cs" />
     <Compile Include="Controllers\PeerAssessmentsController.cs" />
     <Compile Include="Controllers\QuestionsController.cs" />
     <Compile Include="Controllers\ResponsesController.cs" />
@@ -562,6 +563,7 @@
     <Compile Include="ViewModel\MissionDetailViewModel.cs" />
     <Compile Include="ViewModel\MissionIndexViewModel.cs" />
     <Compile Include="ViewModel\MissionViewModel.cs" />
+    <Compile Include="ViewModel\NavPartial\TeacherNavViewModel.cs" />
     <Compile Include="ViewModel\Questions\ManagementInterfaceViewModel.cs" />
     <Compile Include="ViewModel\QuestionViewModel.cs" />
     <Compile Include="ViewModel\ReflectionViewModel.cs" />
@@ -1942,6 +1944,7 @@
     <Content Include="Views\Course\ChangeLeader.cshtml" />
     <Content Include="Views\LearningBehaviors\Index.cshtml" />
     <Content Include="Views\Questions\ManagementInterface.cshtml" />
+    <Content Include="Views\Nav\_TeacherNavPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
