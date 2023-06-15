@@ -127,7 +127,7 @@ namespace LMSweb.Controllers
         public ActionResult Assessment([System.Web.Http.FromBody] EvalutionViewModel groupVM, int gid, string mid, string cid)
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            var TID = claims.Claims.Where(x => x.Type == "TID").SingleOrDefault().Value;
+            var TID = claims.Claims.Where(x => x.Type == "UID").SingleOrDefault().Value;
             int GID = gid;
             var MID = mid;
             var CID = cid;
@@ -385,7 +385,7 @@ namespace LMSweb.Controllers
         {
             
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            var TID = claims.Claims.Where(x => x.Type == "TID").SingleOrDefault().Value;
+            var TID = claims.Claims.Where(x => x.Type == "UID").SingleOrDefault().Value;
             int GID = gid;
             var MID = mid;
             var CID = cid;
