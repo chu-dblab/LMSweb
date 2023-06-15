@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "ManagementInterface";
+}
+
+@if (User.IsInRole("Teacher"))
+{
+    @section NavPills {
+        <ul class="nav nav-pills me-auto ms-3">
+            @*@AllHelper.SetActiveNavData(Url.Action("Index", "Missions", new { CID = Model.CourseID }), "任務管理")
+            @AllHelper.SetUnActiveNavData(Url.Action("StudentManagement", "Course", new { CID = Model.CourseID }), "學生名單")
+            @AllHelper.SetUnActiveNavData(Url.Action("TeacherJourney", "LearningBehaviors", new { CID = Model.CourseID }), "學習表現")
+            @AllHelper.SetUnActiveNavData(Url.Action("TeacherEvalutionJourney", "LearningBehaviors", new { CID = Model.CourseID }), "學習表現(互評版)")
+            @AllHelper.SetUnActiveNavData(Url.Action("Index", "LearningBehaviors", new { SearchID = Model.CourseID }), "新學習表現")*@
+        </ul>
+    }
+}
+
+<div class="container">
+    @AllHelper.CouresTitleForTeacherView("任務管理介面")
+
+
+</div>

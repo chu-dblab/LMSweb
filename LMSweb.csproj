@@ -562,6 +562,7 @@
     <Compile Include="ViewModel\MissionDetailViewModel.cs" />
     <Compile Include="ViewModel\MissionIndexViewModel.cs" />
     <Compile Include="ViewModel\MissionViewModel.cs" />
+    <Compile Include="ViewModel\Questions\ManagementInterfaceViewModel.cs" />
     <Compile Include="ViewModel\QuestionViewModel.cs" />
     <Compile Include="ViewModel\ReflectionViewModel.cs" />
     <Compile Include="ViewModel\SelectMissionViewModel.cs" />
@@ -1940,6 +1941,7 @@
     <Content Include="Views\Missions\SelectCourses.cshtml" />
     <Content Include="Views\Course\ChangeLeader.cshtml" />
     <Content Include="Views\LearningBehaviors\Index.cshtml" />
+    <Content Include="Views\Questions\ManagementInterface.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
