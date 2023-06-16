@@ -509,6 +509,10 @@
     <Compile Include="Migrations\202306110910404_FIXQuestionNewContent.designer.cs">
       <DependentUpon>202306110910404_FIXQuestionNewContent.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202306161352521_addNewOption.cs" />
+    <Compile Include="Migrations\202306161352521_addNewOption.designer.cs">
+      <DependentUpon>202306161352521_addNewOption.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\Answer.cs" />
@@ -526,6 +530,7 @@
     <Compile Include="Models\LearningBehavior.cs" />
     <Compile Include="Models\LMSmodel.cs" />
     <Compile Include="Models\Option.cs" />
+    <Compile Include="Models\OptionNew.cs" />
     <Compile Include="Models\Provided.cs" />
     <Compile Include="Models\Question.cs" />
     <Compile Include="Models\Mission.cs" />
@@ -543,6 +548,7 @@
     <Compile Include="Models\TeacherAssessment.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\QuestionService.cs" />
     <Compile Include="Service\TextIO.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModel\ChangeLeaderViewModel.cs" />
@@ -564,6 +570,7 @@
     <Compile Include="ViewModel\MissionIndexViewModel.cs" />
     <Compile Include="ViewModel\MissionViewModel.cs" />
     <Compile Include="ViewModel\NavPartial\TeacherNavViewModel.cs" />
+    <Compile Include="ViewModel\Questions\GoalSettingForStudentViewModel.cs" />
     <Compile Include="ViewModel\Questions\ManagementInterfaceViewModel.cs" />
     <Compile Include="ViewModel\QuestionViewModel.cs" />
     <Compile Include="ViewModel\ReflectionViewModel.cs" />
@@ -2161,6 +2168,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202306110910404_FIXQuestionNewContent.resx">
       <DependentUpon>202306110910404_FIXQuestionNewContent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202306161352521_addNewOption.resx">
+      <DependentUpon>202306161352521_addNewOption.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
