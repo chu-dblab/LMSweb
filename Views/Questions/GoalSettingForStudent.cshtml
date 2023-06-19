@@ -1,0 +1,165 @@
+﻿@model LMSweb.ViewModel.Questions.GoalSettingForStudentViewModel
+
+@{
+    ViewBag.Title = "GoalSettingForStudent";
+}
+
+
+<div class="container">
+    @AllHelper.CouresTitleForStudentView(Model.MissionName)
+
+    <div class="card m-3 p-3">
+        <h2>@Model.TaskSteps</h2>
+
+        @if (Model.DefaultQuestions.Any() == false)
+        {
+            <p>目前還沒有設定題目哦~</p>
+        }
+        else
+        {
+            <table id="table_id" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            #
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DefaultQuestions.First().Description)
+                        </th>
+                        <th>
+                            作答
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="number">
+
+                    @foreach (var Q in Model.DefaultQuestions)
+                    {
+                        <tr>
+                            <td>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Q.Description)
+                            </td>
+                            <td>
+                                @if (Q.Type == "單選")
+                                {
+                                    foreach (var qo in Q.DefaultOptions)
+                                    {
+
+                                        @*<input class="form-check-input" type="radio" value="" id="flexCheckDefault">@qo.OptionName*@
+                                        @Html.RadioButton(Q.DQID.ToString(), qo.DOptions, new { @class = "form-check-input", @required = "required" })
+                                        @Html.Label(qo.DOptions, new { @class = "form-check-label", @for = Q.DQID })
+
+                                    }
+                                }
+                                else if (Q.Type == "多選")
+                                {
+                                    foreach (var qo in Q.DefaultOptions)
+                                    {
+                                        @*<input class="form-check-input" type="checkbox" name="flexRadioDefault" id=" flexRadioDefault">@qo.OptionName*@
+                                        @Html.CheckBox(Q.DQID.ToString(), new { @class = "form-check-input", @value = qo.DOptions })
+                                        @Html.Label(qo.DOptions, new { @class = "form-check-label" })
+                                    }
+                                }
+                                else
+                                {
+                                    @*<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>*@
+                                    @Html.TextArea(Q.DQID.ToString(), new { @class = "form-control", @rows = "3", @required = "required" })
+                                }
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+            <div class="mb-3">
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">送出</button>
+                </div>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">送出確認</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            送出後無法做修改，確定要送出嗎?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">再想想</button>
+                            <input type="submit" value="送出" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+
+    </div>
+
+
+</div>
+@section scripts
+{
+    <script>
+        var questions_qid = @Html.Raw(@Json.Encode(Model.DefaultQuestions.Select(q => q.DQID).ToList()));
+        //console.log(questions_qid);
+        window.onload = function () {
+            var tableLine = document.getElementById("number");
+            for (var i = 0; i < tableLine.rows.length; i++) {
+                tableLine.rows[i].cells[0].innerHTML = (i + 1);
+
+            }
+        }
+        $("form").submit(function () {
+            var sumbit_data = {};
+            sumbit_data["CID"] = "@Model.CourseID";
+            sumbit_data["MID"] = "@Model.MissionID";
+            sumbit_data["QRs"] = [];
+            for (var i = 0; i < questions_qid.length; i++) {
+                var Question_Response = {};
+                var type = $('input[name="' + questions_qid[i] + '"]').attr('type');
+                //console.log(questions_qid[i]);
+                response = "";
+                if (type == "radio") {
+                    response = $('input[name="' + questions_qid[i] + '"]:checked').map(function () {
+                        return $(this).val();
+                    }).get().join();
+                } else if (type == "checkbox") {
+                    response = $('input[name="' + questions_qid[i] + '"]:checked').map(function () {
+                        return $(this).val();
+                    }).get().join();
+                } else {
+                    selector = $('textarea[name="' + questions_qid[i] + '"]');
+                    response = selector.val();
+                }
+                //console.log(response);
+                Question_Response["qid"] = questions_qid[i];
+                Question_Response["response"] = response;
+                Question_Response["mid"] = "@Model.MissionID";
+                sumbit_data["QRs"].push(Question_Response);
+            }
+            console.log(sumbit_data);
+            $.ajax({
+                url: '@Url.Action("StudentGoalSetting", "Student")',
+                type: 'post',
+                dataType: 'json',
+                data: sumbit_data,
+                success: function (response) {
+                    // ... do something with the data...
+                    window.location.href = response.redirectToUrl;
+
+                },
+                error: function (thrownError) {
+                    alert(thrownError);
+                }
+
+            });
+            return false;
+        });
+    </script>
+}

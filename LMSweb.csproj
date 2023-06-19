@@ -509,9 +509,9 @@
     <Compile Include="Migrations\202306110910404_FIXQuestionNewContent.designer.cs">
       <DependentUpon>202306110910404_FIXQuestionNewContent.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202306161352521_addNewOption.cs" />
-    <Compile Include="Migrations\202306161352521_addNewOption.designer.cs">
-      <DependentUpon>202306161352521_addNewOption.cs</DependentUpon>
+    <Compile Include="Migrations\202306191019077_FixForeignKeyConstrainQuestionNewOptionNew.cs" />
+    <Compile Include="Migrations\202306191019077_FixForeignKeyConstrainQuestionNewOptionNew.designer.cs">
+      <DependentUpon>202306191019077_FixForeignKeyConstrainQuestionNewOptionNew.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Admin.cs" />
@@ -2169,8 +2169,8 @@
     <EmbeddedResource Include="Migrations\202306110910404_FIXQuestionNewContent.resx">
       <DependentUpon>202306110910404_FIXQuestionNewContent.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202306161352521_addNewOption.resx">
-      <DependentUpon>202306161352521_addNewOption.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202306191019077_FixForeignKeyConstrainQuestionNewOptionNew.resx">
+      <DependentUpon>202306191019077_FixForeignKeyConstrainQuestionNewOptionNew.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

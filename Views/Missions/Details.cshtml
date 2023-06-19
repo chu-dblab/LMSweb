@@ -29,6 +29,7 @@
 
     var DrawingUrl = Url.Action("StudentDrawing", "Student", new { mid = Model.MissionID, cid = Model.CourseID });
     var CodingUrl = Url.Action("StudentCoding", "Student", new { mid = Model.MissionID, cid = Model.CourseID });
+    var GoalSettingUrl = Url.Action("GoalSettingForStudent", "Questions", new { mid = Model.MissionID});
 
     string[][] GuideStapUrlList = new string[6][];
 
@@ -43,7 +44,7 @@
     GuideStapUrlList[1] = new string[]
     {
         "",
-        "",
+        GoalSettingUrl,
         DrawingUrl,
         "",
         CodingUrl,

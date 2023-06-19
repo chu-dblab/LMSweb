@@ -22,5 +22,6 @@ namespace LMSweb.Models
         public string EProcedureID { get; set; }
         public virtual ExperimentalProcedure ExperimentalProcedure { get; set; }
         public virtual Course Course { get; set; }
+        public virtual ICollection<OptionNew> Options { get; set; }
     }
 }

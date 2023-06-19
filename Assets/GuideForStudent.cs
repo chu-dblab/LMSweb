@@ -121,6 +121,35 @@ namespace LMSweb.Assets
                 Student student;
                 Execution execution;
                 SetExecutionByCurrentStatus(out student, out execution);
+
+                // 開啟第一步驟畫流程圖
+                if (execution.CurrentStatus == "000000")
+                {
+                    execution.CurrentStatus = "100000";
+                }
+
+                // 判斷流程圖是否上傳
+                else if (execution.CurrentStatus == "100000")
+                {
+                    var Draw = db.StudentDraws.Where(x => x.GID == student.GID && x.MID == mid).FirstOrDefault();
+
+                    if (Draw != null)
+                    {
+                        execution.CurrentStatus = "210000";
+                    }
+                }
+
+                // 判斷程式碼是否上傳
+                else if (execution.CurrentStatus == "210000")
+                {
+                    var Code = db.StudentCodes.Where(x => x.GID == student.GID && x.MID == mid).FirstOrDefault();
+
+                    if (Code != null)
+                    {
+                        execution.CurrentStatus = "221000";
+                    }
+                }
+                db.SaveChanges();
             }
         }
 

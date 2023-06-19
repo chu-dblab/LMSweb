@@ -373,6 +373,7 @@ namespace LMSweb.Controllers
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity;
             var SID = claims.Claims.Where(x => x.Type == "UID").FirstOrDefault().Value;
+            
             var response = db.Responses.Where(r => r.SID == SID && r.MID == mid);
             var qids = response.Select(r => r.DQID ).ToList();
             var questions = db.DefaultQuestions.Where(q => qids.Contains(q.DQID) && q.Class == "目標設置").ToList();

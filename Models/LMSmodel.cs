@@ -32,8 +32,15 @@ namespace LMSweb.Models
         public DbSet<GroupER> GroupERs { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Execution> Executions { get; set; }
+        public DbSet<ExperimentalProcedure> ExperimentalProcedures { get; set; }
+        public DbSet<QuestionNew> QuestionNews { get; set; }
+        public DbSet<OptionNew> OptionNews { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<OptionNew>()
+                .HasRequired(q => q.QuestionNew)
+                .WithMany(q => q.Options)
+                .HasForeignKey(q => q.QuestionNewID).WillCascadeOnDelete(true);
             base.OnModelCreating(modelBuilder);
         }
 

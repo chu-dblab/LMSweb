@@ -4,10 +4,12 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
 using LMSweb.Models;
 using LMSweb.ViewModel;
+using LMSweb.ViewModel.Questions;
 
 namespace LMSweb.Controllers
 {
@@ -36,9 +38,10 @@ namespace LMSweb.Controllers
             return View(sQvmodel);
         }
 
-        public ActionResult AddQuestion(string mid, string cid,int dqid)
+        public ActionResult AddQuestion(string mid, string cid, int dqid)
         {
             DefaultQuestion defaultQuestion = db.DefaultQuestions.Find(dqid); //default
+            
             var question = new Question();
 
             question.Description = defaultQuestion.Description;
@@ -549,9 +552,41 @@ namespace LMSweb.Controllers
 
         public ActionResult ManagementInterface()
         {
-
-
             return View();
+        }
+
+        public ActionResult GoalSettingForStudent(string mid)
+        {
+            ClaimsIdentity claims = (ClaimsIdentity)User.Identity;
+            var SID = claims.Claims.Where(x => x.Type == "UID").FirstOrDefault().Value;
+            
+            var cid = db.Missions.Find(mid).CID;
+
+            var response = db.Responses.Where(r => r.SID == SID && r.MID == mid);
+            var qids = response.Select(r => r.DQID).ToList();
+            var questions = db.DefaultQuestions.Where(q => qids.Contains(q.DQID) && q.Class == "目標設置").ToList();
+            var cname = db.Courses.Find(cid).CName;
+            var mname = db.Missions.Find(mid).MName;
+            var misChat = db.Missions.Find(mid).IsDiscuss;
+
+            if (questions.Any())
+            {
+                return RedirectToAction("StudentGoal", "Student", new { cid, mid, SID });
+            }
+            else
+            {
+                GoalSettingForStudentViewModel GoalSettingForStudentVM = new GoalSettingForStudentViewModel()
+                {
+                    TaskSteps = Assets.GlobalClass.TaskSteps.GoalSetting,
+                    DefaultQuestions = db.DefaultQuestions.Where(q => q.Class == "目標設置").Include(q => q.DefaultOptions).ToList(),
+                    MissionID = mid,
+                    CourseID = cid,
+                    CourseName = cname,
+                    MissionName = mname
+                };
+                
+                return View(GoalSettingForStudentVM);
+            }
         }
     }
 
