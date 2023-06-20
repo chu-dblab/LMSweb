@@ -36,6 +36,7 @@ namespace LMSweb.Models
         public DbSet<QuestionNew> QuestionNews { get; set; }
         public DbSet<OptionNew> OptionNews { get; set; }
         public DbSet<CommentType> CommentTypes { get; set; }
+        public DbSet<Comment> Comments { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<OptionNew>()
@@ -45,6 +46,7 @@ namespace LMSweb.Models
             base.OnModelCreating(modelBuilder);
         }
 
+        object placeHolderVariable;
     }
 
 }

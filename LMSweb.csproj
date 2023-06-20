@@ -231,6 +231,7 @@
     <Compile Include="ChatHub.cs" />
     <Compile Include="CodeServiceHub.cs" />
     <Compile Include="Controllers\ChartController.cs" />
+    <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\apiController\DiscussApiController.cs" />
     <Compile Include="Controllers\GroupsController.cs" />
