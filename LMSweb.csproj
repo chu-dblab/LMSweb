@@ -513,9 +513,15 @@
     <Compile Include="Migrations\202306191019077_FixForeignKeyConstrainQuestionNewOptionNew.designer.cs">
       <DependentUpon>202306191019077_FixForeignKeyConstrainQuestionNewOptionNew.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202306191401233_AddNewComment.cs" />
+    <Compile Include="Migrations\202306191401233_AddNewComment.designer.cs">
+      <DependentUpon>202306191401233_AddNewComment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\Answer.cs" />
+    <Compile Include="Models\Comment.cs" />
+    <Compile Include="Models\CommentType.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\DefaultOption.cs" />
     <Compile Include="Models\DefaultQuestion.cs" />
@@ -2171,6 +2177,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202306191019077_FixForeignKeyConstrainQuestionNewOptionNew.resx">
       <DependentUpon>202306191019077_FixForeignKeyConstrainQuestionNewOptionNew.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202306191401233_AddNewComment.resx">
+      <DependentUpon>202306191401233_AddNewComment.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -35,6 +35,7 @@ namespace LMSweb.Models
         public DbSet<ExperimentalProcedure> ExperimentalProcedures { get; set; }
         public DbSet<QuestionNew> QuestionNews { get; set; }
         public DbSet<OptionNew> OptionNews { get; set; }
+        public DbSet<CommentType> CommentTypes { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<OptionNew>()
