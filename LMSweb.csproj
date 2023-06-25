@@ -567,6 +567,7 @@
     <Compile Include="ViewModel\DrawingViewModel.cs" />
     <Compile Include="ViewModel\EvalutionViewModel.cs" />
     <Compile Include="ViewModel\GoalSettingViewModel.cs" />
+    <Compile Include="ViewModel\GroupAssessment\CommentViewModel.cs" />
     <Compile Include="ViewModel\GroupCreateViewModel.cs" />
     <Compile Include="ViewModel\GroupViewModel.cs" />
     <Compile Include="ViewModel\LearnBViewModel.cs" />
@@ -812,6 +813,7 @@
     <Content Include="Content\bootstrap-fileinput\scss\fileinput.scss" />
     <Content Include="Content\bootstrap-fileinput\scss\fileinput-rtl.scss" />
     <Content Include="App_Code\AllHelper.cshtml" />
+    <Content Include="libman.json" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Scripts\bootstrap-multiselect.js" />
     <Content Include="Scripts\bootstrap-multiselect.min.js" />
@@ -1959,6 +1961,7 @@
     <Content Include="Views\LearningBehaviors\Index.cshtml" />
     <Content Include="Views\Questions\ManagementInterface.cshtml" />
     <Content Include="Views\Nav\_TeacherNavPartial.cshtml" />
+    <Content Include="Views\Comment\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

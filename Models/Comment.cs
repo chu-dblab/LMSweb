@@ -14,7 +14,9 @@ namespace LMSweb.Models
         // 評語內容
         public string CContent { get; set; }
 
-        public virtual CommentType CommentTypes { get; set; }
+        public string StudentID { get; set; }
         public virtual Student Student { get; set; }
+
+        public virtual CommentType CommentTypes { get; set; }
     }
 }

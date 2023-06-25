@@ -8,21 +8,12 @@
         public override void Up()
         {
             CreateTable(
-                "dbo.CommentTypes",
-                c => new
-                    {
-                        CommentTypeID = c.String(nullable: false, maxLength: 128),
-                        CTContent = c.String(),
-                        CTAttribute = c.String(),
-                    })
-                .PrimaryKey(t => t.CommentTypeID);
-            
-            CreateTable(
                 "dbo.Comments",
                 c => new
                     {
                         CommentID = c.String(nullable: false, maxLength: 128),
                         CContent = c.String(),
+                        StudentID = c.String(),
                         CommentTypes_CommentTypeID = c.String(maxLength: 128),
                         Student_SID = c.String(maxLength: 128),
                     })
@@ -32,6 +23,16 @@
                 .Index(t => t.CommentTypes_CommentTypeID)
                 .Index(t => t.Student_SID);
             
+            CreateTable(
+                "dbo.CommentTypes",
+                c => new
+                    {
+                        CommentTypeID = c.String(nullable: false, maxLength: 128),
+                        CTContent = c.String(),
+                        CTAttribute = c.String(),
+                    })
+                .PrimaryKey(t => t.CommentTypeID);
+            
         }
         
         public override void Down()
@@ -40,8 +41,8 @@
             DropForeignKey("dbo.Comments", "CommentTypes_CommentTypeID", "dbo.CommentTypes");
             DropIndex("dbo.Comments", new[] { "Student_SID" });
             DropIndex("dbo.Comments", new[] { "CommentTypes_CommentTypeID" });
-            DropTable("dbo.Comments");
             DropTable("dbo.CommentTypes");
+            DropTable("dbo.Comments");
         }
     }
 }

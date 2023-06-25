@@ -39,15 +39,15 @@ namespace LMSweb.Migrations
 
             context.CommentTypes.AddOrUpdate(
                 p => p.CommentTypeID,
-                new Models.CommentType { CommentTypeID = "1", CTContent = "我們想稱讚這組的流程圖或程式碼", CTAttribute = "評語" },
-                new Models.CommentType { CommentTypeID = "2", CTContent = "我們想批評這組的流程圖或程式碼", CTAttribute = "評語" },
-                new Models.CommentType { CommentTypeID = "3", CTContent = "我們想指出這組有錯誤的地方", CTAttribute = "評語" },
-                new Models.CommentType { CommentTypeID = "4", CTContent = "我們想請這組想想看如何改進他們的流程圖或程式碼", CTAttribute = "評語" },
-                new Models.CommentType { CommentTypeID = "5", CTContent = "我們想說跟這組的作品無關的評論", CTAttribute = "評語" },
-                new Models.CommentType { CommentTypeID = "6", CTContent = "我們想稱讚這組給的評語", CTAttribute = "回饋" },
-                new Models.CommentType { CommentTypeID = "7", CTContent = "我們想批評這組給的評語", CTAttribute = "回饋" },
-                new Models.CommentType { CommentTypeID = "8", CTContent = "我們想指出這組給的評語有錯誤的地方", CTAttribute = "回饋" },
-                new Models.CommentType { CommentTypeID = "9", CTContent = "我們想請這組想想看如何改進他們的評語", CTAttribute = "回饋" },
+                new Models.CommentType { CommentTypeID = "01", CTContent = "我們想稱讚這組的流程圖或程式碼", CTAttribute = "評語" },
+                new Models.CommentType { CommentTypeID = "02", CTContent = "我們想批評這組的流程圖或程式碼", CTAttribute = "評語" },
+                new Models.CommentType { CommentTypeID = "03", CTContent = "我們想指出這組有錯誤的地方", CTAttribute = "評語" },
+                new Models.CommentType { CommentTypeID = "04", CTContent = "我們想請這組想想看如何改進他們的流程圖或程式碼", CTAttribute = "評語" },
+                new Models.CommentType { CommentTypeID = "05", CTContent = "我們想說跟這組的作品無關的評論", CTAttribute = "評語" },
+                new Models.CommentType { CommentTypeID = "06", CTContent = "我們想稱讚這組給的評語", CTAttribute = "回饋" },
+                new Models.CommentType { CommentTypeID = "07", CTContent = "我們想批評這組給的評語", CTAttribute = "回饋" },
+                new Models.CommentType { CommentTypeID = "08", CTContent = "我們想指出這組給的評語有錯誤的地方", CTAttribute = "回饋" },
+                new Models.CommentType { CommentTypeID = "09", CTContent = "我們想請這組想想看如何改進他們的評語", CTAttribute = "回饋" },
                 new Models.CommentType { CommentTypeID = "10", CTContent = "我們想說跟這組的評語無關的回饋", CTAttribute = "回饋" }
             );
         }
