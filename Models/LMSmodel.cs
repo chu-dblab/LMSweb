@@ -45,8 +45,6 @@ namespace LMSweb.Models
                 .HasForeignKey(q => q.QuestionNewID).WillCascadeOnDelete(true);
             base.OnModelCreating(modelBuilder);
         }
-
-        object placeHolderVariable;
     }
 
 }

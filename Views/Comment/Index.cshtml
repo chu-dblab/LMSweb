@@ -1,0 +1,73 @@
+﻿@model LMSweb.ViewModel.GroupAssessment.CommentViewModel
+
+@{
+    ViewBag.Title = "GroupAssessment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<String> testA = new List<String>();
+    testA.Add("A");
+	testA.Add("B");
+}
+
+<style>
+    #id {
+        display: inline-block;
+        width: 100%;
+    }
+
+    .toggleChangeRadiusLeft1, .toggleChangeRadiusLeft2, .toggleChangeRadiusLeft3 {
+        border-radius: 20px 0 0 0 !important;
+    }
+
+    .toggleChangeRadiusRight1, .toggleChangeRadiusRight2, .toggleChangeRadiusRight3 {
+        border-radius: 0 20px 0 0 !important;
+    }
+</style>
+<script>
+	
+    $(document).ready(function () {
+        $('#descriptionCollapse1').on('show.bs.collapse', function () {
+            $('#toggleChangeRadiusLeft1').addClass('toggleChangeRadiusLeft1');
+            $('#toggleChangeRadiusRight1').addClass('toggleChangeRadiusRight1');
+        });
+
+        $('#descriptionCollapse1').on('hide.bs.collapse', function () {
+            $('#toggleChangeRadiusRight1').removeClass('toggleChangeRadiusRight1');
+            $('#toggleChangeRadiusLeft1').removeClass('toggleChangeRadiusLeft1');
+        });
+        $('#descriptionCollapse2').on('show.bs.collapse', function () {
+            $('#toggleChangeRadiusLeft2').addClass('toggleChangeRadiusLeft2');
+            $('#toggleChangeRadiusRight2').addClass('toggleChangeRadiusRight2');
+        });
+        $('#descriptionCollapse2').on('hide.bs.collapse', function () {
+            $('#toggleChangeRadiusRight2').removeClass('toggleChangeRadiusRight2');
+            $('#toggleChangeRadiusLeft2').removeClass('toggleChangeRadiusLeft2');
+        });
+        $('#descriptionCollapse3').on('show.bs.collapse', function () {
+            $('#toggleChangeRadiusLeft3').addClass('toggleChangeRadiusLeft3');
+            $('#toggleChangeRadiusRight3').addClass('toggleChangeRadiusRight3');
+        });
+        $('#descriptionCollapse3').on('hide.bs.collapse', function () {
+            $('#toggleChangeRadiusRight3').removeClass('toggleChangeRadiusRight3');
+            $('#toggleChangeRadiusLeft3').removeClass('toggleChangeRadiusLeft3');
+        });
+    });
+
+</script>
+
+<div class="article">
+	<div class="row">
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button"
+                    id="dropdownMenuButton" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                Select Comment
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                @foreach (var cType in testA)
+                {
+                    <li><a class="dropdown-item" href="">@cType</a></li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>

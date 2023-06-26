@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using LMSweb.Models;
 using LMSweb.ViewModel;
+using LMSweb.ViewModel.GroupAssessment;
 
 namespace LMSweb.Controllers
 {
@@ -15,10 +16,10 @@ namespace LMSweb.Controllers
     {
         private LMSmodel db = new LMSmodel();
 
-        public ActionResult Index()
+        public ActionResult Index(string commentid)
         {
-            var comments = db.Comments.Include("CommentTypes").Include("Students").ToList();
-            return View(comments);
+            var comments = db.Comments.Where(x => x.CommentID == commentid);
+            return View();
         }
 
         public ActionResult Details(string id)
