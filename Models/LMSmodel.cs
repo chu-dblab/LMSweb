@@ -37,14 +37,8 @@ namespace LMSweb.Models
         public DbSet<OptionNew> OptionNews { get; set; }
         public DbSet<CommentType> CommentTypes { get; set; }
         public DbSet<Comment> Comments { get; set; }
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<OptionNew>()
-                .HasRequired(q => q.QuestionNew)
-                .WithMany(q => q.Options)
-                .HasForeignKey(q => q.QuestionNewID).WillCascadeOnDelete(true);
-            base.OnModelCreating(modelBuilder);
-        }
+        public DbSet<Answer> Answers { get; set; }
+        public DbSet<Provided> Provideds { get; set; }
     }
 
 }

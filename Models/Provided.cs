@@ -15,9 +15,12 @@ namespace LMSweb.Models
         public string AID { get; set; }
         [Key]
         [Column(Order = 1)]
-        public string StudentID { get; set; }
+        public string UserID { get; set; }
 
+
+        [ForeignKey("AID")]
         public virtual Answer Answers { get; set; }
-        public virtual Student Students { get; set; }
+        [ForeignKey("UserID")]
+        public virtual User User { get; set; }
     }
 }

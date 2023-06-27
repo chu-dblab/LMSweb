@@ -18,5 +18,7 @@ namespace LMSweb.Models
         public string Gender { get; set; }
         [Required]
         public string RoleName { get; set; } //因為Role在T-SQL內是個關鍵字所以在後方補上Name
+
+        public virtual ICollection<Provided> Provideds { get; set; }
     }
 }

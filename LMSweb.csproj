@@ -518,6 +518,10 @@
     <Compile Include="Migrations\202306191401233_AddNewComment.designer.cs">
       <DependentUpon>202306191401233_AddNewComment.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202306271158170_fix_foreign.cs" />
+    <Compile Include="Migrations\202306271158170_fix_foreign.designer.cs">
+      <DependentUpon>202306271158170_fix_foreign.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\Answer.cs" />
@@ -2184,6 +2188,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202306191401233_AddNewComment.resx">
       <DependentUpon>202306191401233_AddNewComment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202306271158170_fix_foreign.resx">
+      <DependentUpon>202306271158170_fix_foreign.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
